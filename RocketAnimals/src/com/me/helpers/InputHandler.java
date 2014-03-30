@@ -14,11 +14,15 @@ public class InputHandler implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		if (screenX < (Gdx.graphics.getWidth() / 2)) {
+		System.out.println("Touched " + screenX);
+		if (screenX < (rocket.getX()+(rocket.getWidth()/2))) {
+			
 			rocket.onLeft();
+			rocket.movLeft(screenX);
 		}
 		else
 			rocket.onRight();
+		    rocket.movRight(screenX);
 		return true;
 	}
 
@@ -45,7 +49,25 @@ public class InputHandler implements InputProcessor {
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		return false;
+		
+		
+		
+		
+		if (screenX < (rocket.getX()+(rocket.getWidth()/2))) {
+			
+			rocket.onLeft();
+			rocket.movLeft(screenX);
+			
+			
+		}
+		else {
+			rocket.onRight();
+			rocket.movRight(screenX);
+		}
+		
+		
+		
+		return true;
 	}
 
 	@Override

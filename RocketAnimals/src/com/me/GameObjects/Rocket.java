@@ -12,6 +12,9 @@ public class Rocket {
 	private int width;
 	private int height;
 	
+	private int stopper;
+	
+	
 	public Rocket(float x, float y, int width, int height) {
 		this.width = width;
 		this.height = height;
@@ -26,11 +29,43 @@ public class Rocket {
 		
 		// Move the rocket using velocity
 		position.add(velocity.cpy().scl(delta));
+		
+		System.out.println((int) position.x);
+		
+		if( (int) position.x == stopper){
+	
+			
+			velocity.x = 0;
+		}
+		
+	}
+	
+	//Input Control Methods
+	public void movLeft(int x){
+		
+		this.stopper = x;
+	
+		
+	}
+	
+	public void movRight(int x){
+		
+		this.stopper = x;
 	}
 	
 	// Control methods
-	public void onLeft() { velocity.x -= 50; }
-	public void onRight() {velocity.x += 50; }
+	public void onLeft() {
+		velocity.x -= 50;
+		if(velocity.x < -50){
+			velocity.x = -50 ;
+		}
+	}
+	public void onRight() {
+		velocity.x += 50;
+		if(velocity.x > 50){
+			velocity.x = 50 ;
+		}
+	}
 	public void onNoClick() {velocity.x = 0; }
 	
 	// Getter methods

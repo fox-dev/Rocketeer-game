@@ -13,6 +13,7 @@ public class GameWorld {
 	
 	public void update(float delta) {
 		rocket.update(delta);
+		
 	}
 	
 	public Rocket getRocket() { return rocket; }
