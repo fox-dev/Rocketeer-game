@@ -14,7 +14,7 @@ public class GameScreen implements Screen {
 	private float runTime = 0;
 	
 	public GameScreen() {
-		System.out.println("GameScreen attached!");
+	
 		
 		// Get the screen details
 		float screenWidth = Gdx.graphics.getWidth();
