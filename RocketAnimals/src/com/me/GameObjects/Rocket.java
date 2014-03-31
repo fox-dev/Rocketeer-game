@@ -12,6 +12,8 @@ public class Rocket {
 	private int width;
 	private int height;
 	
+	
+	//Used to stop the rocket when it reaches the finger/mouse
 	private int stopper;
 	
 	
@@ -30,27 +32,18 @@ public class Rocket {
 		// Move the rocket using velocity
 		position.add(velocity.cpy().scl(delta));
 		
-		System.out.println((int) position.x);
 		
+		//check if rocket has reached the finger/mouse's location.
 		if( (int) position.x == stopper){
 	
-			
 			velocity.x = 0;
 		}
 		
 	}
 	
-	//Input Control Methods
-	public void movLeft(int x){
-		
-		this.stopper = x;
-	
-		
-	}
-	
-	public void movRight(int x){
-		
-		this.stopper = x;
+	//Input Control Methods to track user's current X location
+	public void userAtX(int userLocationX){
+		this.stopper = userLocationX;
 	}
 	
 	// Control methods
