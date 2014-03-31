@@ -18,11 +18,11 @@ public class InputHandler implements InputProcessor {
 		if (screenX < (rocket.getX()+(rocket.getWidth()/2))) {
 			
 			rocket.onLeft();
-			rocket.movLeft(screenX);
+			rocket.userAtX(screenX);
 		}
 		else
 			rocket.onRight();
-		    rocket.movRight(screenX);
+		    rocket.userAtX(screenX);
 		return true;
 	}
 
@@ -56,13 +56,13 @@ public class InputHandler implements InputProcessor {
 		if (screenX < (rocket.getX()+(rocket.getWidth()/2))) {
 			
 			rocket.onLeft();
-			rocket.movLeft(screenX);
+			rocket.userAtX(screenX);
 			
 			
 		}
 		else {
 			rocket.onRight();
-			rocket.movRight(screenX);
+			rocket.userAtX(screenX);
 		}
 		
 		
