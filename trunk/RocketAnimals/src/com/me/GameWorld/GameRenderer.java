@@ -9,6 +9,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.utils.Array;
+import com.me.GameObjects.AbstractObstacle;
+import com.me.GameObjects.Meteor;
 import com.me.GameObjects.Rocket;
 import com.me.helpers.AssetLoader;
 
@@ -25,9 +28,12 @@ public class GameRenderer {
 	
 	// Game objects
 	Rocket rocket;
+	Array<AbstractObstacle> meteor;
+	
 	
 	// Game sprites;
 	TextureRegion rocket1, rocket2, rocket3;
+	TextureRegion sMeteor;
 	Animation rocketAnimation;
 	
 	public GameRenderer(GameWorld world, int gameHeight, int midPointY) {
@@ -66,6 +72,8 @@ public class GameRenderer {
 		
 		
 		spriteBatch.begin();
+		drawMeteors();
+		
 		if (rocket.isMoving())
 			spriteBatch.draw(rocketAnimation.getKeyFrame(runTime), rocket.getX(), rocket.getY(), rocket.getWidth(), rocket.getHeight());
 		else
@@ -74,8 +82,16 @@ public class GameRenderer {
 		
 	}
 	
+	public void drawMeteors(){
+		for(AbstractObstacle items : world.getScroller().getAbstractObstacles()){
+			spriteBatch.draw(sMeteor, items.getX(), items.getY(), items.getWidth(), items.getHeight());
+		}
+		
+	}
+	
 	public void initGameObjects() {
 		rocket = world.getRocket();
+		meteor = world.getScroller().getAbstractObstacles();
 	}
 	
 	public void initGameAssets() {
@@ -83,5 +99,8 @@ public class GameRenderer {
 		rocket2 = AssetLoader.rocket2;
 		rocket3 = AssetLoader.rocket3;
 		rocketAnimation = AssetLoader.rocketAnimation;
+		sMeteor = AssetLoader.meteor;
+		
+		
 	}
 }

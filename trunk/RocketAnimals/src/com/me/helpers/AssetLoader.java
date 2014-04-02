@@ -13,6 +13,8 @@ public class AssetLoader {
 	public static Animation rocketAnimation;
 	public static TextureRegion rocket1, rocket2, rocket3;
 	
+	public static TextureRegion meteor;
+	
 	
 	public static void load() {
 		
@@ -24,6 +26,10 @@ public class AssetLoader {
 		rocket1 = new TextureRegion(texture, 153, 0, 17, 12);
 		rocket2 = new TextureRegion(texture, 170, 0, 17, 12);
 		rocket3 = new TextureRegion(texture, 136, 0, 17, 12);
+		
+		// Meteor
+		meteor = new TextureRegion(texture, 153, 0, 17, 12); //change sprite later
+		
 		
 		// Rocket Animation
 		TextureRegion[] rockets = {rocket1, rocket2, rocket3};
