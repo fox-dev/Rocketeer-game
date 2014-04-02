@@ -15,7 +15,7 @@ public class InputHandler implements InputProcessor {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		System.out.println("Touched " + screenX);
-		if (screenX < (rocket.getX()+(rocket.getWidth()/2))) {
+		if (screenX < rocket.getMiddleX()) {
 			
 			rocket.onLeft();
 			rocket.userAtX(screenX);
@@ -53,7 +53,7 @@ public class InputHandler implements InputProcessor {
 		
 		
 		
-		if (screenX < (rocket.getX()+(rocket.getWidth()/2))) {
+		if (screenX < rocket.getMiddleX()) {
 			
 			rocket.onLeft();
 			rocket.userAtX(screenX);

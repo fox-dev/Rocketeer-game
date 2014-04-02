@@ -53,5 +53,11 @@ public class ScrollableHandler {
 	public void generateAbstractObstacles(){
 		
 	}
+	
+	// Need this to remove objects for collision detection
+	public void removeObject(AbstractObstacle obstacle) {
+		obstacleList.removeValue(obstacle, true);
+		numObstacles--;
+	}
 
 }

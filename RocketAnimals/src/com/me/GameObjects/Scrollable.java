@@ -2,6 +2,7 @@ package com.me.GameObjects;
 
 import java.util.Random;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class Scrollable {
@@ -12,6 +13,7 @@ public class Scrollable {
     protected int width;
     protected int height;
     protected boolean isScrolledDown;
+    protected Rectangle collisionRect; // Used for very crude collision detection
     
     private Random r;
     
@@ -26,6 +28,8 @@ public class Scrollable {
         this.height = height;
         
         isScrolledDown = false;
+        
+        collisionRect = new Rectangle(x,y,width,height);
     }
     
     ////////////////////////////////////////////////////
@@ -34,6 +38,9 @@ public class Scrollable {
 		
 		// Move the obstacle using velocity
 		position.add(velocity.cpy().scl(delta));
+		
+		// Move the rectangle to the new position
+		collisionRect.setPosition(position);
 		
 		// If the Scrollable object is no longer visible:
         if (position.y + height > 480 + 30) {
@@ -64,5 +71,6 @@ public class Scrollable {
  	public float getWidth() { return width; }
  	public float getHeight() { return height; }
  	public boolean isScrolledDown() { return isScrolledDown; }
-
+ 	public Rectangle getRect() { return collisionRect; }
+ 	
 }
