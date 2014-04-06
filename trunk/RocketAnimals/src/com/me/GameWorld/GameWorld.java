@@ -6,6 +6,7 @@ import com.me.GameObjects.AbstractObstacle;
 import com.me.GameObjects.Rocket;
 import com.me.GameObjects.Scrollable;
 import com.me.GameObjects.ScrollableHandler;
+import com.me.helpers.Constants;
 
 public class GameWorld {
 	
@@ -14,7 +15,7 @@ public class GameWorld {
 	private Array<AbstractObstacle> scrollObjects;
 	
 	public GameWorld(int midPointY) {
-		rocket = new Rocket((Gdx.graphics.getWidth() / 2) - 15, 400, 30, 30);
+		rocket = new Rocket((Constants.TRUE_WIDTH / 2) - 15, 400, 30, 30);
 		scroller = new ScrollableHandler();
 		scrollObjects = new Array<AbstractObstacle>();
 	}
