@@ -28,7 +28,7 @@ public class ScrollableHandler {
 	public void update(float delta){
 		RNG = Math.random();
 		
-		System.out.println("R = " + numObstacles);
+		//System.out.println("R = " + numObstacles);
 		if(RNG < 0.05 && numObstacles < 15) {
 			obstacleList.add(new AbstractObstacle(r.nextInt(305), -30, 30, 30, SCROLL_SPEED));
 			numObstacles++;
