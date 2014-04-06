@@ -3,8 +3,11 @@ package com.me.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.me.GameWorld.GameRenderer;
 import com.me.GameWorld.GameWorld;
+import com.me.helpers.Constants;
 import com.me.helpers.InputHandler;
 
 public class GameScreen implements Screen {
@@ -44,6 +47,8 @@ public class GameScreen implements Screen {
 	public void resize(int width, int height) {
 		System.out.println("GameScreen resize");
 		System.out.println("RESIZING TO (" + width + ", " + height + ")");
+		
+		renderer.resize(width, height);
 	}
 
 	@Override

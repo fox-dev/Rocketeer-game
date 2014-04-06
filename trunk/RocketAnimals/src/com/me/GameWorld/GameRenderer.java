@@ -1,19 +1,19 @@
 package com.me.GameWorld;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.me.GameObjects.AbstractObstacle;
-import com.me.GameObjects.Meteor;
 import com.me.GameObjects.Rocket;
 import com.me.helpers.AssetLoader;
+import com.me.helpers.Constants;
 
 public class GameRenderer {
 	
@@ -22,6 +22,7 @@ public class GameRenderer {
 	private ShapeRenderer shapeRenderer;
 	
 	private SpriteBatch spriteBatch;
+	private Rectangle viewport;
 	
 	private int gameHeight;
 	private int midPointY;
@@ -43,7 +44,7 @@ public class GameRenderer {
 		
 		
 		cam = new OrthographicCamera();
-		cam.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		cam.setToOrtho(true, Constants.TRUE_WIDTH, Constants.TRUE_HEIGHT);
 		
 		spriteBatch = new SpriteBatch();
 		spriteBatch.setProjectionMatrix(cam.combined); // Attach spriteBatch to camera
@@ -58,8 +59,16 @@ public class GameRenderer {
 	
 	public void render(float runTime) {
 
+		// Update camera
+		cam.update();
+		cam.apply(Gdx.gl10);
+		
+		// Set viewport
+		Gdx.gl.glViewport((int) viewport.x, (int) viewport.y,
+                (int) viewport.width, (int) viewport.height);
+		
 		// Fill screen with black
-		Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
+		Gdx.gl.glClearColor(1f, 1f, 1f, 1f);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
 		// Begin ShapeRenderer
@@ -102,5 +111,30 @@ public class GameRenderer {
 		sMeteor = AssetLoader.meteor;
 		
 		
+	}
+	
+	public void resize(int width, int height) {
+		float aspectRatio = (float)width / (float)height;
+		float scale = 1f;
+		Vector2 crop = new Vector2(0f, 0f);
+		
+		if(aspectRatio > Constants.ASPECT_RATIO)
+        {
+            scale = (float)height/(float)Constants.TRUE_HEIGHT;
+            crop.x = (width - Constants.TRUE_WIDTH*scale)/2f;
+        }
+        else if(aspectRatio < Constants.ASPECT_RATIO)
+        {
+            scale = (float)width/(float)Constants.TRUE_WIDTH;
+            crop.y = (height - Constants.TRUE_HEIGHT*scale)/2f;
+        }
+        else
+        {
+            scale = (float)width/(float)Constants.TRUE_WIDTH;
+        }
+
+        float w = (float)Constants.TRUE_WIDTH*scale;
+        float h = (float)Constants.TRUE_HEIGHT*scale;
+        viewport = new Rectangle(crop.x, crop.y, w, h);
 	}
 }
