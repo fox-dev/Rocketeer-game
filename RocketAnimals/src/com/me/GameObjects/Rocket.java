@@ -1,10 +1,14 @@
 package com.me.GameObjects;
 
+
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.me.helpers.Constants;
+
 
 public class Rocket {
 
+	
 	private Vector2 position;
 	private Vector2 velocity;
 	private Vector2 acceleration;
@@ -14,6 +18,9 @@ public class Rocket {
 	private int height;
 	
 	protected Rectangle collisionRect; // Used for very crude collision detection
+	
+	private boolean moveRight;
+	private boolean moveLeft;
 	
 	
 	//Used to stop the rocket when it reaches the finger/mouse
@@ -29,6 +36,9 @@ public class Rocket {
 		acceleration = new Vector2(0, 460);
 		
 		collisionRect = new Rectangle(x, y, width, height);
+		
+		moveRight = false;
+	
 	}
 	
 	// Update method
@@ -42,8 +52,12 @@ public class Rocket {
 		
 		
 		//check if rocket has reached the finger/mouse's location.
-		if( (int) getMiddleX() == stopper){
+		if( (int) getMiddleX() >= stopper && (moveRight == true)){
 	
+			velocity.x = 0;
+		}
+		else if( (int) getMiddleX() <= stopper && (moveRight == false)){
+			
 			velocity.x = 0;
 		}
 		
@@ -56,15 +70,19 @@ public class Rocket {
 	
 	// Control methods
 	public void onLeft() {
-		velocity.x -= 50;
-		if(velocity.x < -50){
-			velocity.x = -50 ;
+	
+		moveRight = false;
+		velocity.x -= Constants.ROCKET_VELOCITY;
+		if(velocity.x < -Constants.ROCKET_VELOCITY){
+			velocity.x = -Constants.ROCKET_VELOCITY ;
 		}
 	}
 	public void onRight() {
-		velocity.x += 50;
-		if(velocity.x > 50){
-			velocity.x = 50 ;
+		moveRight = true;
+		
+		velocity.x += Constants.ROCKET_VELOCITY;
+		if(velocity.x > Constants.ROCKET_VELOCITY){
+			velocity.x = Constants.ROCKET_VELOCITY;
 		}
 	}
 	public void onNoClick() {velocity.x = 0; }
