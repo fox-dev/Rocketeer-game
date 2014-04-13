@@ -5,6 +5,7 @@ import com.me.GameObjects.AbstractObstacle;
 import com.me.GameObjects.Rocket;
 import com.me.GameObjects.Scrollable;
 import com.me.GameObjects.ScrollableHandler;
+import com.me.helpers.AssetLoader;
 import com.me.helpers.Constants;
 
 public class GameWorld {
@@ -27,6 +28,9 @@ public class GameWorld {
 		rocket = new Rocket((Constants.TRUE_WIDTH / 2) - 15, 450, 30, 30);
 		scroller = new ScrollableHandler();
 		scrollObjects = new Array<AbstractObstacle>();
+		
+		// Play music???
+		AssetLoader.bgm.play();
 	}
 	
 	public void update(float delta) {
@@ -74,6 +78,7 @@ public class GameWorld {
 		for (Scrollable tempObj : scrollObjects) {
 			if (rocket.getRect().overlaps(tempObj.getRect())) {
 				scroller.removeObject((AbstractObstacle)tempObj);
+				AssetLoader.hit.play();
 			}
 		}
 	}
