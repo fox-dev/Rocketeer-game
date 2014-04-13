@@ -40,7 +40,7 @@ public class GameScreen implements Screen {
 		world.update(delta);
 		renderer.render(runTime);
 		
-		Gdx.input.setInputProcessor(new InputHandler(world.getRocket()));
+		Gdx.input.setInputProcessor(new InputHandler(world, world.getRocket()));
 	}
 
 	@Override

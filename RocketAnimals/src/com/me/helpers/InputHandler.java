@@ -1,10 +1,10 @@
 package com.me.helpers;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.me.GameObjects.Rocket;
+import com.me.GameWorld.GameWorld;
 
 public class InputHandler implements InputProcessor {
 	
@@ -12,11 +12,11 @@ public class InputHandler implements InputProcessor {
 	
 	private OrthographicCamera cam;
 	
+	private GameWorld world;
 	
 	
-	
-	public InputHandler(Rocket rocket) {
-		
+	public InputHandler(GameWorld world, Rocket rocket) {
+		this.world = world;
 		this.rocket = rocket;
 		
 		cam = new OrthographicCamera();
@@ -30,18 +30,24 @@ public class InputHandler implements InputProcessor {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		
-		Vector3 tempPos = new Vector3(screenX, screenY, 0);
-		cam.unproject(tempPos);
-		System.out.println("Touched " + tempPos.x);
-		if (tempPos.x < rocket.getMiddleX()) {
-			
-			rocket.onLeft();
-			rocket.userAtX((int)tempPos.x);
+		if (world.isReady()) {
+			world.start();
 		}
-		else
-			rocket.onRight();
-		    rocket.userAtX((int)tempPos.x);
-		return true;
+		else {
+		
+			Vector3 tempPos = new Vector3(screenX, screenY, 0);
+			cam.unproject(tempPos);
+			System.out.println("Touched " + tempPos.x);
+			if (tempPos.x < rocket.getMiddleX()) {
+			
+				rocket.onLeft();
+				rocket.userAtX((int)tempPos.x);
+			}
+			else
+				rocket.onRight();
+		    	rocket.userAtX((int)tempPos.x);
+		}
+    	return true;
 	}
 
 	@Override
