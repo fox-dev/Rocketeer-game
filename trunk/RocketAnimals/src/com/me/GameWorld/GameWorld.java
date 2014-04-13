@@ -52,6 +52,7 @@ public class GameWorld {
 				break;
 			}
 			
+			break;
 			
 		case RUNNING:
 			
