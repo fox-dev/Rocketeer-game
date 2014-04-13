@@ -14,12 +14,15 @@ public class InputHandler implements InputProcessor {
 	
 	
 	
+	
 	public InputHandler(Rocket rocket) {
 		
 		this.rocket = rocket;
 		
 		cam = new OrthographicCamera();
 		cam.setToOrtho(true, Constants.TRUE_WIDTH, Constants.TRUE_HEIGHT);
+		
+		
 		
 		
 	}
