@@ -41,8 +41,12 @@ public class Rocket {
 	
 	}
 	
+
+	
 	// Update method
 	public void update(float delta) {
+		
+	
 		
 		// Move the rocket using velocity
 		position.add(velocity.cpy().scl(delta));
@@ -61,6 +65,12 @@ public class Rocket {
 			velocity.x = 0;
 		}
 		
+	}
+	
+	public void moveBird(){
+		if(position.y >= 400){
+			position.y--;
+		}
 	}
 	
 	//Input Control Methods to track user's current X location

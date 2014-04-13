@@ -29,9 +29,13 @@ public class InputHandler implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		
+
 		if (world.isReady()) {
-			world.start();
+			world.standby();
+			
+		}
+		else if (world.isStandby()){
+			
 		}
 		else {
 		
@@ -74,24 +78,30 @@ public class InputHandler implements InputProcessor {
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		
-		
-		Vector3 tempPos = new Vector3(screenX, screenY, 0);
-		cam.unproject(tempPos);
-		System.out.println("Touched " + tempPos.x);
-		
-		if (tempPos.x < rocket.getMiddleX()) {
+		if (world.isReady()) {
+			world.standby();
 			
-			rocket.onLeft();
-			rocket.userAtX((int)tempPos.x);
-			
+		}
+		else if (world.isStandby()){
 			
 		}
 		else {
-			rocket.onRight();
-			rocket.userAtX((int)tempPos.x);
+			Vector3 tempPos = new Vector3(screenX, screenY, 0);
+			cam.unproject(tempPos);
+			System.out.println("Touched " + tempPos.x);
+		
+			if (tempPos.x < rocket.getMiddleX()) {
+			
+				rocket.onLeft();
+				rocket.userAtX((int)tempPos.x);
+			
+			
+			}
+			else {
+				rocket.onRight();
+				rocket.userAtX((int)tempPos.x);
+			}
 		}
-		
-		
 		
 		return true;
 	}
