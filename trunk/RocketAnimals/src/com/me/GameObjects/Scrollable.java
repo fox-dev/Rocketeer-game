@@ -35,7 +35,7 @@ public class Scrollable {
     ////////////////////////////////////////////////////
     
     public void update(float delta){
-		
+    
 		// Move the obstacle using velocity
 		position.add(velocity.cpy().scl(delta));
 		

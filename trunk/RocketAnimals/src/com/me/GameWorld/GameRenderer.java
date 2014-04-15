@@ -1,16 +1,20 @@
 package com.me.GameWorld;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.me.GameObjects.AbstractObstacle;
+import com.me.GameObjects.HotAirBalloon;
+import com.me.GameObjects.Meteor;
 import com.me.GameObjects.Rocket;
 import com.me.helpers.AssetLoader;
 import com.me.helpers.Constants;
@@ -27,9 +31,12 @@ public class GameRenderer {
 	private int gameHeight;
 	private int midPointY;
 	
+	
+	
 	// Game objects
 	Rocket rocket;
-	Array<AbstractObstacle> meteor;
+	Array<AbstractObstacle> stuff;
+	
 	
 	
 	// Game sprites;
@@ -80,8 +87,9 @@ public class GameRenderer {
 		*/
 		
 		
+		
 		spriteBatch.begin();
-		drawMeteors();
+		drawStuff();
 		
 		if (rocket.isMoving())
 			spriteBatch.draw(rocketAnimation.getKeyFrame(runTime), rocket.getX(), rocket.getY(), rocket.getWidth(), rocket.getHeight());
@@ -91,16 +99,28 @@ public class GameRenderer {
 		
 	}
 	
-	public void drawMeteors(){
+	
+	
+	public void drawStuff(){
 		for(AbstractObstacle items : world.getScroller().getAbstractObstacles()){
-			spriteBatch.draw(sMeteor, items.getX(), items.getY(), items.getWidth(), items.getHeight());
+			if(items instanceof Meteor){
+				
+				spriteBatch.draw(sMeteor, items.getX(), items.getY(), items.getWidth(), items.getHeight());
+			}
+			if(items instanceof HotAirBalloon){
+				
+				spriteBatch.draw(rocket1, items.getX(), items.getY(), items.getWidth(), items.getHeight());
+				
+				
+			}
 		}
 		
 	}
 	
 	public void initGameObjects() {
 		rocket = world.getRocket();
-		meteor = world.getScroller().getAbstractObstacles();
+		stuff = world.getScroller().getAbstractObstacles();
+		
 	}
 	
 	public void initGameAssets() {
