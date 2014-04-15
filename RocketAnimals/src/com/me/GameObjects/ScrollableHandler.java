@@ -11,8 +11,6 @@ public class ScrollableHandler {
 	
 	private Array<AbstractObstacle> obstacleList = new Array<AbstractObstacle>();
  	private Iterator<AbstractObstacle> iterator;
- 	private Meteor tempMet;
- 	private HotAirBalloon tempHab;
 	private double RNG;
 	private int numObstacles = 0;
 	
@@ -53,30 +51,15 @@ public class ScrollableHandler {
 		}
 		
 		iterator = obstacleList.iterator();
-		while(iterator.hasNext()){
-			
-			Object o = iterator.next();
-			if(o instanceof Meteor){
-				tempMet = (Meteor) o;
-				tempMet.update(delta);
-				
-				if(tempMet.isScrolledDown()){
-					iterator.remove();
-					numObstacles--;
-				}
-				
+		while(iterator.hasNext())
+		{	
+			AbstractObstacle o = iterator.next();
+			o.update(delta);
+			if(o.isScrolledDown())
+			{
+				iterator.remove();
+				numObstacles--;
 			}
-			
-			if(o instanceof HotAirBalloon){
-				tempHab =  (HotAirBalloon) o;
-				tempHab.update(delta);
-				
-				if(tempHab.isScrolledDown()){
-					iterator.remove();
-					numObstacles--;
-				}
-			}
-			
 			
 		}
 		
