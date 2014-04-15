@@ -33,6 +33,7 @@ public class GameScreen implements Screen {
 	// THIS IS THE MAIN LOOP!!
 	@Override
 	public void render(float delta) {
+		
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		

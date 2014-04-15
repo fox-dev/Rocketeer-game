@@ -2,6 +2,8 @@ package com.me.GameWorld;
 
 import com.badlogic.gdx.utils.Array;
 import com.me.GameObjects.AbstractObstacle;
+import com.me.GameObjects.HotAirBalloon;
+import com.me.GameObjects.Meteor;
 import com.me.GameObjects.Rocket;
 import com.me.GameObjects.Scrollable;
 import com.me.GameObjects.ScrollableHandler;
@@ -13,6 +15,8 @@ public class GameWorld {
 	private Rocket rocket;
 	private ScrollableHandler scroller;
 	private Array<AbstractObstacle> scrollObjects;
+	private HotAirBalloon hab;
+	
 	
 	private float runTime = 0;
 	
@@ -28,13 +32,14 @@ public class GameWorld {
 		rocket = new Rocket((Constants.TRUE_WIDTH / 2) - 15, 450, 30, 30);
 		scroller = new ScrollableHandler();
 		scrollObjects = new Array<AbstractObstacle>();
+		hab = new HotAirBalloon(100, -30, 95, 120, 200);
 		
 		// Play music???
 		AssetLoader.bgm.play();
 	}
 	
 	public void update(float delta) {
-		runTime += delta;
+	
 		
 		switch(currentState) {
 		
@@ -71,15 +76,28 @@ public class GameWorld {
 	}
 	
 	private void updateRunning(float delta) {
+		runTime += delta;
+		System.out.println("Gameworld runtime is: " + runTime);
 		rocket.update(delta);
 		scroller.update(delta);
 		
+		
+		
 		// Very crude collision detection
 		scrollObjects = scroller.getAbstractObstacles();
-		for (Scrollable tempObj : scrollObjects) {
-			if (rocket.getRect().overlaps(tempObj.getRect())) {
-				scroller.removeObject((AbstractObstacle)tempObj);
-				AssetLoader.hit.play();
+		for (AbstractObstacle tempObj : scrollObjects) {
+			if(tempObj instanceof Meteor){
+				if (rocket.getRect().overlaps(((tempObj).getRect()))) {
+					scroller.removeObject((Meteor)tempObj);
+					AssetLoader.hit.play();
+				}
+			}
+			if(tempObj instanceof HotAirBalloon){
+				if (rocket.getRect().overlaps(((tempObj).getRect()))) {
+					scroller.removeObject((HotAirBalloon)tempObj);
+					AssetLoader.hit.play();
+				}
+				
 			}
 		}
 	}
@@ -110,5 +128,10 @@ public class GameWorld {
 	
 	public Rocket getRocket() { return rocket; }
 	public ScrollableHandler getScroller() { return scroller; }
+	public HotAirBalloon getHab() { return hab; }
+	
+	
+	
+	
 	
 }

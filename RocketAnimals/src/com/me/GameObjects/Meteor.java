@@ -2,14 +2,18 @@ package com.me.GameObjects;
 
 import java.util.Random;
 
+import com.badlogic.gdx.math.Rectangle;
+
 public class Meteor extends AbstractObstacle{
 	
-	private Random r;
+	protected Rectangle collisionRect;
 	
 
 	public Meteor(float x, float y, int width, int height, float scrollSpeed) {
 		super(x, y, width, height, scrollSpeed);
-		r = new Random();
+		
+		collisionRect = new Rectangle(x,y,width,height);
+		
 		
 	}
 	
@@ -22,6 +26,21 @@ public class Meteor extends AbstractObstacle{
 		
 	}
 	*/
+	
+	
+	@Override
+	public void update(float delta){
+		
+		
+		super.update(delta);
+		
+		collisionRect.setPosition(position);
+		
+		
+	}
+	
+	public Rectangle getRect() { return collisionRect; }
+	
 
 
 }
