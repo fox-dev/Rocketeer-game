@@ -15,6 +15,8 @@ public class Scrollable {
     protected boolean isScrolledDown;
     protected Rectangle collisionRect; // Used for very crude collision detection
     
+    protected float rotation; // Can be used to rotate object
+    
     private Random r;
     
     
@@ -30,6 +32,8 @@ public class Scrollable {
         isScrolledDown = false;
         
         collisionRect = new Rectangle(x,y,width,height);
+        
+        rotation = 0;
     }
     
     ////////////////////////////////////////////////////
@@ -70,6 +74,9 @@ public class Scrollable {
  	public float getY() { return position.y; }
  	public float getWidth() { return width; }
  	public float getHeight() { return height; }
+	public float getMiddleX() { return width / 2; }
+	public float getMiddleY() { return height / 2; }
+	public float getRotation() { return rotation; }
  	public boolean isScrolledDown() { return isScrolledDown; }
  	public Rectangle getRect() { return collisionRect; }
  	

@@ -7,43 +7,66 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
 
 public class AssetLoader {
 	
 	public static Texture texture;
 	
-	public static TextureRegion rocket1, rocket2, rocket3, meteor;
-	public static Animation rocketAnimation;
+	public static TextureRegion rocketLeft, rocket, rocketRight, meteor, rocketFire1, rocketFire2, rocketFire3;
+	public static Animation rocketAnimation, rocketFireAnimation;
 	
-	public static Sound hit;
+	public static Sound hit1, hit2;
+	public static Array<Sound> hitSounds;
 	
 	public static Music bgm; // change names later!
 	
 	public static void load() {
+		
+		hitSounds = new Array<Sound>();
 		
 		// Load the texture
 		texture = new Texture(Gdx.files.internal("data/spritesheet.png"));
 		texture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		
 		// Rocket
-		rocket1 = new TextureRegion(texture, 0, 0, 67, 74);
-		rocket2 = new TextureRegion(texture, 103, 0, 67, 74);
-		rocket3 = new TextureRegion(texture, 222, 0, 67, 74);
+		rocketLeft = new TextureRegion(texture, 0, 0, 67, 74);
+		rocket = new TextureRegion(texture, 103, 0, 84, 74); // Spritesheet may need fixing
+		rocketRight = new TextureRegion(texture, 222, 0, 67, 74);
 		
-		rocket1.flip(false, true);
-		rocket2.flip(false, true);
-		rocket3.flip(false, true);
+		rocketLeft.flip(false, true);
+		rocket.flip(false, true);
+		rocketRight.flip(false, true);
+		
+		// Rocket Animation
+		TextureRegion[] rockets = {rocketLeft, rocket, rocketRight};
+		rocketAnimation = new Animation(0.01f, rockets);
+		rocketAnimation.setPlayMode(Animation.LOOP_PINGPONG);
+		
+		// Rocket fire
+		rocketFire1 = new TextureRegion(texture, 10, 82, 53, 63);
+		rocketFire2 = new TextureRegion(texture, 118, 82, 53, 63);
+		rocketFire3 = new TextureRegion(texture, 226, 82, 53, 63);
+		
+		rocketFire1.flip(false, true);
+		rocketFire2.flip(false, true);
+		rocketFire3.flip(false, true);
+		
+		// Rocket fire Animation
+		TextureRegion[] fire = {rocketFire1, rocketFire2, rocketFire3};
+		rocketFireAnimation = new Animation(0.05f, fire);
+		rocketFireAnimation.setPlayMode(Animation.LOOP);
 		
 		// Meteor
 		meteor = new TextureRegion(texture, 337, 0, 81, 80); //change sprite later
 		
-		// Rocket Animation
-		TextureRegion[] rockets = {rocket1, rocket2, rocket3};
-		rocketAnimation = new Animation(0.01f, rockets);
-		rocketAnimation.setPlayMode(Animation.LOOP_PINGPONG);
-		
 		// Load audio
-		hit = Gdx.audio.newSound(Gdx.files.internal("data/hit.wav"));
+		hit1 = Gdx.audio.newSound(Gdx.files.internal("data/hit1.wav"));
+		hit2 = Gdx.audio.newSound(Gdx.files.internal("data/hit2.wav"));
+		hitSounds.add(hit1);
+		hitSounds.add(hit2);
+		
+		// Load music
 		bgm = Gdx.audio.newMusic(Gdx.files.internal("data/themoon.mp3"));
 	}
 	
@@ -52,7 +75,7 @@ public class AssetLoader {
 		texture.dispose();
 		
 		// Also dispose of audio
-		hit.dispose();
+		hit1.dispose();
 		bgm.dispose();
 	}
 }
