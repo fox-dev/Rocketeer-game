@@ -38,6 +38,7 @@ public class Rocket {
 		collisionRect = new Rectangle(x, y, width, height);
 		
 		moveRight = false;
+		moveLeft = false;
 	
 	}
 	
@@ -68,7 +69,7 @@ public class Rocket {
 	}
 	
 	public void moveBird(){
-		if(position.y >= 400){
+		if(position.y >= Constants.ROCKET_LIFTOFF_STOP_AT_Y){
 			position.y--;
 		}
 	}
@@ -80,7 +81,7 @@ public class Rocket {
 	
 	// Control methods
 	public void onLeft() {
-	
+		moveLeft = true;
 		moveRight = false;
 		velocity.x -= Constants.ROCKET_VELOCITY;
 		if(velocity.x < -Constants.ROCKET_VELOCITY){
@@ -88,14 +89,18 @@ public class Rocket {
 		}
 	}
 	public void onRight() {
+		moveLeft = false;
 		moveRight = true;
-		
 		velocity.x += Constants.ROCKET_VELOCITY;
 		if(velocity.x > Constants.ROCKET_VELOCITY){
 			velocity.x = Constants.ROCKET_VELOCITY;
 		}
 	}
-	public void onNoClick() {velocity.x = 0; }
+	public void onNoClick() {
+		moveLeft = false;
+		moveRight = false;
+		velocity.x = 0; 
+		}
 	
 	// Getter methods
 	public float getX() { return position.x; }
@@ -103,7 +108,10 @@ public class Rocket {
 	public float getWidth() { return width; }
 	public float getHeight() { return height; }
 	public float getMiddleX() { return (position.x + (width / 2)); }
-	public float getMiddleY() { return (position.x + (height / 2)); }
+	public float getMiddleY() { return (position.y + (height / 2)); }
+	public float bottom() { return (position.y + height); }
+	public boolean isMovingLeft() { return moveLeft; }
+	public boolean isMovingRight() { return moveRight; }
 	public boolean isMoving() { return (velocity.x != 0); }
 	public Rectangle getRect() { return collisionRect; }
 	

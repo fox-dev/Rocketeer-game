@@ -31,18 +31,13 @@ public class GameRenderer {
 	private int gameHeight;
 	private int midPointY;
 	
-	
-	
 	// Game objects
 	Rocket rocket;
-	Array<AbstractObstacle> stuff;
-	
-	
+	Array<AbstractObstacle> objectList;
 	
 	// Game sprites;
-	TextureRegion rocket1, rocket2, rocket3;
-	TextureRegion sMeteor;
-	Animation rocketAnimation;
+	TextureRegion rocketLeft, rocketMid, rocketRight, sMeteor, fire1, fire2, fire3;
+	Animation rocketAnimation, rocketFireAnimation;
 	
 	public GameRenderer(GameWorld world, int gameHeight, int midPointY) {
 		this.world = world;
@@ -65,7 +60,6 @@ public class GameRenderer {
 	}
 	
 	public void render(float runTime) {
-
 		// Update camera
 		cam.update();
 		cam.apply(Gdx.gl10);
@@ -75,61 +69,86 @@ public class GameRenderer {
                 (int) viewport.width, (int) viewport.height);
 		
 		// Fill screen with black
-		Gdx.gl.glClearColor(1f, 1f, 1f, 1f);
+		Gdx.gl.glClearColor(0.11f, 0.11f, 0.11f, 1f);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
-		// Begin ShapeRenderer
-		/*
-		shapeRenderer.begin(ShapeType.Filled);
-		shapeRenderer.setColor(Color.GREEN);
-		shapeRenderer.rect(world.getRocket().getX(), world.getRocket().getY(), world.getRocket().getWidth(), world.getRocket().getHeight());
-		shapeRenderer.end();
-		*/
-		
-		
-		
+		// Draw sprites
 		spriteBatch.begin();
-		drawStuff();
-		
-		if (rocket.isMoving())
-			spriteBatch.draw(rocketAnimation.getKeyFrame(runTime), rocket.getX(), rocket.getY(), rocket.getWidth(), rocket.getHeight());
-		else
-			spriteBatch.draw(rocket1, rocket.getX(), rocket.getY(), rocket.getWidth(), rocket.getHeight());
+		drawObjects(runTime);
 		spriteBatch.end();
 		
-	}
-	
-	
-	
-	public void drawStuff(){
-		for(AbstractObstacle items : world.getScroller().getAbstractObstacles()){
-			if(items instanceof Meteor){
-				
-				spriteBatch.draw(sMeteor, items.getX(), items.getY(), items.getWidth(), items.getHeight());
-			}
-			if(items instanceof HotAirBalloon){
-				
-				spriteBatch.draw(rocket1, items.getX(), items.getY(), items.getWidth(), items.getHeight());
-				
-				
-			}
+		// If DRAW_BOUNDS is enabled
+		if (Constants.DRAW_BOUNDS) {
+			shapeRenderer.begin(ShapeType.Line);
+			drawObjectsBoundaries();
+			shapeRenderer.end();
 		}
 		
 	}
 	
+	private void drawObjects(float runTime){
+
+		// Draw player first
+		/*
+		if (rocket.isMoving())
+			spriteBatch.draw(rocketAnimation.getKeyFrame(runTime), rocket.getX(), rocket.getY(), rocket.getWidth(), rocket.getHeight());
+		else
+			spriteBatch.draw(rocket1, rocket.getX(), rocket.getY(), rocket.getWidth(), rocket.getHeight());
+		*/
+		if (rocket.isMovingLeft()) {
+			spriteBatch.draw(rocketFireAnimation.getKeyFrame(runTime), rocket.getX(), rocket.getY() + 25, Constants.ROCKET_FIRE_WIDTH, Constants.ROCKET_FIRE_HEIGHT);
+			spriteBatch.draw(rocketLeft, rocket.getX(), rocket.getY(), rocket.getWidth(), rocket.getHeight());
+		}
+		else if (rocket.isMovingRight()) {
+			spriteBatch.draw(rocketFireAnimation.getKeyFrame(runTime), rocket.getX(), rocket.getY() + 25, Constants.ROCKET_FIRE_WIDTH, Constants.ROCKET_FIRE_HEIGHT);
+			spriteBatch.draw(rocketRight, rocket.getX(), rocket.getY(), rocket.getWidth(), rocket.getHeight());
+		}
+		else {
+			spriteBatch.draw(rocketFireAnimation.getKeyFrame(runTime), rocket.getX(), rocket.getY() + 25, Constants.ROCKET_FIRE_WIDTH, Constants.ROCKET_FIRE_HEIGHT);
+			spriteBatch.draw(rocketMid, rocket.getX(), rocket.getY(), rocket.getWidth(), rocket.getHeight());
+		}
+		
+		// Draw all obstacles
+		for(AbstractObstacle items : world.getScroller().getAbstractObstacles()){
+			if(items instanceof Meteor){
+				
+				// spriteBatch.draw(sMeteor, items.getX(), items.getY(), items.getWidth(), items.getHeight());
+				spriteBatch.draw(sMeteor, items.getX(), items.getY(), items.getMiddleX(), items.getMiddleY(), items.getWidth(), items.getHeight(), 1f, 1f, items.getRotation());
+			}
+			if(items instanceof HotAirBalloon){
+				
+				spriteBatch.draw(rocketLeft, items.getX(), items.getY(), items.getWidth(), items.getHeight());			
+				
+			}
+		}
+	}
+	
+	public void drawObjectsBoundaries() {
+		
+		// Draw boundary for player
+		shapeRenderer.setColor(Color.GREEN);
+		shapeRenderer.rect(world.getRocket().getX(), world.getRocket().getY(), world.getRocket().getWidth(), world.getRocket().getHeight());
+		
+		// Now draw boundaries for all obstacles
+		for (AbstractObstacle items : world.getScroller().getAbstractObstacles()) {
+			shapeRenderer.rect(items.getX(), items.getY(), items.getWidth(), items.getWidth());
+		}
+	}
+	
 	public void initGameObjects() {
 		rocket = world.getRocket();
-		stuff = world.getScroller().getAbstractObstacles();
+		objectList = world.getScroller().getAbstractObstacles();
 		
 	}
 	
 	public void initGameAssets() {
-		rocket1 = AssetLoader.rocket1;
-		rocket2 = AssetLoader.rocket2;
-		rocket3 = AssetLoader.rocket3;
+		rocketLeft = AssetLoader.rocketLeft;
+		rocketMid = AssetLoader.rocket;
+		rocketRight = AssetLoader.rocketRight;
 		rocketAnimation = AssetLoader.rocketAnimation;
+		rocketFireAnimation = AssetLoader.rocketFireAnimation;
 		sMeteor = AssetLoader.meteor;
-		
+
 		
 	}
 	

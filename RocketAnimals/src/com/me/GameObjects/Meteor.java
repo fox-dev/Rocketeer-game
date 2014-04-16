@@ -6,14 +6,13 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class Meteor extends AbstractObstacle{
 	
-	protected Rectangle collisionRect;
-	
+	// protected Rectangle collisionRect;
 
 	public Meteor(float x, float y, int width, int height, float scrollSpeed) {
 		super(x, y, width, height, scrollSpeed);
 		
-		collisionRect = new Rectangle(x,y,width,height);
-		
+		//collisionRect = new Rectangle(x,y,width,height);
+		rotation = 0;
 		
 	}
 	
@@ -30,16 +29,15 @@ public class Meteor extends AbstractObstacle{
 	
 	@Override
 	public void update(float delta){
-		
-		
 		super.update(delta);
 		
-		collisionRect.setPosition(position);
+		rotation += 5;
+		//collisionRect.setPosition(position);
 		
 		
 	}
 	
-	public Rectangle getRect() { return collisionRect; }
+	// public Rectangle getRect() { return collisionRect; }
 	
 
 

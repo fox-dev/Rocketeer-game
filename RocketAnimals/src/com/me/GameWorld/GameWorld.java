@@ -29,18 +29,17 @@ public class GameWorld {
 	
 	public GameWorld(int midPointY) {
 		currentState = GameState.READY;
-		rocket = new Rocket((Constants.TRUE_WIDTH / 2) - 15, 450, 30, 30);
+		rocket = new Rocket(Constants.ROCKET_STARTING_X, Constants.ROCKET_STARTING_Y, Constants.ROCKET_WIDTH, Constants.ROCKET_HEIGHT);
 		scroller = new ScrollableHandler();
 		scrollObjects = new Array<AbstractObstacle>();
 		hab = new HotAirBalloon(100, -30, 95, 120, 200);
 		
 		// Play music???
 		AssetLoader.bgm.play();
+		AssetLoader.bgm.setLooping(true);
 	}
 	
 	public void update(float delta) {
-	
-		
 		switch(currentState) {
 		
 		case READY:
@@ -52,7 +51,7 @@ public class GameWorld {
 			
 			rocket.moveBird();
 			
-			if(rocket.getY() == 400){
+			if(rocket.getY() == Constants.ROCKET_LIFTOFF_STOP_AT_Y){
 				start();
 				break;
 			}
@@ -71,7 +70,6 @@ public class GameWorld {
 	}
 	
 	private void updateReady(float delta) {
-		
 	
 	}
 	
@@ -89,13 +87,13 @@ public class GameWorld {
 			if(tempObj instanceof Meteor){
 				if (rocket.getRect().overlaps(((tempObj).getRect()))) {
 					scroller.removeObject((Meteor)tempObj);
-					AssetLoader.hit.play();
+					AssetLoader.hitSounds.random().play();
 				}
 			}
 			if(tempObj instanceof HotAirBalloon){
 				if (rocket.getRect().overlaps(((tempObj).getRect()))) {
 					scroller.removeObject((HotAirBalloon)tempObj);
-					AssetLoader.hit.play();
+					AssetLoader.hitSounds.random().play();
 				}
 				
 			}
