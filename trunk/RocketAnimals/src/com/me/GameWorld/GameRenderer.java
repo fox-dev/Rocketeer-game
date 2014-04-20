@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.me.GameObjects.AbstractObstacle;
 import com.me.GameObjects.HotAirBalloon;
+import com.me.GameObjects.JetPlane;
 import com.me.GameObjects.Meteor;
 import com.me.GameObjects.Rocket;
 import com.me.helpers.AssetLoader;
@@ -36,7 +37,7 @@ public class GameRenderer {
 	Array<AbstractObstacle> objectList;
 	
 	// Game sprites;
-	TextureRegion rocketLeft, rocketMid, rocketRight, sMeteor, fire1, fire2, fire3;
+	TextureRegion rocketLeft, rocketMid, rocketRight, sMeteor, jetPlane, fire1, fire2, fire3;
 	Animation rocketAnimation, rocketFireAnimation;
 	
 	public GameRenderer(GameWorld world, int gameHeight, int midPointY) {
@@ -109,16 +110,23 @@ public class GameRenderer {
 		}
 		
 		// Draw all obstacles
-		for(AbstractObstacle items : world.getScroller().getAbstractObstacles()){
-			if(items instanceof Meteor){
+		for(AbstractObstacle items : world.getScroller().getAbstractObstacles())
+		{
+			if(items instanceof Meteor)
+			{
 				
 				// spriteBatch.draw(sMeteor, items.getX(), items.getY(), items.getWidth(), items.getHeight());
 				spriteBatch.draw(sMeteor, items.getX(), items.getY(), items.getMiddleX(), items.getMiddleY(), items.getWidth(), items.getHeight(), 1f, 1f, items.getRotation());
 			}
-			if(items instanceof HotAirBalloon){
+			if(items instanceof HotAirBalloon)
+			{
 				
 				spriteBatch.draw(rocketLeft, items.getX(), items.getY(), items.getWidth(), items.getHeight());			
 				
+			}
+			if(items instanceof JetPlane)
+			{
+				spriteBatch.draw(jetPlane, items.getX(), items.getY(), items.getWidth(), items.getHeight());
 			}
 		}
 	}
@@ -148,6 +156,7 @@ public class GameRenderer {
 		rocketAnimation = AssetLoader.rocketAnimation;
 		rocketFireAnimation = AssetLoader.rocketFireAnimation;
 		sMeteor = AssetLoader.meteor;
+		jetPlane = AssetLoader.jetPlane;
 
 		
 	}

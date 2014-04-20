@@ -5,7 +5,8 @@ import java.util.Random;
 
 import com.badlogic.gdx.utils.Array;
 
-public class ScrollableHandler {
+public class ScrollableHandler 
+{
 	
 	private HotAirBalloon hab;
 	
@@ -35,13 +36,17 @@ public class ScrollableHandler {
 		
 	}
 	
-	public void meteorStuff(float delta){
+	public void meteorStuff(float delta)
+	{
 		
 		RNG = Math.random();
 		
 		//System.out.println("R = " + numObstacles);
 		if(RNG < 0.05 && numObstacles < 15) {
 			obstacleList.add(new Meteor(r.nextInt(305), -30, 30, 30, randInt(150,225)));
+			numObstacles++;
+			
+			obstacleList.add(new JetPlane(r.nextInt(305), -30, 30, 30, randInt(150, 225)));
 			numObstacles++;
 			
 			if(runTime >= 10 && runTime <= 20){
@@ -81,17 +86,14 @@ public class ScrollableHandler {
 	
 	public Array<AbstractObstacle> getAbstractObstacles(){ return obstacleList;}
 	
-	public void generateAbstractObstacles(){
+	public void generateAbstractObstacles()
+	{
 		
 	}
 	
 	// Need this to remove objects for collision detection
-	public void removeObject(Meteor obstacle) {
-		obstacleList.removeValue(obstacle, true);
-		numObstacles--;
-	}
-	
-	public void removeObject(HotAirBalloon obstacle) {
+	public void removeObject(AbstractObstacle obstacle) 
+	{
 		obstacleList.removeValue(obstacle, true);
 		numObstacles--;
 	}

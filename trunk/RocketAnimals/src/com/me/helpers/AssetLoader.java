@@ -13,7 +13,7 @@ public class AssetLoader {
 	
 	public static Texture texture;
 	
-	public static TextureRegion rocketLeft, rocket, rocketRight, meteor, rocketFire1, rocketFire2, rocketFire3;
+	public static TextureRegion rocketLeft, rocket, rocketRight, meteor, jetPlane, rocketFire1, rocketFire2, rocketFire3;
 	public static Animation rocketAnimation, rocketFireAnimation;
 	
 	public static Sound hit1, hit2;
@@ -59,6 +59,10 @@ public class AssetLoader {
 		
 		// Meteor
 		meteor = new TextureRegion(texture, 337, 0, 81, 80); //change sprite later
+		
+		// JetPlace
+		jetPlane = new TextureRegion(texture, 179, 156, 420, 297);
+		jetPlane.flip(false, true);
 		
 		// Load audio
 		hit1 = Gdx.audio.newSound(Gdx.files.internal("data/hit1.wav"));
