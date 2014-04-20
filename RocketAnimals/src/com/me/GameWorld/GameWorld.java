@@ -3,6 +3,7 @@ package com.me.GameWorld;
 import com.badlogic.gdx.utils.Array;
 import com.me.GameObjects.AbstractObstacle;
 import com.me.GameObjects.HotAirBalloon;
+import com.me.GameObjects.JetPlane;
 import com.me.GameObjects.Meteor;
 import com.me.GameObjects.Rocket;
 import com.me.GameObjects.Scrollable;
@@ -83,8 +84,15 @@ public class GameWorld {
 		
 		// Very crude collision detection
 		scrollObjects = scroller.getAbstractObstacles();
-		for (AbstractObstacle tempObj : scrollObjects) {
-			if(tempObj instanceof Meteor){
+		for (AbstractObstacle tempObj : scrollObjects) 
+		{
+			if (rocket.getRect().overlaps(((tempObj).getRect())))      //Cutting down code
+			{
+				scroller.removeObject(tempObj);
+				AssetLoader.hitSounds.random().play();
+			}
+			
+			/*if(tempObj instanceof Meteor){
 				if (rocket.getRect().overlaps(((tempObj).getRect()))) {
 					scroller.removeObject((Meteor)tempObj);
 					AssetLoader.hitSounds.random().play();
@@ -97,6 +105,12 @@ public class GameWorld {
 				}
 				
 			}
+			if(tempObj instanceof JetPlane){
+				if (rocket.getRect().overlaps(((tempObj).getRect()))) {
+					scroller.removeObject((JetPlane)tempObj);
+					AssetLoader.hitSounds.random().play();
+				}
+			}*/
 		}
 	}
 	
