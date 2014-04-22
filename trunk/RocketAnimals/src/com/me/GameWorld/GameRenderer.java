@@ -127,6 +127,7 @@ public class GameRenderer {
 			if(items instanceof JetPlane)
 			{
 				spriteBatch.draw(jetPlane, items.getX(), items.getY(), items.getWidth(), items.getHeight());
+				
 			}
 		}
 	}
@@ -139,7 +140,11 @@ public class GameRenderer {
 		
 		// Now draw boundaries for all obstacles
 		for (AbstractObstacle items : world.getScroller().getAbstractObstacles()) {
-			shapeRenderer.rect(items.getX(), items.getY(), items.getWidth(), items.getWidth());
+			shapeRenderer.rect(items.getX(), items.getY(), items.getWidth(), items.getHeight());
+			if(items instanceof HotAirBalloon){
+				shapeRenderer.circle(((HotAirBalloon) items).getCirc().x, ((HotAirBalloon) items).getCirc().y, ((HotAirBalloon) items).getCirc().radius);
+				
+			}
 		}
 	}
 	
