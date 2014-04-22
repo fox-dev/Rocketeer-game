@@ -3,6 +3,7 @@ package com.me.GameObjects;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 
+
 public class HotAirBalloon extends AbstractObstacle{
 	
 	protected Rectangle collisionRect;
@@ -22,12 +23,16 @@ public class HotAirBalloon extends AbstractObstacle{
 	public void update(float delta){
 		
 		
+		
 		position.add(velocity.cpy().scl(delta));
 		
 		// If the Scrollable object is no longer visible:
         if ((position.y - 45 + (height/2) - 30) > 480) {
             isScrolledDown = true;
+            
         }
+        
+        velocity.x = -30;
 		
 		collisionRect.set(position.x, position.y, width, height - 30);
 		collisionCirc.set(position.x + (width/2), position.y - 45 + (height/2), 30);

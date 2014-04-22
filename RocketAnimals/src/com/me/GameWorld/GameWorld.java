@@ -12,6 +12,7 @@ import com.me.GameObjects.ScrollableHandler;
 import com.me.helpers.AssetLoader;
 import com.me.helpers.Constants;
 
+
 public class GameWorld {
 	
 	private Rocket rocket;
@@ -93,6 +94,14 @@ public class GameWorld {
 					AssetLoader.hitSounds.random().play();
 				}
 				
+			}
+			if(tempObj instanceof JetPlane){
+				if (rocket.getRect().overlaps(((tempObj).getRect()))) {
+					scroller.despawnPlane();
+					scroller.removeObject((JetPlane)tempObj);
+					AssetLoader.hitSounds.random().play();
+					
+				}
 			}
 			if (rocket.getRect().overlaps(((tempObj).getRect())))      //Cutting down code
 			{

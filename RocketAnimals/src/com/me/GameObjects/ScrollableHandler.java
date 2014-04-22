@@ -5,11 +5,11 @@ import java.util.Random;
 
 import com.badlogic.gdx.utils.Array;
 
+
 public class ScrollableHandler 
 {
 	
-	private HotAirBalloon hab;
-	
+
 	private Array<AbstractObstacle> obstacleList = new Array<AbstractObstacle>();
  	private Iterator<AbstractObstacle> iterator;
 	private double RNG;
@@ -20,6 +20,9 @@ public class ScrollableHandler
 	private float runTime = 0;
 	
 	private Random r;
+	
+	//EventFlags with default - false
+	private boolean PLANE_EVENT = false;
 	
 	public ScrollableHandler(){
 		
@@ -41,15 +44,23 @@ public class ScrollableHandler
 		
 		RNG = Math.random();
 		
+		int eventInt = randInt(0,10);
+		//System.out.println(eventInt);
+		
 		//System.out.println("R = " + numObstacles);
 		if(RNG < 0.05 && numObstacles < 15) {
 			obstacleList.add(new Meteor(r.nextInt(305), -30, 30, 30, randInt(150,225)));
 			numObstacles++;
 			
-			//obstacleList.add(new JetPlane(r.nextInt(305), -30, 100, 100, randInt(150, 225)));
-			//numObstacles++;
 			
-			if(runTime >= 10 && runTime <= 20){
+			if(PLANE_EVENT == false && eventInt == 5){
+				obstacleList.add(new JetPlane(305, randInt(0,280), 100, 100, randInt(150, 225)));
+				numObstacles++;
+				PLANE_EVENT = true;
+				System.out.println(PLANE_EVENT);
+			}
+			
+			if(runTime >= 5 && runTime <= 20){
 			 	obstacleList.add(new HotAirBalloon(r.nextInt(305), -30, 30, 30, randInt(40,400)));
 			 	numObstacles++;
 			}
@@ -64,6 +75,9 @@ public class ScrollableHandler
 	
 			if(o.isScrolledDown())
 			{
+				if(o instanceof JetPlane){
+					PLANE_EVENT = false;
+				}
 				iterator.remove();
 				numObstacles--;
 			}
@@ -99,5 +113,9 @@ public class ScrollableHandler
 		obstacleList.removeValue(obstacle, true);
 		numObstacles--;
 	}
+	
+	public boolean planeEvent(){return PLANE_EVENT;}
+	public void spawnPlane(){ PLANE_EVENT = true;}
+	public void despawnPlane(){ PLANE_EVENT = false;}
 
 }
