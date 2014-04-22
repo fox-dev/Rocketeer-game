@@ -1,5 +1,6 @@
 package com.me.GameWorld;
 
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.utils.Array;
 import com.me.GameObjects.AbstractObstacle;
 import com.me.GameObjects.HotAirBalloon;
@@ -76,7 +77,7 @@ public class GameWorld {
 	
 	private void updateRunning(float delta) {
 		runTime += delta;
-		System.out.println("Gameworld runtime is: " + runTime);
+		//System.out.println("Gameworld runtime is: " + runTime);
 		rocket.update(delta);
 		scroller.update(delta);
 		
@@ -86,6 +87,13 @@ public class GameWorld {
 		scrollObjects = scroller.getAbstractObstacles();
 		for (AbstractObstacle tempObj : scrollObjects) 
 		{
+			if(tempObj instanceof HotAirBalloon){
+				if (Intersector.overlaps(((HotAirBalloon) tempObj).getCirc(), rocket.getRect())) {
+					scroller.removeObject((HotAirBalloon)tempObj);
+					AssetLoader.hitSounds.random().play();
+				}
+				
+			}
 			if (rocket.getRect().overlaps(((tempObj).getRect())))      //Cutting down code
 			{
 				scroller.removeObject(tempObj);

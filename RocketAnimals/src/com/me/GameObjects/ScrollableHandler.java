@@ -32,7 +32,7 @@ public class ScrollableHandler
 	public void update(float delta){
 		runTime += delta;
 		meteorStuff(delta);
-		System.out.println("Runtime is: " + runTime);
+		//System.out.println("Runtime is: " + runTime);
 		
 	}
 	
@@ -46,8 +46,8 @@ public class ScrollableHandler
 			obstacleList.add(new Meteor(r.nextInt(305), -30, 30, 30, randInt(150,225)));
 			numObstacles++;
 			
-			obstacleList.add(new JetPlane(r.nextInt(305), -30, 30, 30, randInt(150, 225)));
-			numObstacles++;
+			//obstacleList.add(new JetPlane(r.nextInt(305), -30, 100, 100, randInt(150, 225)));
+			//numObstacles++;
 			
 			if(runTime >= 10 && runTime <= 20){
 			 	obstacleList.add(new HotAirBalloon(r.nextInt(305), -30, 30, 30, randInt(40,400)));
@@ -60,6 +60,8 @@ public class ScrollableHandler
 		{	
 			AbstractObstacle o = iterator.next();
 			o.update(delta);
+			
+	
 			if(o.isScrolledDown())
 			{
 				iterator.remove();

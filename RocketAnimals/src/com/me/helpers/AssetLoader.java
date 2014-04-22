@@ -61,7 +61,7 @@ public class AssetLoader {
 		meteor = new TextureRegion(texture, 337, 0, 81, 80); //change sprite later
 		
 		// JetPlace
-		jetPlane = new TextureRegion(texture, 179, 156, 420, 297);
+		jetPlane = new TextureRegion(texture, 179, 156, 239, 141);
 		jetPlane.flip(false, true);
 		
 		// Load audio
