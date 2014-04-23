@@ -34,8 +34,8 @@ public class HotAirBalloon extends AbstractObstacle{
         
         velocity.x = -30;
 		
-		collisionRect.set(position.x, position.y, width, height - 30);
-		collisionCirc.set(position.x + (width/2), position.y - 45 + (height/2), 30);
+		collisionRect.set(position.x + 10, position.y + 60, width - 28, height - 60);
+		collisionCirc.set(position.x + (width/2), position.y - 20  + (height/2), 30);
 		
 		
 	}
