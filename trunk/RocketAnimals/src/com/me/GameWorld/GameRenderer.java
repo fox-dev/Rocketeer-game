@@ -37,7 +37,7 @@ public class GameRenderer {
 	Array<AbstractObstacle> objectList;
 	
 	// Game sprites;
-	TextureRegion rocketLeft, rocketMid, rocketRight, sMeteor, jetPlane, fire1, fire2, fire3;
+	TextureRegion rocketLeft, rocketMid, rocketRight, sMeteor, hotAirBalloon, jetPlane, fire1, fire2, fire3;
 	Animation rocketAnimation, rocketFireAnimation;
 	
 	public GameRenderer(GameWorld world, int gameHeight, int midPointY) {
@@ -121,7 +121,7 @@ public class GameRenderer {
 			if(items instanceof HotAirBalloon)
 			{
 				
-				spriteBatch.draw(rocketLeft, items.getX(), items.getY(), items.getWidth(), items.getHeight());			
+				spriteBatch.draw(hotAirBalloon, items.getX(), items.getY(), items.getWidth(), items.getHeight());			
 				
 			}
 			if(items instanceof JetPlane)
@@ -140,11 +140,12 @@ public class GameRenderer {
 		
 		// Now draw boundaries for all obstacles
 		for (AbstractObstacle items : world.getScroller().getAbstractObstacles()) {
-			shapeRenderer.rect(items.getX(), items.getY(), items.getWidth(), items.getHeight());
 			if(items instanceof HotAirBalloon){
 				shapeRenderer.circle(((HotAirBalloon) items).getCirc().x, ((HotAirBalloon) items).getCirc().y, ((HotAirBalloon) items).getCirc().radius);
-				
+				shapeRenderer.rect(items.getRect().x, items.getRect().y, items.getRect().width, items.getRect().height);
 			}
+			else shapeRenderer.rect(items.getX(), items.getY(), items.getWidth(), items.getHeight());
+	
 		}
 	}
 	
@@ -161,6 +162,7 @@ public class GameRenderer {
 		rocketAnimation = AssetLoader.rocketAnimation;
 		rocketFireAnimation = AssetLoader.rocketFireAnimation;
 		sMeteor = AssetLoader.meteor;
+		hotAirBalloon = AssetLoader.hotAirBalloon;
 		jetPlane = AssetLoader.jetPlane;
 
 		

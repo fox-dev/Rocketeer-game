@@ -54,14 +54,14 @@ public class ScrollableHandler
 			
 			
 			if(PLANE_EVENT == false && eventInt == 5){
-				obstacleList.add(new JetPlane(305, randInt(0,280), 100, 100, randInt(150, 225)));
+				obstacleList.add(new JetPlane(305, randInt(0,280), 50, 50, randInt(150, 225)));
 				numObstacles++;
 				PLANE_EVENT = true;
 				System.out.println(PLANE_EVENT);
 			}
 			
-			if(runTime >= 5 && runTime <= 20){
-			 	obstacleList.add(new HotAirBalloon(r.nextInt(305), -30, 30, 30, randInt(40,400)));
+			if(runTime >= 0 && runTime <= 100){
+			 	obstacleList.add(new HotAirBalloon(r.nextInt(305), -100, 63, 100, randInt(40,400)));
 			 	numObstacles++;
 			}
 		}
