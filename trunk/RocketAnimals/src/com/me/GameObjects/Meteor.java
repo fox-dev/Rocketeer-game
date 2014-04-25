@@ -1,44 +1,30 @@
 package com.me.GameObjects;
 
-import java.util.Random;
-
-import com.badlogic.gdx.math.Rectangle;
+import com.me.helpers.Constants;
 
 public class Meteor extends AbstractObstacle{
-	
-	// protected Rectangle collisionRect;
 
+	private int rotateNum;
+	
 	public Meteor(float x, float y, int width, int height, float scrollSpeed) {
 		super(x, y, width, height, scrollSpeed);
-		
-		//collisionRect = new Rectangle(x,y,width,height);
+
 		rotation = 0;
+		rotateNum = (int)(Math.random() * Constants.METEOR_MAX_ROTATE);
 		
 	}
 	
-	/*Not currently needed
-	@Override
-	public void resetPosition(float newX, float newY){
-		super.resetPosition(newX, newY);
-		System.out.println("made it!");
-		position.x = r.nextInt(305) - 15;
+	public Meteor(float x, float y, int width, int height, float scrollSpeed, float xSpeed, Constants.DIRECTION direction) {
+		super(x, y, width, height, scrollSpeed, xSpeed, direction);
 		
+		rotation = 0;
+		rotateNum = (int)(Math.random() * Constants.METEOR_MAX_ROTATE);
 	}
-	*/
-	
 	
 	@Override
 	public void update(float delta){
 		super.update(delta);
 		
-		rotation += 5;
-		//collisionRect.setPosition(position);
-		
-		
+		rotation += rotateNum;
 	}
-	
-	// public Rectangle getRect() { return collisionRect; }
-	
-
-
 }

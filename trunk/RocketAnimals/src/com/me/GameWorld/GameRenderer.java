@@ -19,6 +19,7 @@ import com.me.GameObjects.Meteor;
 import com.me.GameObjects.Rocket;
 import com.me.helpers.AssetLoader;
 import com.me.helpers.Constants;
+import com.me.helpers.Constants.DIRECTION;
 
 public class GameRenderer {
 	
@@ -37,7 +38,7 @@ public class GameRenderer {
 	Array<AbstractObstacle> objectList;
 	
 	// Game sprites;
-	TextureRegion rocketLeft, rocketMid, rocketRight, sMeteor, hotAirBalloon, jetPlane, fire1, fire2, fire3;
+	TextureRegion rocketLeft, rocketMid, rocketRight, sMeteor, hotAirBalloon, hotAirBalloon_flipped, jetPlane, jetPlane_flipped, fire1, fire2, fire3;
 	Animation rocketAnimation, rocketFireAnimation;
 	
 	public GameRenderer(GameWorld world, int gameHeight, int midPointY) {
@@ -120,14 +121,18 @@ public class GameRenderer {
 			}
 			if(items instanceof HotAirBalloon)
 			{
-				
-				spriteBatch.draw(hotAirBalloon, items.getX(), items.getY(), items.getWidth(), items.getHeight());			
+				if (items.getDirection().equals(DIRECTION.DOWN_RIGHT))
+					spriteBatch.draw(hotAirBalloon_flipped, items.getX(), items.getY(), items.getWidth(), items.getHeight());
+				else
+					spriteBatch.draw(hotAirBalloon, items.getX(), items.getY(), items.getWidth(), items.getHeight());
 				
 			}
 			if(items instanceof JetPlane)
 			{
-				spriteBatch.draw(jetPlane, items.getX(), items.getY(), items.getWidth(), items.getHeight());
-				
+				if (items.getDirection().equals(DIRECTION.DOWN_RIGHT))
+					spriteBatch.draw(jetPlane_flipped, items.getX(), items.getY(), items.getWidth(), items.getHeight());
+				else
+					spriteBatch.draw(jetPlane, items.getX(), items.getY(), items.getWidth(), items.getHeight());
 			}
 		}
 	}
@@ -163,8 +168,10 @@ public class GameRenderer {
 		rocketFireAnimation = AssetLoader.rocketFireAnimation;
 		sMeteor = AssetLoader.meteor;
 		hotAirBalloon = AssetLoader.hotAirBalloon;
+		hotAirBalloon_flipped = AssetLoader.hotAirBalloon_flipped;
 		jetPlane = AssetLoader.jetPlane;
-
+		jetPlane_flipped = AssetLoader.jetPlane_flipped;
+		
 		
 	}
 	

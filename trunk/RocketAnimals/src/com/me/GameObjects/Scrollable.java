@@ -1,9 +1,8 @@
 package com.me.GameObjects;
 
-import java.util.Random;
-
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.me.helpers.Constants;
 
 public class Scrollable {
 	
@@ -17,14 +16,11 @@ public class Scrollable {
     
     protected float rotation; // Can be used to rotate object
     
-    private Random r;
-    
-    
     ////////////////////////////////////////////////////
     
-    public Scrollable(float x, float y, int width, int height, float scrollSpeed) {
+    public Scrollable(float x, float y, int width, int height, float ySpeed) {
         position = new Vector2(x, y);
-        velocity = new Vector2(0, scrollSpeed);
+        velocity = new Vector2(0, ySpeed);
         
         this.width = width;
         this.height = height;
@@ -35,6 +31,22 @@ public class Scrollable {
         
         rotation = 0;
     }
+    
+	////////////////////////////////////////////////////
+	    
+	public Scrollable(float x, float y, int width, int height, float ySpeed, float xSpeed) {
+	position = new Vector2(x, y);
+	velocity = new Vector2(xSpeed, ySpeed);
+	
+	this.width = width;
+	this.height = height;
+	
+	isScrolledDown = false;
+	
+	collisionRect = new Rectangle(x,y,width,height);
+	
+	rotation = 0;
+	}
     
     ////////////////////////////////////////////////////
     
@@ -47,7 +59,7 @@ public class Scrollable {
 		collisionRect.setPosition(position);
 		
 		// If the Scrollable object is no longer visible:
-        if (position.y + height > 480 + 30) {
+        if (((position.y + height) > 480 + height) || (((position.x + width < 0) || position.x - width > Constants.TRUE_WIDTH))) {
             isScrolledDown = true;
         }
 	}
