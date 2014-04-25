@@ -13,7 +13,7 @@ public class AssetLoader {
 	
 	public static Texture texture;
 	
-	public static TextureRegion rocketLeft, rocket, rocketRight, meteor, hotAirBalloon, jetPlane, rocketFire1, rocketFire2, rocketFire3;
+	public static TextureRegion rocketLeft, rocket, rocketRight, meteor, hotAirBalloon, hotAirBalloon_flipped, jetPlane, jetPlane_flipped, rocketFire1, rocketFire2, rocketFire3;
 	public static Animation rocketAnimation, rocketFireAnimation;
 	
 	public static Sound hit1, hit2;
@@ -63,10 +63,14 @@ public class AssetLoader {
 		//HotAirBalloon
 		hotAirBalloon = new TextureRegion(texture, 0, 161, 152, 240);
 		hotAirBalloon.flip(false, true);
+		hotAirBalloon_flipped = new TextureRegion(texture, 0, 161, 152, 240);
+		hotAirBalloon_flipped.flip(true, true);
 		
 		// JetPlane
 		jetPlane = new TextureRegion(texture, 179, 156, 239, 141);
 		jetPlane.flip(false, true);
+		jetPlane_flipped = new TextureRegion(texture, 179, 156, 239, 141);
+		jetPlane_flipped.flip(true, true);
 		
 		
 		// Load audio
