@@ -72,7 +72,7 @@ public class ScrollableHandler
 				}
 			} else {
 				if(PLANE_EVENT == false && eventInt == 5){
-					obstacleList.add(new JetPlane(370, randInt(0,280), 50, 50, randInt(Constants.PLANE_MIN_Y_SPEED, Constants.PLANE_MAX_Y_SPEED), randInt(Constants.PLANE_MIN_X_SPEED, Constants.PLANE_MAX_X_SPEED), Constants.DIRECTION.DOWN_LEFT));
+					obstacleList.add(new JetPlane(320, randInt(0,280), 50, 50, randInt(Constants.PLANE_MIN_Y_SPEED, Constants.PLANE_MAX_Y_SPEED), randInt(Constants.PLANE_MIN_X_SPEED, Constants.PLANE_MAX_X_SPEED), Constants.DIRECTION.DOWN_LEFT));
 					numObstacles++;
 					PLANE_EVENT = true;
 					System.out.println(PLANE_EVENT);
