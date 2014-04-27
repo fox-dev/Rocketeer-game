@@ -43,6 +43,7 @@ public class GameWorld {
 	}
 	
 	public void update(float delta) {
+		System.out.println(("CurrentState: " + currentState));
 		switch(currentState) {
 		
 		case READY:
@@ -65,8 +66,11 @@ public class GameWorld {
 			
 			updateRunning(delta);
 			break;
+			
 		case GAMEOVER:
-			updateGameOver(delta);
+			
+			//updateGameOver(delta);
+			break;
 			
 		default:
 			break;
@@ -93,6 +97,7 @@ public class GameWorld {
 			if(tempObj instanceof HotAirBalloon){
 				if (Intersector.overlaps(((HotAirBalloon) tempObj).getCirc(), rocket.getRect())) {
 					scroller.removeObject((HotAirBalloon)tempObj);
+					AssetLoader.hitSounds.random().play();
 					//AssetLoader.hitSounds.random().play();
 					gameOver();
 					
@@ -143,7 +148,10 @@ public class GameWorld {
 	}
 	
 	public void restart() {
-		;
+		scroller.resetObjects();
+		rocket.resetRocket();
+		runTime = 0;
+		ready();
 	}
 	
 	// Game state setters
