@@ -82,7 +82,7 @@ public class Rocket {
 	}
 	
 	public void resetRocket(){
-		position.y = Constants.ROCKET_STARTING_X;
+		position.x = Constants.ROCKET_STARTING_X;
 		position.y = Constants.ROCKET_STARTING_Y;
 	}
 	
