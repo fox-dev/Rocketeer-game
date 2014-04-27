@@ -77,6 +77,15 @@ public class GameRenderer {
 		// Draw sprites
 		spriteBatch.begin();
 		drawObjects(runTime);
+		 // Convert integer into String
+        String score = world.getScore() + "";
+
+        // Draw shadow first
+        AssetLoader.shadow.draw(spriteBatch, "" + world.getScore(), (136 / 2)
+                - (3 * score.length()), 12);
+        // Draw text
+        AssetLoader.font.draw(spriteBatch, "" + world.getScore(), (136 / 2)
+                - (3 * score.length() - 1), 11);
 		spriteBatch.end();
 		
 		// If DRAW_BOUNDS is enabled

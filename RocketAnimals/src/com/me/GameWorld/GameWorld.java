@@ -158,6 +158,11 @@ public class GameWorld {
 	public Rocket getRocket() { return rocket; }
 	public ScrollableHandler getScroller() { return scroller; }
 	public HotAirBalloon getHab() { return hab; }
+
+	public int getScore() {
+		
+		return (int) runTime *10;
+	}
 	
 	
 	

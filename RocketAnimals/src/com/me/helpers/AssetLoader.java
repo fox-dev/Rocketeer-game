@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
@@ -20,6 +21,8 @@ public class AssetLoader {
 	public static Array<Sound> hitSounds;
 	
 	public static Music bgm; // change names later!
+	
+	public static BitmapFont font, shadow;
 	
 	public static void load() {
 		
@@ -81,6 +84,13 @@ public class AssetLoader {
 		
 		// Load music
 		bgm = Gdx.audio.newMusic(Gdx.files.internal("data/themoon.mp3"));
+		
+		//Font
+		font = new BitmapFont(Gdx.files.internal("data/text.fnt"));
+        font.setScale(.25f, -.25f);
+        shadow = new BitmapFont(Gdx.files.internal("data/shadow.fnt"));
+        shadow.setScale(.25f, -.25f);
+
 	}
 	
 	public static void dipose() {
@@ -90,5 +100,9 @@ public class AssetLoader {
 		// Also dispose of audio
 		hit1.dispose();
 		bgm.dispose();
+		
+		//Fonts
+		font.dispose();
+		shadow.dispose();
 	}
 }
