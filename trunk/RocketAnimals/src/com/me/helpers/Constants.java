@@ -42,14 +42,14 @@ public class Constants {
 	// Plane constants
 	public static final int PLANE_MIN_X_SPEED = 100;
 	public static final int PLANE_MAX_X_SPEED = 200;
-	public static final int PLANE_MIN_Y_SPEED = 150;
-	public static final int PLANE_MAX_Y_SPEED = 225;
+	public static final int PLANE_MIN_Y_SPEED = 100;
+	public static final int PLANE_MAX_Y_SPEED = 150;
 	
 	// Balloon constants
 	public static final int BALLOON_MIN_X_SPEED = 25;
 	public static final int BALLOON_MAX_X_SPEED = 100;
 	public static final int BALLOON_MIN_Y_SPEED = 100;
-	public static final int BALLOON_MAX_Y_SPEED = 400;
+	public static final int BALLOON_MAX_Y_SPEED = 300;
 	
 	
 }
