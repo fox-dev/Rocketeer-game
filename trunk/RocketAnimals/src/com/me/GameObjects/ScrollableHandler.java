@@ -135,6 +135,14 @@ public class ScrollableHandler
 		numObstacles--;
 	}
 	
+	
+	//Remove all objects when restarting game
+		public void resetObjects(){
+			obstacleList = new Array<AbstractObstacle>();
+			numObstacles = 0;
+			
+		}
+	
 	public boolean planeEvent(){return PLANE_EVENT;}
 	public void spawnPlane(){ PLANE_EVENT = true;}
 	public void despawnPlane(){ PLANE_EVENT = false;}
