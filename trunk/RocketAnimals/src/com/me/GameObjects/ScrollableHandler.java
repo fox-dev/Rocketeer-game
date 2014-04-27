@@ -141,6 +141,9 @@ public class ScrollableHandler
 			obstacleList = new Array<AbstractObstacle>();
 			numObstacles = 0;
 			
+			runTime = 0;
+			PLANE_EVENT = false;
+			
 		}
 	
 	public boolean planeEvent(){return PLANE_EVENT;}
