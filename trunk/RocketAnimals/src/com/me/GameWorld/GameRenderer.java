@@ -76,7 +76,13 @@ public class GameRenderer {
 		
 		// Draw sprites
 		spriteBatch.begin();
+		
+		if(!world.isGameOver()){
+			drawPlayer(runTime);
+		}
+		
 		drawObjects(runTime);
+		
 		 // Convert integer into String
         String score = world.getScore() + "";
 
@@ -97,27 +103,31 @@ public class GameRenderer {
 		
 	}
 	
+	private void drawPlayer(float runTime){
+		// Draw player first
+				/*
+				if (rocket.isMoving())
+					spriteBatch.draw(rocketAnimation.getKeyFrame(runTime), rocket.getX(), rocket.getY(), rocket.getWidth(), rocket.getHeight());
+				else
+					spriteBatch.draw(rocket1, rocket.getX(), rocket.getY(), rocket.getWidth(), rocket.getHeight());
+				*/
+				if (rocket.isMovingLeft()) {
+					spriteBatch.draw(rocketFireAnimation.getKeyFrame(runTime), rocket.getX(), rocket.getY() + 25, Constants.ROCKET_FIRE_WIDTH, Constants.ROCKET_FIRE_HEIGHT);
+					spriteBatch.draw(rocketLeft, rocket.getX(), rocket.getY(), rocket.getWidth(), rocket.getHeight());
+				}
+				else if (rocket.isMovingRight()) {
+					spriteBatch.draw(rocketFireAnimation.getKeyFrame(runTime), rocket.getX(), rocket.getY() + 25, Constants.ROCKET_FIRE_WIDTH, Constants.ROCKET_FIRE_HEIGHT);
+					spriteBatch.draw(rocketRight, rocket.getX(), rocket.getY(), rocket.getWidth(), rocket.getHeight());
+				}
+				else {
+					spriteBatch.draw(rocketFireAnimation.getKeyFrame(runTime), rocket.getX(), rocket.getY() + 25, Constants.ROCKET_FIRE_WIDTH, Constants.ROCKET_FIRE_HEIGHT);
+					spriteBatch.draw(rocketMid, rocket.getX(), rocket.getY(), rocket.getWidth(), rocket.getHeight());
+				}
+		
+	}
 	private void drawObjects(float runTime){
 
-		// Draw player first
-		/*
-		if (rocket.isMoving())
-			spriteBatch.draw(rocketAnimation.getKeyFrame(runTime), rocket.getX(), rocket.getY(), rocket.getWidth(), rocket.getHeight());
-		else
-			spriteBatch.draw(rocket1, rocket.getX(), rocket.getY(), rocket.getWidth(), rocket.getHeight());
-		*/
-		if (rocket.isMovingLeft()) {
-			spriteBatch.draw(rocketFireAnimation.getKeyFrame(runTime), rocket.getX(), rocket.getY() + 25, Constants.ROCKET_FIRE_WIDTH, Constants.ROCKET_FIRE_HEIGHT);
-			spriteBatch.draw(rocketLeft, rocket.getX(), rocket.getY(), rocket.getWidth(), rocket.getHeight());
-		}
-		else if (rocket.isMovingRight()) {
-			spriteBatch.draw(rocketFireAnimation.getKeyFrame(runTime), rocket.getX(), rocket.getY() + 25, Constants.ROCKET_FIRE_WIDTH, Constants.ROCKET_FIRE_HEIGHT);
-			spriteBatch.draw(rocketRight, rocket.getX(), rocket.getY(), rocket.getWidth(), rocket.getHeight());
-		}
-		else {
-			spriteBatch.draw(rocketFireAnimation.getKeyFrame(runTime), rocket.getX(), rocket.getY() + 25, Constants.ROCKET_FIRE_WIDTH, Constants.ROCKET_FIRE_HEIGHT);
-			spriteBatch.draw(rocketMid, rocket.getX(), rocket.getY(), rocket.getWidth(), rocket.getHeight());
-		}
+		
 		
 		// Draw all obstacles
 		for(AbstractObstacle items : world.getScroller().getAbstractObstacles())

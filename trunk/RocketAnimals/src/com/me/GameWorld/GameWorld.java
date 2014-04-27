@@ -65,6 +65,8 @@ public class GameWorld {
 			
 			updateRunning(delta);
 			break;
+		case GAMEOVER:
+			updateGameOver(delta);
 			
 		default:
 			break;
@@ -91,22 +93,26 @@ public class GameWorld {
 			if(tempObj instanceof HotAirBalloon){
 				if (Intersector.overlaps(((HotAirBalloon) tempObj).getCirc(), rocket.getRect())) {
 					scroller.removeObject((HotAirBalloon)tempObj);
-					AssetLoader.hitSounds.random().play();
+					//AssetLoader.hitSounds.random().play();
+					gameOver();
+					
 				}
 				
 			}
 			if(tempObj instanceof JetPlane){
 				if (rocket.getRect().overlaps(((tempObj).getRect()))) {
 					scroller.despawnPlane();
-					scroller.removeObject((JetPlane)tempObj);
+					//scroller.removeObject((JetPlane)tempObj);
 					AssetLoader.hitSounds.random().play();
+					gameOver();
 					
 				}
 			}
 			if (rocket.getRect().overlaps(((tempObj).getRect())))      //Cutting down code
 			{
-				scroller.removeObject(tempObj);
+				//scroller.removeObject(tempObj);
 				AssetLoader.hitSounds.random().play();
+				gameOver();
 			}
 			
 			/*if(tempObj instanceof Meteor){
@@ -131,6 +137,11 @@ public class GameWorld {
 		}
 	}
 	
+	public void updateGameOver(float delta){
+		scroller.update(delta);
+		
+	}
+	
 	public void restart() {
 		;
 	}
@@ -149,11 +160,17 @@ public class GameWorld {
 		currentState = GameState.STANDBY;
 	}
 	
+	public void gameOver(){
+		currentState = GameState.GAMEOVER;
+	}
+	
 	// Game state getters
 	public boolean isReady() { return currentState == GameState.READY; }
 	public boolean isRunning() { return currentState == GameState.RUNNING; }
 	public boolean isGameOver() { return currentState == GameState.GAMEOVER; }
 	public boolean isStandby() { return currentState == GameState.STANDBY; }
+	
+
 	
 	public Rocket getRocket() { return rocket; }
 	public ScrollableHandler getScroller() { return scroller; }
@@ -161,7 +178,7 @@ public class GameWorld {
 
 	public int getScore() {
 		
-		return (int) runTime *10;
+		return (int) (runTime);
 	}
 	
 	
