@@ -82,7 +82,7 @@ public class InputHandler implements InputProcessor {
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		
 		if (world.isReady()) {
-			world.standby();
+			//world.standby();
 			
 		}
 		else if (world.isStandby()){
