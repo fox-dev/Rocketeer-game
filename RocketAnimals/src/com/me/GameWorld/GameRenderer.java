@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -38,7 +39,8 @@ public class GameRenderer {
 	Array<AbstractObstacle> objectList;
 	
 	// Game sprites;
-	TextureRegion rocketLeft, rocketMid, rocketRight, sMeteor, hotAirBalloon, hotAirBalloon_flipped, jetPlane, jetPlane_flipped, fire1, fire2, fire3;
+	TextureRegion rocketLeft, rocketMid, rocketRight, sMeteor, hotAirBalloon, hotAirBalloon_flipped, 
+	 			jetPlane, jetPlane_flipped, fire1, fire2, fire3, gameOver;
 	Animation rocketAnimation, rocketFireAnimation;
 	
 	public GameRenderer(GameWorld world, int gameHeight, int midPointY) {
@@ -92,6 +94,13 @@ public class GameRenderer {
         // Draw text
         AssetLoader.font.draw(spriteBatch, "" + world.getScore(), (136 / 2)
                 - (3 * score.length() - 1), 11);
+        
+        // Draw Game Over
+        if(world.isGameOver()){
+        	drawGameOver();
+        	//AssetLoader.shadow.draw(spriteBatch, "Game Over", 25, 56);
+           // AssetLoader.font.draw(spriteBatch, "Game Over", 24, 55);
+        }
 		spriteBatch.end();
 		
 		// If DRAW_BOUNDS is enabled
@@ -101,6 +110,11 @@ public class GameRenderer {
 			shapeRenderer.end();
 		}
 		
+	}
+	
+	private void drawGameOver() {
+		
+		spriteBatch.draw(AssetLoader.gameOver, (Constants.TRUE_WIDTH/2) - 92/2, (Constants.TRUE_HEIGHT/2 - 14/2), 92, 14);
 	}
 	
 	private void drawPlayer(float runTime){
@@ -190,6 +204,8 @@ public class GameRenderer {
 		hotAirBalloon_flipped = AssetLoader.hotAirBalloon_flipped;
 		jetPlane = AssetLoader.jetPlane;
 		jetPlane_flipped = AssetLoader.jetPlane_flipped;
+		
+		gameOver = AssetLoader.gameOver;
 		
 		
 	}
