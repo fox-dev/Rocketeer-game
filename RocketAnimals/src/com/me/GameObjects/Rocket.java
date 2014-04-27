@@ -47,13 +47,20 @@ public class Rocket {
 	// Update method
 	public void update(float delta) {
 		
-	
-		
 		// Move the rocket using velocity
 		position.add(velocity.cpy().scl(delta));
 		
 		// Move the rectangle to the rocket's new position
 		collisionRect.setPosition(position);
+		
+		// Movement boundaries
+		if (position.x <= 0) {
+			velocity.x = 0; // Stop moving
+		}
+		
+		if (position.x >= Constants.TRUE_WIDTH - width) {
+			velocity.x = 0;
+		}
 		
 		
 		//check if rocket has reached the finger/mouse's location.
@@ -81,19 +88,23 @@ public class Rocket {
 	
 	// Control methods
 	public void onLeft() {
+		if (position.x > 0) {
 		moveLeft = true;
 		moveRight = false;
 		velocity.x -= Constants.ROCKET_VELOCITY;
-		if(velocity.x < -Constants.ROCKET_VELOCITY){
-			velocity.x = -Constants.ROCKET_VELOCITY ;
-		}
+			if(velocity.x < -Constants.ROCKET_VELOCITY){
+				velocity.x = -Constants.ROCKET_VELOCITY ;
+			}
+		}	
 	}
 	public void onRight() {
-		moveLeft = false;
-		moveRight = true;
-		velocity.x += Constants.ROCKET_VELOCITY;
-		if(velocity.x > Constants.ROCKET_VELOCITY){
-			velocity.x = Constants.ROCKET_VELOCITY;
+		if (position.x < Constants.TRUE_WIDTH - width) {
+			moveLeft = false;
+			moveRight = true;
+			velocity.x += Constants.ROCKET_VELOCITY;
+			if(velocity.x > Constants.ROCKET_VELOCITY){
+				velocity.x = Constants.ROCKET_VELOCITY;
+			}
 		}
 	}
 	public void onNoClick() {
