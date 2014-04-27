@@ -69,7 +69,7 @@ public class GameWorld {
 			
 		case GAMEOVER:
 			
-			//updateGameOver(delta);
+			updateGameOver(delta);
 			break;
 			
 		default:

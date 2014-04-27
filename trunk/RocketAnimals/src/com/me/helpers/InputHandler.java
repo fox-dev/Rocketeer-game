@@ -37,6 +37,9 @@ public class InputHandler implements InputProcessor {
 		else if (world.isStandby()){
 			
 		}
+		else if( world.isGameOver()){
+			world.restart();
+		}
 		else {
 		
 			Vector3 tempPos = new Vector3(screenX, screenY, 0);
