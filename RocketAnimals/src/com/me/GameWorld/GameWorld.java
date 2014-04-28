@@ -23,6 +23,8 @@ public class GameWorld {
 	
 	private float runTime = 0;
 	
+	private int finalScore = 0;
+	
 	private GameState currentState;
 	
 	// Game states
@@ -84,6 +86,7 @@ public class GameWorld {
 	
 	private void updateRunning(float delta) {
 		runTime += delta;
+		finalScore = scroller.getDodged();
 		//System.out.println("Gameworld runtime is: " + runTime);
 		rocket.update(delta);
 		scroller.update(delta);
@@ -152,6 +155,7 @@ public class GameWorld {
 		scroller.resetObjects();
 		rocket.resetRocket();
 		runTime = 0;
+		finalScore = 0;
 		ready();
 	}
 	
@@ -188,6 +192,10 @@ public class GameWorld {
 	public int getScore() {
 		
 		return (int) (scroller.getDodged());
+	}
+	
+	public int getFinalScore(){
+		return finalScore;
 	}
 	
 	
