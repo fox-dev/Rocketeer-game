@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.me.GameObjects.AbstractObstacle;
+import com.me.GameObjects.Background;
 import com.me.GameObjects.HotAirBalloon;
 import com.me.GameObjects.JetPlane;
 import com.me.GameObjects.Meteor;
@@ -42,6 +43,10 @@ public class GameRenderer {
 	TextureRegion rocketLeft, rocketMid, rocketRight, sMeteor, hotAirBalloon, hotAirBalloon_flipped, 
 	 			jetPlane, jetPlane_flipped, fire1, fire2, fire3, gameOver;
 	Animation rocketAnimation, rocketFireAnimation;
+	
+	//temp
+	TextureRegion bg;
+	private Background background; 
 	
 	public GameRenderer(GameWorld world, int gameHeight, int midPointY) {
 		this.world = world;
@@ -73,11 +78,15 @@ public class GameRenderer {
                 (int) viewport.width, (int) viewport.height);
 		
 		// Fill screen with black
-		Gdx.gl.glClearColor(0.11f, 0.11f, 0.11f, 1f);
+		//Gdx.gl.glClearColor(0.11f, 0.11f, 0.11f, 1f);
+		Gdx.gl.glClearColor(55 / 255.0f, 80 / 255.0f, 100 / 255.0f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
 		// Draw sprites
 		spriteBatch.begin();
+		
+		//spriteBatch.draw(bg, 0, Constants.TRUE_HEIGHT - 102, Constants.TRUE_WIDTH, 102);
+		spriteBatch.draw(bg, background.getX(), background.getY(), Constants.TRUE_WIDTH, 102);
 		
 		if(!world.isGameOver()){
 			drawPlayer(runTime);
@@ -190,6 +199,7 @@ public class GameRenderer {
 	public void initGameObjects() {
 		rocket = world.getRocket();
 		objectList = world.getScroller().getAbstractObstacles();
+		background = world.getScroller().getFrontBackground();
 		
 	}
 	
@@ -206,6 +216,8 @@ public class GameRenderer {
 		jetPlane_flipped = AssetLoader.jetPlane_flipped;
 		
 		gameOver = AssetLoader.gameOver;
+		
+		bg = AssetLoader.bg;
 		
 		
 	}

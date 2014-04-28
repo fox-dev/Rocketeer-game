@@ -87,6 +87,7 @@ public class GameWorld {
 		//System.out.println("Gameworld runtime is: " + runTime);
 		rocket.update(delta);
 		scroller.update(delta);
+		scroller.scrollBackgroundUpdate(delta);
 		
 		
 		
@@ -186,7 +187,7 @@ public class GameWorld {
 
 	public int getScore() {
 		
-		return (int) (runTime);
+		return (int) (scroller.getDodged());
 	}
 	
 	
