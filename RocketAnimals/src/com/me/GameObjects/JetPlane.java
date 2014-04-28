@@ -8,7 +8,6 @@ public class JetPlane extends AbstractObstacle
 {
 	protected boolean isSpawned;
 	
-	
 	public JetPlane(float x, float y, int width, int height, float scrollSpeed)
 	{
 		super(x, y, width, height, scrollSpeed);
@@ -17,7 +16,8 @@ public class JetPlane extends AbstractObstacle
 		// velocity.y = 80;
 	}
 	
-	public JetPlane(float x, float y, int width, int height, float scrollSpeed, float glideSpeed, Constants.DIRECTION direction) {
+	public JetPlane(float x, float y, int width, int height, float scrollSpeed, float glideSpeed, Constants.DIRECTION direction) 
+	{
 		super(x, y, width, height, scrollSpeed, glideSpeed, direction);
 		
 	}

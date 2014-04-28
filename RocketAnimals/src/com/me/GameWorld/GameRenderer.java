@@ -172,7 +172,7 @@ public class GameRenderer {
 				// spriteBatch.draw(sMeteor, items.getX(), items.getY(), items.getWidth(), items.getHeight());
 				spriteBatch.draw(sMeteor, items.getX(), items.getY(), items.getMiddleX(), items.getMiddleY(), items.getWidth(), items.getHeight(), 1f, 1f, items.getRotation());
 			}
-			if(items instanceof HotAirBalloon)
+			else if(items instanceof HotAirBalloon)
 			{
 				if (items.getDirection().equals(DIRECTION.DOWN_RIGHT))
 					spriteBatch.draw(hotAirBalloon_flipped, items.getX(), items.getY(), items.getWidth(), items.getHeight());
@@ -180,7 +180,7 @@ public class GameRenderer {
 					spriteBatch.draw(hotAirBalloon, items.getX(), items.getY(), items.getWidth(), items.getHeight());
 				
 			}
-			if(items instanceof JetPlane)
+			else if(items instanceof JetPlane)
 			{
 				if (items.getDirection().equals(DIRECTION.DOWN_RIGHT))
 					spriteBatch.draw(jetPlane_flipped, items.getX(), items.getY(), items.getWidth(), items.getHeight());

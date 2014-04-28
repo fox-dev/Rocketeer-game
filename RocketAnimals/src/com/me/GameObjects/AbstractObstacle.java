@@ -14,44 +14,47 @@ public class AbstractObstacle extends Scrollable{
 		super(x, y, width, height, ySpeed);
 
 		scrollDirection = Constants.DIRECTION.DOWN;
-		tempXSpeed = 0;
-		tempYSpeed = ySpeed;
+		setDirection(scrollDirection);
 	}
 	
 	public AbstractObstacle(float x, float y, int width, int height, float ySpeed, float xSpeed, Constants.DIRECTION direction) {
 		super(x, y, width, height, ySpeed, xSpeed);
 		
 		scrollDirection = direction;
-		tempXSpeed = xSpeed;
-		tempYSpeed = ySpeed;
+		setDirection(scrollDirection);
 	}
 	
 	@Override
-	public void update(float delta) {
+	public void update(float delta) 
+	{
 		super.update(delta);
-		
-		// Direction logic
-		switch (scrollDirection) {
-		case DOWN:
-			velocity.x = 0;
-			velocity.y = tempYSpeed;
-			break;
-		case DOWN_LEFT:
-			velocity.x = -tempXSpeed;
-			velocity.y = tempYSpeed;
-			break;
-		case DOWN_RIGHT:
-			velocity.x = tempXSpeed;
-			velocity.y = tempYSpeed;
-			break;
-		default:
-			velocity.x = 0;
-			velocity.y = tempYSpeed;
-			break;
-		}
-		
 	}
 	
-	public void setDirection(Constants.DIRECTION newDirection) { scrollDirection = newDirection; }
+	public void setDirection(Constants.DIRECTION newDirection) 
+	{ 
+		scrollDirection = newDirection;
+		tempXSpeed = velocity.x;
+		tempYSpeed = velocity.y;
+		// Direction logic
+		switch (scrollDirection) 
+		{
+			case DOWN:
+				velocity.x = 0;
+				velocity.y = tempYSpeed;
+				break;
+			case DOWN_LEFT:
+				velocity.x = -tempXSpeed;
+				velocity.y = tempYSpeed;
+				break;
+			case DOWN_RIGHT:
+				velocity.x = tempXSpeed;
+				velocity.y = tempYSpeed;
+				break;
+			default:
+				velocity.x = 0;
+				velocity.y = tempYSpeed;
+				break;
+		}
+	}
 	public Constants.DIRECTION getDirection() { return scrollDirection; }
 }
