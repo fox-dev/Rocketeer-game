@@ -100,9 +100,9 @@ public class GameWorld {
 		{
 			if(tempObj instanceof HotAirBalloon){
 				if (Intersector.overlaps(((HotAirBalloon) tempObj).getCirc(), rocket.getRect())) {
-					scroller.removeObject((HotAirBalloon)tempObj);
+					//scroller.removeObject((HotAirBalloon)tempObj);
 					AssetLoader.hitSounds.random().play();
-					//AssetLoader.hitSounds.random().play();
+					AssetLoader.hitSounds.random().play();
 					gameOver();
 					
 				}
