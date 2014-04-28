@@ -161,6 +161,8 @@ public class ScrollableHandler
 			bg.position.x = 0;
 			bg.position.y = Constants.TRUE_HEIGHT - 102;
 			
+			dodged = 0;
+			
 		}
 	
 	public boolean planeEvent(){return PLANE_EVENT;}

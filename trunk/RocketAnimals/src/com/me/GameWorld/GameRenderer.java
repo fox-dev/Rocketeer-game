@@ -35,6 +35,8 @@ public class GameRenderer {
 	private int gameHeight;
 	private int midPointY;
 	
+	String score;
+	
 	// Game objects
 	Rocket rocket;
 	Array<AbstractObstacle> objectList;
@@ -98,11 +100,20 @@ public class GameRenderer {
         String score = world.getScore() + "";
 
         // Draw shadow first
-        AssetLoader.shadow.draw(spriteBatch, "" + world.getScore(), (136 / 2)
+        if(!world.isGameOver()){
+        	AssetLoader.shadow.draw(spriteBatch, "" + world.getScore(), (136 / 2)
                 - (3 * score.length()), 12);
-        // Draw text
-        AssetLoader.font.draw(spriteBatch, "" + world.getScore(), (136 / 2)
+        	// Draw text
+        	AssetLoader.font.draw(spriteBatch, "" + world.getScore(), (136 / 2)
                 - (3 * score.length() - 1), 11);
+        }
+        else{
+        	AssetLoader.shadow.draw(spriteBatch, "" + world.getFinalScore(), (136 / 2)
+                - (3 * score.length()), 12);
+            // Draw text
+            AssetLoader.font.draw(spriteBatch, "" + world.getFinalScore(), (136 / 2)
+                - (3 * score.length() - 1), 11);
+        }
         
         // Draw Game Over
         if(world.isGameOver()){
