@@ -77,7 +77,7 @@ public class Rocket {
 	
 	public void moveBird(){
 		if(position.y >= Constants.ROCKET_LIFTOFF_STOP_AT_Y){
-			position.y--;
+			position.y = (float) (position.y - 0.50);
 		}
 	}
 	
