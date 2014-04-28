@@ -14,7 +14,6 @@ public class ScrollableHandler
 
 	private Array<AbstractObstacle> obstacleList = new Array<AbstractObstacle>();
  	private Iterator<AbstractObstacle> iterator;
-	private double RNG;
 	private int numObstacles = 0;
 	private boolean flipObjectX = false; // False => Direction is DOWN_LEFT
 	
@@ -49,49 +48,70 @@ public class ScrollableHandler
 	
 	{
 		
-		
-		
-		RNG = Math.random();
-		
 		int eventInt = randInt(0,10);
 		//System.out.println(eventInt);
 		
 		//System.out.println("R = " + numObstacles);
-		if(RNG < 0.04 && numObstacles < 15) {
-			
-			flipObjectX = ((int)(RNG * 50)) == 1 ? false : true; // Should alternate often
-			
+		double rMeteor = Math.random();
+		//Chance of Meteors 4%
+		if(rMeteor < 0.04 && numObstacles < 15) 
+		{	
 			// Add objects with down direction first
+			                        // (x position, y position, width, height, ySpeed, xSpeed, direction)
 			obstacleList.add(new Meteor(r.nextInt(305), -30, 30, 30, randInt(Constants.METEOR_MIN_SPEED_Y, Constants.METEOR_MAX_SPEED_Y), 0f, Constants.DIRECTION.DOWN));
 			numObstacles++;
+	
+		}
+		
+		double rPlane = Math.random();
+		//Chance of Planes .4%
+		if(rPlane < 0.04 && numObstacles < 15)
+		{
+			flipObjectX = ((int)(rPlane * 50)) == 1 ? false : true; // Should alternate often
 			
-			if (flipObjectX) {
+			if (flipObjectX) 
+			{
 				if(PLANE_EVENT == false && eventInt == 9){
 					obstacleList.add(new JetPlane(-100, randInt(0,100), 100, 50, randInt(Constants.PLANE_MIN_Y_SPEED, Constants.PLANE_MAX_Y_SPEED), randInt(Constants.PLANE_MIN_X_SPEED, Constants.PLANE_MAX_X_SPEED), Constants.DIRECTION.DOWN_RIGHT));
 					numObstacles++;
 					PLANE_EVENT = true;
 					System.out.println(PLANE_EVENT);
 				}
-				
-				if(runTime >= 0 && runTime <= 100 && (eventInt == 1 ||  eventInt == 5 || eventInt == 7) ){
-				 	obstacleList.add(new HotAirBalloon(r.nextInt(305), -100, 63, 100, randInt(Constants.BALLOON_MIN_Y_SPEED,Constants.BALLOON_MAX_Y_SPEED), randInt(Constants.BALLOON_MIN_X_SPEED, Constants.BALLOON_MAX_X_SPEED), Constants.DIRECTION.DOWN_RIGHT));
-				 	numObstacles++;
-				}
-			} else {
-				if(PLANE_EVENT == false && eventInt == 9){
+			} 
+			else 
+			{
+				if(PLANE_EVENT == false && eventInt == 9)
+				{
 					obstacleList.add(new JetPlane(320, randInt(0,100), 100, 50, randInt(Constants.PLANE_MIN_Y_SPEED, Constants.PLANE_MAX_Y_SPEED), randInt(Constants.PLANE_MIN_X_SPEED, Constants.PLANE_MAX_X_SPEED), Constants.DIRECTION.DOWN_LEFT));
 					numObstacles++;
 					PLANE_EVENT = true;
 					System.out.println(PLANE_EVENT);
 				}
 				
+			}
+		}
+		
+		double rHotAirBalloon = Math.random();
+		//Chance of Hot Air Balloons 4%
+		if(rHotAirBalloon < 0.04 && numObstacles < 15)
+		{
+			boolean flipObjectX2 = ((int)(rHotAirBalloon * 50)) == 1 ? false : true; // Should alternate often
+			
+			if (flipObjectX2) 
+			{
+				if(runTime >= 0 && runTime <= 100 && (eventInt == 1 ||  eventInt == 5 || eventInt == 7) )
+				{
+				 	obstacleList.add(new HotAirBalloon(r.nextInt(305), -100, 63, 100, randInt(Constants.BALLOON_MIN_Y_SPEED, Constants.BALLOON_MAX_Y_SPEED), randInt(Constants.BALLOON_MIN_X_SPEED, Constants.BALLOON_MAX_X_SPEED), Constants.DIRECTION.DOWN_RIGHT));
+				 	numObstacles++;
+				}
+			} 
+			else 
+			{
 				if(runTime >= 0 && runTime <= 100){
 				 	obstacleList.add(new HotAirBalloon(r.nextInt(305), -100, 63, 100, randInt(Constants.BALLOON_MIN_Y_SPEED,Constants.BALLOON_MAX_Y_SPEED), randInt(Constants.BALLOON_MIN_X_SPEED, Constants.BALLOON_MAX_X_SPEED), Constants.DIRECTION.DOWN_LEFT));
 				 	numObstacles++;
 				}
 			}
-			
-			
 		}
 		
 		iterator = obstacleList.iterator();
@@ -128,9 +148,7 @@ public class ScrollableHandler
 
 	    // nextInt is normally exclusive of the top value,
 	    // so add 1 to make it inclusive
-	    int randomNum = rand.nextInt((max - min) + 1) + min;
-
-	    return randomNum;
+	    return rand.nextInt((max - min) + 1) + min;
 	}
 	
 	public Array<AbstractObstacle> getAbstractObstacles(){ return obstacleList;}
