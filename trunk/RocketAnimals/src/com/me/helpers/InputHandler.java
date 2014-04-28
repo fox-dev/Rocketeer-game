@@ -45,14 +45,15 @@ public class InputHandler implements InputProcessor {
 			Vector3 tempPos = new Vector3(screenX, screenY, 0);
 			cam.unproject(tempPos);
 			System.out.println("Touched " + tempPos.x);
-			if (tempPos.x < rocket.getMiddleX()) {
+			if (tempPos.x < rocket.getMiddleX() - 15) {
 			
 				rocket.onLeft();
 				rocket.userAtX((int)tempPos.x);
 			}
-			else
+			else if((tempPos.x > rocket.getMiddleX() + 15)){
 				rocket.onRight();
 		    	rocket.userAtX((int)tempPos.x);
+			}
 		}
     	return true;
 	}
@@ -93,14 +94,14 @@ public class InputHandler implements InputProcessor {
 			cam.unproject(tempPos);
 			System.out.println("Touched " + tempPos.x);
 		
-			if (tempPos.x < rocket.getMiddleX()) {
+			if (tempPos.x < rocket.getMiddleX() - 15) {
 			
 				rocket.onLeft();
 				rocket.userAtX((int)tempPos.x);
 			
 			
 			}
-			else {
+			else if(tempPos.x  > rocket.getMiddleX() + 15){
 				rocket.onRight();
 				rocket.userAtX((int)tempPos.x);
 			}
