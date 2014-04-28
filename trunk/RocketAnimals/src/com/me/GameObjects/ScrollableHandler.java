@@ -9,6 +9,7 @@ import com.me.helpers.Constants;
 
 public class ScrollableHandler 
 {
+	private Background bg; //temp
 	
 
 	private Array<AbstractObstacle> obstacleList = new Array<AbstractObstacle>();
@@ -16,6 +17,8 @@ public class ScrollableHandler
 	private double RNG;
 	private int numObstacles = 0;
 	private boolean flipObjectX = false; // False => Direction is DOWN_LEFT
+	
+	private int dodged = 0;
 	
 	public static final int SCROLL_SPEED = 150;
 	
@@ -31,6 +34,7 @@ public class ScrollableHandler
 		//iterator = new AbstractObstacle(0, 0, 30, 30, SCROLL_SPEED); //using default bird sprite, change sprite and position later
 		r = new Random();
 		
+		bg = new Background(0, Constants.TRUE_HEIGHT - 102, Constants.TRUE_WIDTH, 102, 15);
 		
 	}
 	
@@ -42,7 +46,10 @@ public class ScrollableHandler
 	}
 	
 	public void meteorStuff(float delta)
+	
 	{
+		
+		
 		
 		RNG = Math.random();
 		
@@ -101,10 +108,15 @@ public class ScrollableHandler
 				}
 				iterator.remove();
 				numObstacles--;
+				dodged++;
 			}
 			
 		}
 		
+	}
+	
+	public void scrollBackgroundUpdate(float delta){
+		bg.update(delta);
 	}
 	
 	
@@ -144,10 +156,17 @@ public class ScrollableHandler
 			runTime = 0;
 			PLANE_EVENT = false;
 			
+			//bg = new Background(0, Constants.TRUE_HEIGHT - 102, Constants.TRUE_WIDTH, 102, 15);
+			
+			bg.position.x = 0;
+			bg.position.y = Constants.TRUE_HEIGHT - 102;
+			
 		}
 	
 	public boolean planeEvent(){return PLANE_EVENT;}
 	public void spawnPlane(){ PLANE_EVENT = true;}
 	public void despawnPlane(){ PLANE_EVENT = false;}
+	public int getDodged() { return dodged;};
+	public Background getFrontBackground(){return bg;}
 
 }

@@ -16,6 +16,8 @@ public class AssetLoader {
 	
 	public static Texture texture2; //temporary
 	
+	public static TextureRegion bg; //temp
+	
 	public static TextureRegion rocketLeft, rocket, rocketRight, meteor, hotAirBalloon, hotAirBalloon_flipped, 
 	 							jetPlane, jetPlane_flipped, rocketFire1, rocketFire2, rocketFire3, gameOver;
 	public static Animation rocketAnimation, rocketFireAnimation;
@@ -31,11 +33,17 @@ public class AssetLoader {
 		
 		hitSounds = new Array<Sound>();
 		
+		
 		// Load the texture
 		texture = new Texture(Gdx.files.internal("data/spritesheet.png"));
 		texture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		
 		texture2 = new Texture(Gdx.files.internal("data/texture.png")); //temporary
+		
+		//Bg temp
+		bg = new TextureRegion(texture2, 0, 0, 136, 43);
+		bg.flip(false, true);
+		
 		
 		// Rocket
 		rocketLeft = new TextureRegion(texture, 0, 0, 67, 74);
