@@ -9,6 +9,19 @@ import com.me.helpers.Constants;
 
 public class ScrollableHandler 
 {
+	public static final int SCROLL_SPEED = 150;
+	
+	private final int LOW_OBSTACLE_NUM = 5;
+	private final int MID_OBSTACLE_NUM = 7;
+	private final int HI_OBSTACLE_NUM = 9;
+	
+	private final int FIRST_WAVE_TIME = 15;
+	private final int SECOND_WAVE_TIME = 30;
+	private final int THIRD_WAVE_TIME = 45;
+	
+	private int OBSTACLE_LIMIT = LOW_OBSTACLE_NUM;
+	
+	
 	private Background bg; //temp
 	
 
@@ -19,7 +32,7 @@ public class ScrollableHandler
 	
 	private int dodged = 0;
 	
-	public static final int SCROLL_SPEED = 150;
+	
 	
 	private float runTime = 0;
 	
@@ -42,6 +55,21 @@ public class ScrollableHandler
 		meteorStuff(delta);
 		//System.out.println("Runtime is: " + runTime);
 		
+		// System.out.println(numObstacles + ", " + OBSTACLE_LIMIT);
+		
+		// Update obstacle limit as time goes on
+		if (runTime <= FIRST_WAVE_TIME) {
+			OBSTACLE_LIMIT = LOW_OBSTACLE_NUM;
+		}
+		
+		if (runTime > FIRST_WAVE_TIME && runTime <= SECOND_WAVE_TIME) {
+			OBSTACLE_LIMIT = MID_OBSTACLE_NUM;
+		}
+		
+		if (runTime > SECOND_WAVE_TIME && runTime <= THIRD_WAVE_TIME) {
+			OBSTACLE_LIMIT = HI_OBSTACLE_NUM;
+		}
+		
 	}
 	
 	public void meteorStuff(float delta)
@@ -54,7 +82,7 @@ public class ScrollableHandler
 		//System.out.println("R = " + numObstacles);
 		double rMeteor = Math.random();
 		//Chance of Meteors 4%
-		if(rMeteor < 0.04 && numObstacles < 15) 
+		if(rMeteor < 0.04 && numObstacles < OBSTACLE_LIMIT) 
 		{	
 			// Add objects with down direction first
 			                        // (x position, y position, width, height, ySpeed, xSpeed, direction)
@@ -65,7 +93,8 @@ public class ScrollableHandler
 		
 		double rPlane = Math.random();
 		//Chance of Planes .4%
-		if(rPlane < 0.04 && numObstacles < 15)
+		if(rPlane < 0.04 && numObstacles < OBSTACLE_LIMIT && runTime >= SECOND_WAVE_TIME
+			)
 		{
 			flipObjectX = ((int)(rPlane * 50)) == 1 ? false : true; // Should alternate often
 			
@@ -93,7 +122,7 @@ public class ScrollableHandler
 		
 		double rHotAirBalloon = Math.random();
 		//Chance of Hot Air Balloons 4%
-		if(rHotAirBalloon < 0.04 && numObstacles < 15)
+		if(rHotAirBalloon < 0.04 && numObstacles < OBSTACLE_LIMIT && runTime >= FIRST_WAVE_TIME)
 		{
 			boolean flipObjectX2 = ((int)(rHotAirBalloon * 50)) == 1 ? false : true; // Should alternate often
 			
