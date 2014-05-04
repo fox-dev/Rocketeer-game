@@ -44,6 +44,7 @@ public class ScrollableHandler
 	private boolean ALIEN_EVENT = false;
 	
 	//other Alien flags
+	private int ALIEN_EVENT_COUNT = 0;
 	private boolean firing = false;
 	private boolean doneFiring = false;
 	private float shootDelay = 0;
@@ -66,18 +67,15 @@ public class ScrollableHandler
 	}
 	
 	public void update(float delta){
-		System.out.println(numObstacles + " " + ALIEN_EVENT);
+		System.out.println(numObstacles + " " + bulletCount);
 		runTime += delta;
 		if(ALIEN_EVENT == false){
 			meteorStuff(delta);
 		}
-		if(runTime >= 10 && doneFiring == false){
-
+		if(runTime >= 10 && ALIEN_EVENT_COUNT == 0){
 			alienStuff(delta);
 		}
-		if(runTime >= 50){
-			doneFiring = false;
-		}
+		
 		System.out.println("Runtime is: " + runTime);
 		
 		// System.out.println(numObstacles + ", " + OBSTACLE_LIMIT);
@@ -114,6 +112,8 @@ public class ScrollableHandler
 				}
 				if(o instanceof Alien){
 					ALIEN_EVENT = false;
+					ALIEN_EVENT_COUNT++;
+					bulletCount = 0;
 					
 				}
 				
@@ -136,11 +136,8 @@ public class ScrollableHandler
 		 	
 		}
 		
-		
 		x++;
 		xSpeed = (int) (40*Math.sin(Math.toDegrees(x/4)));
-		
-		System.out.println("Firing");
 		
 		iterator = obstacleList.iterator();
 		while(iterator.hasNext())
@@ -157,27 +154,21 @@ public class ScrollableHandler
 		}
 		
 		
-		if(firing == true){
-		shootDelay -= delta;
-		if(shootDelay <= 0){
-			obstacleList.add(new Projectile(Constants.TRUE_WIDTH/2 ,0,5,5,xSpeed,100));
-			numObstacles++;
-			bulletCount++;
-			
-			shootDelay += 0.1;
+		if(firing == true && bulletCount < 100){
+			shootDelay -= delta;
+			if(shootDelay <= 0){
+				obstacleList.add(new Projectile(Constants.TRUE_WIDTH/2 ,0,5,5,xSpeed,100));
+				numObstacles++;
+				bulletCount++;
+				shootDelay += 0.1;
+			}
 		}
-		}
-		
-		
+
 		if(bulletCount == 100){
 			System.out.println("Over");
 			doneFiring = true;
-			firing = false;
-			bulletCount = 0;
-			
-		}
-		
-		
+			firing = false;	
+		}	
 	}
 	
 	public void meteorStuff(float delta)
