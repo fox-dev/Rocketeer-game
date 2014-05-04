@@ -34,12 +34,22 @@ public class ScrollableHandler
 	
 	
 	
+	
 	private float runTime = 0;
 	
 	private Random r;
 	
 	//EventFlags with default - false
 	private boolean PLANE_EVENT = false;
+	private boolean alienEvent = false;
+	
+	//other
+	float shootDelay = 0;
+	int x = 0;
+	int xSpeed = 0;
+	int ySpeed = 100;
+	
+	Alien ali;
 	
 	public ScrollableHandler(){
 		
@@ -48,12 +58,20 @@ public class ScrollableHandler
 		
 		bg = new Background(0, Constants.TRUE_HEIGHT - 102, Constants.TRUE_WIDTH, 102, 15);
 		
+		ali = new Alien(Constants.TRUE_WIDTH/2 - 25,0,50,50, 0);
 	}
 	
 	public void update(float delta){
+		System.out.println(numObstacles + " " + alienEvent);
 		runTime += delta;
-		meteorStuff(delta);
-		//System.out.println("Runtime is: " + runTime);
+		if(alienEvent == false){
+			meteorStuff(delta);
+		}
+		if(runTime >= 5 && runTime <= 11){
+			
+			alienStuff(delta);
+		}
+		System.out.println("Runtime is: " + runTime);
 		
 		// System.out.println(numObstacles + ", " + OBSTACLE_LIMIT);
 		
@@ -69,6 +87,65 @@ public class ScrollableHandler
 		if (runTime > SECOND_WAVE_TIME && runTime <= THIRD_WAVE_TIME) {
 			OBSTACLE_LIMIT = HI_OBSTACLE_NUM;
 		}
+		
+		iterator = obstacleList.iterator();
+		while(iterator.hasNext())
+		{	
+			AbstractObstacle o = iterator.next();
+			o.update(delta);
+			
+			if(alienEvent == false && (o instanceof Alien)){
+				o.velocity.y = 10;
+			}
+			
+	
+			if(o.isScrolledDown())
+			{
+				if(o instanceof JetPlane){
+					PLANE_EVENT = false;
+				}
+				
+				iterator.remove();
+				numObstacles--;
+				dodged++;
+			}
+			
+		}
+		
+	}
+	
+	public void alienStuff(float delta){
+		
+		
+		if(alienEvent == false){
+			obstacleList.add(ali);
+		 	numObstacles++;
+		 	alienEvent = true;
+		}
+		
+		
+		
+		x++;
+		xSpeed = (int) (40*Math.sin(Math.toDegrees(x/4)));
+		
+		System.out.println("Firing");
+		
+		shootDelay -= delta;
+		if(shootDelay <= 0){
+			obstacleList.add(new Projectile(Constants.TRUE_WIDTH/2 ,0,5,5,xSpeed,100));
+			numObstacles++;
+			
+			shootDelay += 0.1;
+		}
+		
+		
+		
+		if(runTime > 10){
+			System.out.println("Over");
+			alienEvent = false;
+			
+		}
+		
 		
 	}
 	
@@ -143,24 +220,7 @@ public class ScrollableHandler
 			}
 		}
 		
-		iterator = obstacleList.iterator();
-		while(iterator.hasNext())
-		{	
-			AbstractObstacle o = iterator.next();
-			o.update(delta);
-			
 	
-			if(o.isScrolledDown())
-			{
-				if(o instanceof JetPlane){
-					PLANE_EVENT = false;
-				}
-				iterator.remove();
-				numObstacles--;
-				dodged++;
-			}
-			
-		}
 		
 	}
 	

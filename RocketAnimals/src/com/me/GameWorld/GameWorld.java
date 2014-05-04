@@ -45,7 +45,7 @@ public class GameWorld {
 	}
 	
 	public void update(float delta) {
-		System.out.println(("CurrentState: " + currentState));
+		//System.out.println(("CurrentState: " + currentState));
 		switch(currentState) {
 		
 		case READY:
@@ -103,7 +103,7 @@ public class GameWorld {
 					//scroller.removeObject((HotAirBalloon)tempObj);
 					AssetLoader.hitSounds.random().play();
 					AssetLoader.hitSounds.random().play();
-					gameOver();
+					//gameOver();
 					
 				}
 				
@@ -113,7 +113,7 @@ public class GameWorld {
 					scroller.despawnPlane();
 					//scroller.removeObject((JetPlane)tempObj);
 					AssetLoader.hitSounds.random().play();
-					gameOver();
+					//gameOver();
 					
 				}
 			}
@@ -121,7 +121,7 @@ public class GameWorld {
 			{
 				//scroller.removeObject(tempObj);
 				AssetLoader.hitSounds.random().play();
-				gameOver();
+				//gameOver();
 			}
 			
 			/*if(tempObj instanceof Meteor){
