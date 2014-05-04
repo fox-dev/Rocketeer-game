@@ -16,6 +16,8 @@ public class Scrollable {
     
     protected float rotation; // Can be used to rotate object
     
+    private float deltaScaler = 0;
+    
     ////////////////////////////////////////////////////
     
     public Scrollable(float x, float y, int width, int height, float ySpeed) {
@@ -34,23 +36,25 @@ public class Scrollable {
     
 	////////////////////////////////////////////////////
 	    
-	public Scrollable(float x, float y, int width, int height, float ySpeed, float xSpeed) {
-	position = new Vector2(x, y);
-	velocity = new Vector2(xSpeed, ySpeed);
+	public Scrollable(float x, float y, int width, int height, float xSpeed, float ySpeed) {
+		position = new Vector2(x, y);
+		velocity = new Vector2(xSpeed, ySpeed);
 	
-	this.width = width;
-	this.height = height;
+		this.width = width; 
+		this.height = height;
 	
-	isScrolledDown = false;
+		isScrolledDown = false;
 	
-	collisionRect = new Rectangle(x,y,width,height);
+		collisionRect = new Rectangle(x,y,width,height);
 	
-	rotation = 0;
+		rotation = 0;
 	}
     
     ////////////////////////////////////////////////////
     
     public void update(float delta){
+    	//Get delta scaler
+    	deltaScaler = delta;
     
 		// Move the obstacle using velocity
 		position.add(velocity.cpy().scl(delta));
@@ -91,5 +95,14 @@ public class Scrollable {
 	public float getRotation() { return rotation; }
  	public boolean isScrolledDown() { return isScrolledDown; }
  	public Rectangle getRect() { return collisionRect; }
+ 	
+ // Set Methods for velocity
+ 	
+ 	public void setVelocity(int x, int y){
+ 		velocity = new Vector2(x, y);
+ 		//position.add(velocity.cpy().scl(deltaScaler));
+ 		 
+ 	}
+ 	
  	
 }
