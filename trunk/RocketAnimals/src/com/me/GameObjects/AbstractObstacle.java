@@ -17,8 +17,15 @@ public class AbstractObstacle extends Scrollable{
 		setDirection(scrollDirection);
 	}
 	
+	public AbstractObstacle(float x, float y, int width, int height, float xSpeed, float ySpeed){
+		super(x, y, width, height, xSpeed, ySpeed);
+
+		//scrollDirection = Constants.DIRECTION.DOWN;
+		//setDirection(scrollDirection);
+	}
+	
 	public AbstractObstacle(float x, float y, int width, int height, float ySpeed, float xSpeed, Constants.DIRECTION direction) {
-		super(x, y, width, height, ySpeed, xSpeed);
+		super(x, y, width, height, xSpeed, ySpeed);
 		
 		scrollDirection = direction;
 		setDirection(scrollDirection);
@@ -38,6 +45,7 @@ public class AbstractObstacle extends Scrollable{
 		// Direction logic
 		switch (scrollDirection) 
 		{
+	
 			case DOWN:
 				velocity.x = 0;
 				velocity.y = tempYSpeed;
@@ -58,10 +66,5 @@ public class AbstractObstacle extends Scrollable{
 	}
 	public Constants.DIRECTION getDirection() { return scrollDirection; }
 	
-	public void moveDown(float delta){
-		this.velocity.y = 100*delta;
-		
-	}
 	
-
 }

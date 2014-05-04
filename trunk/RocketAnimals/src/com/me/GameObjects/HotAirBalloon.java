@@ -12,7 +12,8 @@ public class HotAirBalloon extends AbstractObstacle{
 			float scrollSpeed) {
 		super(x, y, width, height, scrollSpeed);
 			
-		// collisionRect = new Rectangle(x,y,width,height);
+		//collisionRect = new Rectangle(x,y,width,height);
+		collisionRect.set(position.x + 10, position.y + 60, width - 28, height - 60);
 		collisionCirc = new Circle();
 	}
 	
@@ -20,7 +21,8 @@ public class HotAirBalloon extends AbstractObstacle{
 			float scrollSpeed, float xSpeed, Constants.DIRECTION direction) {
 		super(x, y, width, height, scrollSpeed, xSpeed, direction);
 		
-		// collisionRect = new Rectangle(x,y,width,height);
+		//collisionRect = new Rectangle(x,y,width,height);
+		collisionRect.set(position.x + 10, position.y + 60, width - 28, height - 60);
 		collisionCirc = new Circle();
 	}
 	

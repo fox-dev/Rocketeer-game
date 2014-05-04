@@ -213,7 +213,7 @@ public class GameRenderer {
 			if(items instanceof Projectile){
 				shapeRenderer.circle(((Projectile) items).getCirc().x, ((Projectile) items).getCirc().y, ((Projectile) items).getCirc().radius);
 			}
-			else shapeRenderer.rect(items.getX(), items.getY(), items.getWidth(), items.getHeight());
+			else shapeRenderer.rect(items.getRect().x, items.getRect().y, items.getRect().width, items.getRect().height);
 	
 		}
 	}

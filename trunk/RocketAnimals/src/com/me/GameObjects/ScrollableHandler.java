@@ -41,15 +41,19 @@ public class ScrollableHandler
 	
 	//EventFlags with default - false
 	private boolean PLANE_EVENT = false;
-	private boolean alienEvent = false;
+	private boolean ALIEN_EVENT = false;
 	
-	//other
-	float shootDelay = 0;
-	int x = 0;
-	int xSpeed = 0;
-	int ySpeed = 100;
+	//other Alien flags
+	private boolean firing = false;
+	private boolean doneFiring = false;
+	private float shootDelay = 0;
+	private int x = 0;
+	private int bulletCount = 0;
+	private int xSpeed = 0;
+	private int ySpeed = 100;
 	
-	Alien ali;
+
+	
 	
 	public ScrollableHandler(){
 		
@@ -58,18 +62,21 @@ public class ScrollableHandler
 		
 		bg = new Background(0, Constants.TRUE_HEIGHT - 102, Constants.TRUE_WIDTH, 102, 15);
 		
-		ali = new Alien(Constants.TRUE_WIDTH/2 - 25,0,50,50, 0);
+		
 	}
 	
 	public void update(float delta){
-		System.out.println(numObstacles + " " + alienEvent);
+		System.out.println(numObstacles + " " + ALIEN_EVENT);
 		runTime += delta;
-		if(alienEvent == false){
+		if(ALIEN_EVENT == false){
 			meteorStuff(delta);
 		}
-		if(runTime >= 5 && runTime <= 11){
-			
+		if(runTime >= 10 && doneFiring == false){
+
 			alienStuff(delta);
+		}
+		if(runTime >= 50){
+			doneFiring = false;
 		}
 		System.out.println("Runtime is: " + runTime);
 		
@@ -94,8 +101,9 @@ public class ScrollableHandler
 			AbstractObstacle o = iterator.next();
 			o.update(delta);
 			
-			if(alienEvent == false && (o instanceof Alien)){
-				o.moveDown(delta); 
+			if((o instanceof Alien) && doneFiring == true){
+				o.setVelocity(0, 80);
+				
 			}
 			
 	
@@ -103,6 +111,10 @@ public class ScrollableHandler
 			{
 				if(o instanceof JetPlane){
 					PLANE_EVENT = false;
+				}
+				if(o instanceof Alien){
+					ALIEN_EVENT = false;
+					
 				}
 				
 				iterator.remove();
@@ -117,12 +129,12 @@ public class ScrollableHandler
 	public void alienStuff(float delta){
 		
 		
-		if(alienEvent == false){
-			obstacleList.add(ali);
+		if(ALIEN_EVENT == false){
+			ALIEN_EVENT = true;
+			obstacleList.add(new Alien(0 - 50,0,50,50,50,0));
 		 	numObstacles++;
-		 	alienEvent = true;
+		 	
 		}
-		
 		
 		
 		x++;
@@ -130,19 +142,38 @@ public class ScrollableHandler
 		
 		System.out.println("Firing");
 		
+		iterator = obstacleList.iterator();
+		while(iterator.hasNext())
+		{	
+			AbstractObstacle o = iterator.next();
+		
+			
+			if(o instanceof Alien){
+				if(((Alien) o).inPosition()){
+					firing  = true;
+				}
+				
+			}
+		}
+		
+		
+		if(firing == true){
 		shootDelay -= delta;
 		if(shootDelay <= 0){
 			obstacleList.add(new Projectile(Constants.TRUE_WIDTH/2 ,0,5,5,xSpeed,100));
 			numObstacles++;
+			bulletCount++;
 			
 			shootDelay += 0.1;
 		}
+		}
 		
 		
-		
-		if(runTime > 10){
+		if(bulletCount == 100){
 			System.out.println("Over");
-			alienEvent = false;
+			doneFiring = true;
+			firing = false;
+			bulletCount = 0;
 			
 		}
 		
