@@ -95,7 +95,7 @@ public class ScrollableHandler
 			o.update(delta);
 			
 			if(alienEvent == false && (o instanceof Alien)){
-				o.velocity.y = 10;
+				o.moveDown(delta); 
 			}
 			
 	
