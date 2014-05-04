@@ -57,4 +57,6 @@ public class AbstractObstacle extends Scrollable{
 		}
 	}
 	public Constants.DIRECTION getDirection() { return scrollDirection; }
+	
+
 }

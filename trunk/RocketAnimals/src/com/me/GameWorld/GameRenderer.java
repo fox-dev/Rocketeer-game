@@ -18,6 +18,7 @@ import com.me.GameObjects.Background;
 import com.me.GameObjects.HotAirBalloon;
 import com.me.GameObjects.JetPlane;
 import com.me.GameObjects.Meteor;
+import com.me.GameObjects.Projectile;
 import com.me.GameObjects.Rocket;
 import com.me.helpers.AssetLoader;
 import com.me.helpers.Constants;
@@ -80,9 +81,14 @@ public class GameRenderer {
                 (int) viewport.width, (int) viewport.height);
 		
 		// Fill screen with black
-		//Gdx.gl.glClearColor(0.11f, 0.11f, 0.11f, 1f);
-		Gdx.gl.glClearColor(55 / 255.0f, 80 / 255.0f, 100 / 255.0f, 1);
+		Gdx.gl.glClearColor(0.11f, 0.11f, 0.11f, 1f);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		
+		// Draw Background color
+		shapeRenderer.begin(ShapeType.Filled);
+		shapeRenderer.setColor(55 / 255.0f, 80 / 255.0f, 100 / 255.0f, 1);
+		shapeRenderer.rect(0, 0, Constants.TRUE_WIDTH, Constants.TRUE_HEIGHT);
+		shapeRenderer.end();
 		
 		// Draw sprites
 		spriteBatch.begin();
@@ -203,6 +209,9 @@ public class GameRenderer {
 			if(items instanceof HotAirBalloon){
 				shapeRenderer.circle(((HotAirBalloon) items).getCirc().x, ((HotAirBalloon) items).getCirc().y, ((HotAirBalloon) items).getCirc().radius);
 				shapeRenderer.rect(items.getRect().x, items.getRect().y, items.getRect().width, items.getRect().height);
+			}
+			if(items instanceof Projectile){
+				shapeRenderer.circle(((Projectile) items).getCirc().x, ((Projectile) items).getCirc().y, ((Projectile) items).getCirc().radius);
 			}
 			else shapeRenderer.rect(items.getX(), items.getY(), items.getWidth(), items.getHeight());
 	

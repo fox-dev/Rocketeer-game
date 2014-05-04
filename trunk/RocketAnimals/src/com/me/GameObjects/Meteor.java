@@ -7,6 +7,7 @@ public class Meteor extends AbstractObstacle{
 	private int rotateNum;
 	
 	public Meteor(float x, float y, int width, int height, float scrollSpeed) {
+		
 		super(x, y, width, height, scrollSpeed);
 
 		rotation = 0;
