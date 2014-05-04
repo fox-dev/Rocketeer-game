@@ -46,9 +46,9 @@ public class AssetLoader {
 		
 		
 		// Rocket
-		rocketLeft = new TextureRegion(texture, 0, 0, 67, 74);
-		rocket = new TextureRegion(texture, 103, 0, 84, 74); // Spritesheet may need fixing
-		rocketRight = new TextureRegion(texture, 222, 0, 67, 74);
+		rocketLeft = new TextureRegion(texture, 0, 0, 45, 48);
+		rocket = new TextureRegion(texture, 58, 0, 45, 48); // Spritesheet may need fixing
+		rocketRight = new TextureRegion(texture, 115, 0, 45, 48	);
 		
 		rocketLeft.flip(false, true);
 		rocket.flip(false, true);
@@ -60,9 +60,9 @@ public class AssetLoader {
 		rocketAnimation.setPlayMode(Animation.LOOP_PINGPONG);
 		
 		// Rocket fire
-		rocketFire1 = new TextureRegion(texture, 10, 82, 53, 63);
-		rocketFire2 = new TextureRegion(texture, 118, 82, 53, 63);
-		rocketFire3 = new TextureRegion(texture, 226, 82, 53, 63);
+		rocketFire1 = new TextureRegion(texture, 3, 48, 39, 30);
+		rocketFire2 = new TextureRegion(texture, 61, 48, 39, 30);
+		rocketFire3 = new TextureRegion(texture, 118, 48, 39, 30);
 		
 		rocketFire1.flip(false, true);
 		rocketFire2.flip(false, true);
@@ -74,18 +74,18 @@ public class AssetLoader {
 		rocketFireAnimation.setPlayMode(Animation.LOOP);
 		
 		// Meteor
-		meteor = new TextureRegion(texture, 337, 0, 81, 80); //change sprite later
+		meteor = new TextureRegion(texture, 192, 6, 49, 48); //change sprite later
 		
 		//HotAirBalloon
-		hotAirBalloon = new TextureRegion(texture, 0, 161, 152, 240);
+		hotAirBalloon = new TextureRegion(texture, 7, 90, 83, 139);
 		hotAirBalloon.flip(false, true);
-		hotAirBalloon_flipped = new TextureRegion(texture, 0, 161, 152, 240);
+		hotAirBalloon_flipped = new TextureRegion(texture, 7, 90, 83, 139);
 		hotAirBalloon_flipped.flip(true, true);
 		
 		// JetPlane
-		jetPlane = new TextureRegion(texture, 179, 156, 239, 141);
+		jetPlane = new TextureRegion(texture, 97, 90, 158, 58);
 		jetPlane.flip(false, true);
-		jetPlane_flipped = new TextureRegion(texture, 179, 156, 239, 141);
+		jetPlane_flipped = new TextureRegion(texture, 97, 90, 158, 58);
 		jetPlane_flipped.flip(true, true);
 		
 		
