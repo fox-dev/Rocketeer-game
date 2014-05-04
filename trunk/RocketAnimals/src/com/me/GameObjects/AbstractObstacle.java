@@ -58,5 +58,10 @@ public class AbstractObstacle extends Scrollable{
 	}
 	public Constants.DIRECTION getDirection() { return scrollDirection; }
 	
+	public void moveDown(float delta){
+		this.velocity.y = 100*delta;
+		
+	}
+	
 
 }
