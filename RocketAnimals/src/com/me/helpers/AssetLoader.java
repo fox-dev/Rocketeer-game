@@ -19,6 +19,9 @@ public class AssetLoader {
 	public static Texture bulletTexture; //temp
 	public static TextureRegion bullets;
 	
+	public static Texture planeTexture; //temp
+	public static TextureRegion plane;
+	
 	public static TextureRegion bg; //temp
 
 	
@@ -43,6 +46,11 @@ public class AssetLoader {
 		texture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		
 		texture2 = new Texture(Gdx.files.internal("data/texture.png")); //temporary
+		
+		planeTexture = new Texture(Gdx.files.internal("data/plane.png")); //temporary
+		plane = new TextureRegion(planeTexture, 0, 0, 476, 196);
+		plane.flip(false, true);
+		
 		bulletTexture = new Texture(Gdx.files.internal("data/bullets.png")); //temporary
 		bullets = new TextureRegion(bulletTexture, 8, 24, 16, 16);
 		
