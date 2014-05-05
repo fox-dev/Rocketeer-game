@@ -16,7 +16,11 @@ public class AssetLoader {
 	
 	public static Texture texture2; //temporary
 	
+	public static Texture bulletTexture; //temp
+	public static TextureRegion bullets;
+	
 	public static TextureRegion bg; //temp
+
 	
 	public static TextureRegion rocketLeft, rocket, rocketRight, meteor, hotAirBalloon, hotAirBalloon_flipped, 
 	 							jetPlane, jetPlane_flipped, rocketFire1, rocketFire2, rocketFire3, gameOver;
@@ -39,6 +43,8 @@ public class AssetLoader {
 		texture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		
 		texture2 = new Texture(Gdx.files.internal("data/texture.png")); //temporary
+		bulletTexture = new Texture(Gdx.files.internal("data/bullets.png")); //temporary
+		bullets = new TextureRegion(bulletTexture, 8, 24, 16, 16);
 		
 		//Bg temp
 		bg = new TextureRegion(texture2, 0, 0, 136, 43);
