@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.me.GameObjects.AbstractObstacle;
+import com.me.GameObjects.Alien;
 import com.me.GameObjects.Background;
 import com.me.GameObjects.CargoPlane;
 import com.me.GameObjects.HotAirBalloon;
@@ -209,6 +210,10 @@ public class GameRenderer {
 			{
 				spriteBatch.draw(plane, items.getX(), items.getY(), items.getWidth(), items.getHeight());
 			}
+			else if(items instanceof Alien){
+				spriteBatch.draw(rocketMid, items.getX(), items.getY(), items.getWidth(), items.getHeight());
+			}
+			
 		}
 	}
 	
