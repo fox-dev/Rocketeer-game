@@ -89,7 +89,7 @@ public class ScrollableHandler
 		if(ALIEN_EVENT == false && CARGO_PLANE_EVENT == false){
 			meteorStuff(delta);
 		}
-		if((doneSpawning == false) && CARGOPLANE_EVENT_COUNT == 0){
+		if(runTime >= 7 && CARGOPLANE_EVENT_COUNT == 0){
 			cargoPlaneStuff(delta);
 		}
 		if(runTime >= 30 && ALIEN_EVENT_COUNT == 0){
