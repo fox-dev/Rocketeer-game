@@ -260,7 +260,7 @@ public class ScrollableHandler
 		if(firing == true && bulletCount < 100){
 			shootDelay -= delta;
 			if(shootDelay <= 0){
-				obstacleList.add(new Projectile(Constants.TRUE_WIDTH/2 ,0,5,5,xSpeed,100));
+				obstacleList.add(new Projectile(Constants.TRUE_WIDTH/2 ,0,16,16,xSpeed,100));
 				numObstacles++;
 				bulletCount++;
 				shootDelay += 0.1;

@@ -45,6 +45,9 @@ public class GameRenderer {
 	// Game sprites;
 	TextureRegion rocketLeft, rocketMid, rocketRight, sMeteor, hotAirBalloon, hotAirBalloon_flipped, 
 	 			jetPlane, jetPlane_flipped, fire1, fire2, fire3, gameOver;
+	
+	TextureRegion bullets;
+	
 	Animation rocketAnimation, rocketFireAnimation;
 	
 	//temp
@@ -195,6 +198,10 @@ public class GameRenderer {
 				else
 					spriteBatch.draw(jetPlane, items.getX(), items.getY(), items.getWidth(), items.getHeight());
 			}
+			else if(items instanceof Projectile)
+			{
+				spriteBatch.draw(bullets, items.getX(), items.getY(), items.getWidth(), items.getHeight());
+			}
 		}
 	}
 	
@@ -240,6 +247,8 @@ public class GameRenderer {
 		gameOver = AssetLoader.gameOver;
 		
 		bg = AssetLoader.bg;
+		
+		bullets = AssetLoader.bullets;
 		
 		
 	}

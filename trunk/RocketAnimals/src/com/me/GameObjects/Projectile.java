@@ -27,7 +27,7 @@ public class Projectile extends AbstractObstacle{
 	public void update(float delta){
 		super.update(delta);
 		
-		collisionCirc.set(position.x + (width/2), position.y + (height/2), 5);
+		collisionCirc.set(position.x + (width/2), position.y + (height/2), 8);
 	}
 	
 	
