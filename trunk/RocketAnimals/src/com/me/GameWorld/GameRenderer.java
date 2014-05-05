@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.me.GameObjects.AbstractObstacle;
 import com.me.GameObjects.Background;
+import com.me.GameObjects.CargoPlane;
 import com.me.GameObjects.HotAirBalloon;
 import com.me.GameObjects.JetPlane;
 import com.me.GameObjects.Meteor;
@@ -47,6 +48,8 @@ public class GameRenderer {
 	 			jetPlane, jetPlane_flipped, fire1, fire2, fire3, gameOver;
 	
 	TextureRegion bullets;
+	
+	TextureRegion plane;
 	
 	Animation rocketAnimation, rocketFireAnimation;
 	
@@ -202,6 +205,10 @@ public class GameRenderer {
 			{
 				spriteBatch.draw(bullets, items.getX(), items.getY(), items.getWidth(), items.getHeight());
 			}
+			else if(items instanceof CargoPlane)
+			{
+				spriteBatch.draw(plane, items.getX(), items.getY(), items.getWidth(), items.getHeight());
+			}
 		}
 	}
 	
@@ -249,7 +256,7 @@ public class GameRenderer {
 		bg = AssetLoader.bg;
 		
 		bullets = AssetLoader.bullets;
-		
+		plane = AssetLoader.plane;
 		
 	}
 	

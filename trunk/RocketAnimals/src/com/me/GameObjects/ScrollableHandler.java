@@ -160,9 +160,10 @@ public class ScrollableHandler
 	
 	public void cargoPlaneStuff(float delta){
 		int xDrop = 0;
+		int yDrop = 0;
 		if(CARGO_PLANE_EVENT == false){
 			CARGO_PLANE_EVENT = true;
-			obstacleList.add(new CargoPlane(Constants.TRUE_WIDTH/2 - 125,0-100,250,100,0,25));
+			obstacleList.add(new CargoPlane(Constants.TRUE_WIDTH/2 - 150,0-150,300,150,0,25));
 			numObstacles++;
 			
 		}
@@ -176,6 +177,7 @@ public class ScrollableHandler
 			if(o instanceof CargoPlane){
 				((CargoPlane) o).stalk(playerRocket);
 				xDrop = (int) o.getX() + (int) o.getWidth()/2;
+				yDrop = (int) o.getY() + (int) o.getHeight();
 				
 			}
 		}
@@ -191,7 +193,7 @@ public class ScrollableHandler
 		{	
 			// Add objects with down direction first
 			                        // (x position, y position, width, height, ySpeed, xSpeed, direction)
-			obstacleList.add(new Meteor(xDrop - 15, -30, 30, 30, randInt(Constants.METEOR_MIN_SPEED_Y/2, Constants.METEOR_MAX_SPEED_Y), 0f, Constants.DIRECTION.DOWN));
+			obstacleList.add(new Meteor(xDrop - 15, yDrop, 30, 30, randInt(Constants.METEOR_MIN_SPEED_Y/2, Constants.METEOR_MAX_SPEED_Y), 0f, Constants.DIRECTION.DOWN));
 			numObstacles++;
 			spawnCount++;
 	
