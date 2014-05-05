@@ -77,8 +77,6 @@ public class ScrollableHandler
 		
 		
 		bg = new Background(0, Constants.TRUE_HEIGHT - 102, Constants.TRUE_WIDTH, 102, 15);
-		
-		
 	}
 	                   
 	public void update(float delta){

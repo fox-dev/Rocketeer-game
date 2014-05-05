@@ -221,19 +221,11 @@ public class GameRenderer {
 		
 		// Draw boundary for player
 		shapeRenderer.setColor(Color.GREEN);
-		shapeRenderer.rect(world.getRocket().getX(), world.getRocket().getY(), world.getRocket().getWidth(), world.getRocket().getHeight());
+		shapeRenderer.polygon(world.getRocket().getPolygon().getTransformedVertices());
 		
-		// Now draw boundaries for all obstacles
+		// Draw the rest
 		for (AbstractObstacle items : world.getScroller().getAbstractObstacles()) {
-			if(items instanceof HotAirBalloon){
-				shapeRenderer.circle(((HotAirBalloon) items).getCirc().x, ((HotAirBalloon) items).getCirc().y, ((HotAirBalloon) items).getCirc().radius);
-				shapeRenderer.rect(items.getRect().x, items.getRect().y, items.getRect().width, items.getRect().height);
-			}
-			if(items instanceof Projectile){
-				shapeRenderer.circle(((Projectile) items).getCirc().x, ((Projectile) items).getCirc().y, ((Projectile) items).getCirc().radius);
-			}
-			else shapeRenderer.rect(items.getRect().x, items.getRect().y, items.getRect().width, items.getRect().height);
-	
+			shapeRenderer.polygon(items.getPolygon().getTransformedVertices());
 		}
 	}
 	

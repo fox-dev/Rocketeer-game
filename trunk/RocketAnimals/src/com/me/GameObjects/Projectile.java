@@ -1,6 +1,7 @@
 package com.me.GameObjects;
 
 import com.badlogic.gdx.math.Circle;
+import com.me.helpers.AssetLoader;
 
 public class Projectile extends AbstractObstacle{
 	
@@ -20,7 +21,8 @@ public class Projectile extends AbstractObstacle{
 		
 		collisionCirc = new Circle();
 		
-		
+		hitBox.setVertices(bullet_polygon);
+		hitBox.setScale((float)((double)width / AssetLoader.bullets.getRegionWidth()), (float)((double)height / AssetLoader.bullets.getRegionHeight()));
 	}
 	
 	@Override

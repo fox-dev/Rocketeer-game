@@ -1,6 +1,6 @@
 package com.me.GameObjects;
 
-import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.me.helpers.Constants;
 
@@ -12,7 +12,8 @@ public class Scrollable {
     protected int width;
     protected int height;
     protected boolean isScrolledDown;
-    protected Rectangle collisionRect; // Used for very crude collision detection
+    
+    protected Polygon hitBox; // Hitbox
     
     protected float rotation; // Can be used to rotate object
     
@@ -29,7 +30,14 @@ public class Scrollable {
         
         isScrolledDown = false;
         
-        collisionRect = new Rectangle(x,y,width,height);
+        // Make a default hitbox
+        hitBox = new Polygon(new float[] {
+        		0,0,
+        		width,0,
+        		width,height,
+        		0, height
+        });
+        hitBox.setOrigin(position.x, position.y);
         
         rotation = 0;
     }
@@ -44,9 +52,14 @@ public class Scrollable {
 		this.height = height;
 	
 		isScrolledDown = false;
-	
-		collisionRect = new Rectangle(x,y,width,height);
-	
+
+        hitBox = new Polygon(new float[] {
+        		0,0,
+        		width,0,
+        		width,height,
+        		0, height
+        });
+
 		rotation = 0;
 	}
     
@@ -58,11 +71,9 @@ public class Scrollable {
     
 		// Move the obstacle using velocity
 		position.add(velocity.cpy().scl(delta));
-		
-		// Move the rectangle to the new position
-		collisionRect.setPosition(position);
-		
-		// If the Scrollable object is no longer visible:
+	
+		hitBox.setPosition(position.x, position.y);
+
         if (((position.y + height) > 480 + height) || (position.y + height <= 0) || (((position.x + width < 0) || position.x - width > Constants.TRUE_WIDTH))) {
             isScrolledDown = true;
         }
@@ -94,7 +105,7 @@ public class Scrollable {
 	public float getMiddleY() { return height / 2; }
 	public float getRotation() { return rotation; }
  	public boolean isScrolledDown() { return isScrolledDown; }
- 	public Rectangle getRect() { return collisionRect; }
+ 	public Polygon getPolygon() { return hitBox; }
  	
  // Set Methods for velocity
  	
