@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.Random;
 
 import com.badlogic.gdx.utils.Array;
+import com.me.GameWorld.GameWorld;
 import com.me.helpers.Constants;
 
 
@@ -32,16 +33,18 @@ public class ScrollableHandler
 	
 	private int dodged = 0;
 	
-	
-	
-	
 	private float runTime = 0;
 	
 	private Random r;
 	
+	//To keep track of rocket position
+	private Rocket playerRocket;
+	
+	
 	//EventFlags with default - false
 	private boolean PLANE_EVENT = false;
 	private boolean ALIEN_EVENT = false;
+	private boolean CARGO_PLANE_EVENT = false;
 	
 	//other Alien flags
 	private int ALIEN_EVENT_COUNT = 0;
@@ -53,28 +56,46 @@ public class ScrollableHandler
 	private int xSpeed = 0;
 	private int ySpeed = 100;
 	
+	//other CargoPlane flags
+	private int CARGOPLANE_EVENT_COUNT = 0;
+	private boolean spawning = false;
+	private boolean doneSpawning = false;
+	private int spawnCount = 0;
+	
+	
+	
+	
 
 	
 	
 	public ScrollableHandler(){
 		
+		
 		//iterator = new AbstractObstacle(0, 0, 30, 30, SCROLL_SPEED); //using default bird sprite, change sprite and position later
 		r = new Random();
+		
+		
 		
 		bg = new Background(0, Constants.TRUE_HEIGHT - 102, Constants.TRUE_WIDTH, 102, 15);
 		
 		
 	}
-	
+	                   
 	public void update(float delta){
-		System.out.println(numObstacles + " " + bulletCount);
+		System.out.println(numObstacles + " " + spawnCount);
 		runTime += delta;
-		if(ALIEN_EVENT == false){
+		
+		
+		if(ALIEN_EVENT == false && CARGO_PLANE_EVENT == false){
 			meteorStuff(delta);
 		}
-		if(runTime >= 10 && ALIEN_EVENT_COUNT == 0){
+		if((doneSpawning == false) && CARGOPLANE_EVENT_COUNT == 0){
+			cargoPlaneStuff(delta);
+		}
+		if(runTime >= 30 && ALIEN_EVENT_COUNT == 0){
 			alienStuff(delta);
 		}
+		
 		
 		System.out.println("Runtime is: " + runTime);
 		
@@ -104,6 +125,11 @@ public class ScrollableHandler
 				
 			}
 			
+			if((o instanceof CargoPlane) && doneSpawning == true){
+				o.setVelocity(0, -30);
+				
+			}
+			
 	
 			if(o.isScrolledDown())
 			{
@@ -116,6 +142,11 @@ public class ScrollableHandler
 					bulletCount = 0;
 					
 				}
+				if(o instanceof CargoPlane){
+					CARGO_PLANE_EVENT = false;
+					CARGOPLANE_EVENT_COUNT++;
+					spawnCount = 0;
+				}
 				
 				iterator.remove();
 				numObstacles--;
@@ -126,8 +157,80 @@ public class ScrollableHandler
 		
 	}
 	
-	public void alienStuff(float delta){
+	
+	public void cargoPlaneStuff(float delta){
+		int xDrop = 0;
+		if(CARGO_PLANE_EVENT == false){
+			CARGO_PLANE_EVENT = true;
+			obstacleList.add(new CargoPlane(Constants.TRUE_WIDTH/2 - 125,0-100,250,100,0,25));
+			numObstacles++;
+			
+		}
 		
+		iterator = obstacleList.iterator();
+		while(iterator.hasNext())
+		{	
+			AbstractObstacle o = iterator.next();
+		
+			
+			if(o instanceof CargoPlane){
+				((CargoPlane) o).stalk(playerRocket);
+				xDrop = (int) o.getX() + (int) o.getWidth()/2;
+				
+			}
+		}
+		
+		System.out.println("xdrop is: " + xDrop);
+		int eventInt = randInt(0,10);
+		//System.out.println(eventInt);
+		
+		//System.out.println("R = " + numObstacles);
+		double rMeteor = Math.random();
+		//Chance of Meteors 4%
+		if(rMeteor < 0.06 && numObstacles < 8) 
+		{	
+			// Add objects with down direction first
+			                        // (x position, y position, width, height, ySpeed, xSpeed, direction)
+			obstacleList.add(new Meteor(xDrop - 15, -30, 30, 30, randInt(Constants.METEOR_MIN_SPEED_Y/2, Constants.METEOR_MAX_SPEED_Y), 0f, Constants.DIRECTION.DOWN));
+			numObstacles++;
+			spawnCount++;
+	
+		}
+		
+		
+		
+		double rHotAirBalloon = Math.random();
+		//Chance of Hot Air Balloons 4%
+		if(rHotAirBalloon < 0.04 && numObstacles < OBSTACLE_LIMIT && runTime >= FIRST_WAVE_TIME)
+		{
+			boolean flipObjectX2 = ((int)(rHotAirBalloon * 50)) == 1 ? false : true; // Should alternate often
+			
+			if (flipObjectX2) 
+			{
+				if(runTime >= 0 && runTime <= 100 && (eventInt == 1 ||  eventInt == 5 || eventInt == 7) )
+				{
+				 	obstacleList.add(new HotAirBalloon(Constants.TRUE_WIDTH/2 - 31, -100, 63, 100, randInt(Constants.BALLOON_MIN_Y_SPEED, Constants.BALLOON_MAX_Y_SPEED), randInt(Constants.BALLOON_MIN_X_SPEED, Constants.BALLOON_MAX_X_SPEED), Constants.DIRECTION.DOWN));
+				 	numObstacles++;
+				}
+			} 
+			else 
+			{
+				if(runTime >= 0 && runTime <= 100){
+				 	obstacleList.add(new HotAirBalloon(Constants.TRUE_WIDTH/2 - 31, -100, 63, 100, randInt(Constants.BALLOON_MIN_Y_SPEED,Constants.BALLOON_MAX_Y_SPEED), randInt(Constants.BALLOON_MIN_X_SPEED, Constants.BALLOON_MAX_X_SPEED), Constants.DIRECTION.DOWN));
+				 	numObstacles++;
+				 	spawnCount++;
+				}
+			}
+		}
+		
+		if(spawnCount == 30){
+			doneSpawning = true;
+			spawning = false;	
+		}
+		
+		
+	}
+	public void alienStuff(float delta){
 		
 		if(ALIEN_EVENT == false){
 			ALIEN_EVENT = true;
@@ -165,7 +268,6 @@ public class ScrollableHandler
 		}
 
 		if(bulletCount == 100){
-			System.out.println("Over");
 			doneFiring = true;
 			firing = false;	
 		}	
@@ -299,5 +401,10 @@ public class ScrollableHandler
 	public void despawnPlane(){ PLANE_EVENT = false;}
 	public int getDodged() { return dodged;};
 	public Background getFrontBackground(){return bg;}
+	
+	//Set rocket
+	public void setRocket(Rocket rocket){
+		playerRocket = rocket;
+	}
 
 }

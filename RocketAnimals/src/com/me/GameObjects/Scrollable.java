@@ -63,7 +63,7 @@ public class Scrollable {
 		collisionRect.setPosition(position);
 		
 		// If the Scrollable object is no longer visible:
-        if (((position.y + height) > 480 + height) || (((position.x + width < 0) || position.x - width > Constants.TRUE_WIDTH))) {
+        if (((position.y + height) > 480 + height) || (position.y + height <= 0) || (((position.x + width < 0) || position.x - width > Constants.TRUE_WIDTH))) {
             isScrolledDown = true;
         }
 	}
