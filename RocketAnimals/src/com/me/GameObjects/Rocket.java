@@ -1,6 +1,7 @@
 package com.me.GameObjects;
 
 
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.me.helpers.Constants;
@@ -17,7 +18,7 @@ public class Rocket {
 	private int width;
 	private int height;
 	
-	protected Rectangle collisionRect; // Used for very crude collision detection
+	protected Polygon hitBox; 
 	
 	private boolean moveRight;
 	private boolean moveLeft;
@@ -35,8 +36,12 @@ public class Rocket {
 		velocity = new Vector2(0, 0);
 		acceleration = new Vector2(0, 460);
 		
-		collisionRect = new Rectangle(x, y, width, height);
-		
+		hitBox = new Polygon(new float[] {
+				0,height,
+				width/2,0,
+				width,height
+		});
+		hitBox.setPosition(-42, -42); // Move off screen
 		moveRight = false;
 		moveLeft = false;
 	
@@ -50,8 +55,8 @@ public class Rocket {
 		// Move the rocket using velocity
 		position.add(velocity.cpy().scl(delta));
 		
-		// Move the rectangle to the rocket's new position
-		collisionRect.setPosition(position);
+		// Move hitbox to the player's position
+		hitBox.setPosition(position.x, position.y);
 		
 		// Movement boundaries
 		if (position.x <= 0) {
@@ -129,6 +134,6 @@ public class Rocket {
 	public boolean isMovingLeft() { return moveLeft; }
 	public boolean isMovingRight() { return moveRight; }
 	public boolean isMoving() { return (velocity.x != 0); }
-	public Rectangle getRect() { return collisionRect; }
+	public Polygon getPolygon() { return hitBox; }
 	
 }

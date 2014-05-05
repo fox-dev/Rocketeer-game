@@ -5,9 +5,7 @@ import com.badlogic.gdx.utils.Array;
 import com.me.GameObjects.AbstractObstacle;
 import com.me.GameObjects.HotAirBalloon;
 import com.me.GameObjects.JetPlane;
-import com.me.GameObjects.Meteor;
 import com.me.GameObjects.Rocket;
-import com.me.GameObjects.Scrollable;
 import com.me.GameObjects.ScrollableHandler;
 import com.me.helpers.AssetLoader;
 import com.me.helpers.Constants;
@@ -104,26 +102,26 @@ public class GameWorld {
 		scrollObjects = scroller.getAbstractObstacles();
 		for (AbstractObstacle tempObj : scrollObjects) 
 		{
+			// Not needed?
+			/*
 			if(tempObj instanceof HotAirBalloon){
-				if (Intersector.overlaps(((HotAirBalloon) tempObj).getCirc(), rocket.getRect())) {
+				if (Intersector.overlapConvexPolygons(tempObj.getPolygon(), rocket.getPolygon())) {
 					//scroller.removeObject((HotAirBalloon)tempObj);
 					AssetLoader.hitSounds.random().play();
 					AssetLoader.hitSounds.random().play();
-					//gameOver();
-					
+					//gameOver();	
 				}
-				
 			}
+			*/
 			if(tempObj instanceof JetPlane){
-				if (rocket.getRect().overlaps(((tempObj).getRect()))) {
+				if (Intersector.overlapConvexPolygons(rocket.getPolygon(), tempObj.getPolygon())) {
 					scroller.despawnPlane();
 					//scroller.removeObject((JetPlane)tempObj);
 					AssetLoader.hitSounds.random().play();
-					//gameOver();
-					
+					//gameOver();	
 				}
 			}
-			if (rocket.getRect().overlaps(((tempObj).getRect())))      //Cutting down code
+			else if (Intersector.overlapConvexPolygons(rocket.getPolygon(), tempObj.getPolygon()))   //Cutting down code
 			{
 				//scroller.removeObject(tempObj);
 				AssetLoader.hitSounds.random().play();
