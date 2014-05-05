@@ -15,6 +15,9 @@ import com.me.helpers.Constants;
 
 public class GameWorld {
 	
+	
+	
+	
 	private Rocket rocket;
 	private ScrollableHandler scroller;
 	private Array<AbstractObstacle> scrollObjects;
@@ -45,6 +48,9 @@ public class GameWorld {
 	}
 	
 	public void update(float delta) {
+		
+		scroller.setRocket(rocket);
+		
 		//System.out.println(("CurrentState: " + currentState));
 		switch(currentState) {
 		
