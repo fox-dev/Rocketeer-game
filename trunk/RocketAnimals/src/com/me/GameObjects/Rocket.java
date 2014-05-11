@@ -1,6 +1,8 @@
 package com.me.GameObjects;
 
 
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -13,6 +15,13 @@ public class Rocket {
 	private Vector2 position;
 	private Vector2 velocity;
 	private Vector2 acceleration;
+	
+	// Collision detection for circle
+	private Vector2 circleVector;
+	private Vector2 polygonVertexVector;
+	private Vector2 circleCenter;
+	private float squareRadius;
+	private float[] polygonVertices;
 	
 	private float rotation; // Used to rotate this bird
 	private int width;
@@ -35,6 +44,10 @@ public class Rocket {
 		position = new Vector2(x, y);
 		velocity = new Vector2(0, 0);
 		acceleration = new Vector2(0, 460);
+
+		circleCenter = new Vector2();
+		circleVector = new Vector2();
+		polygonVertexVector = new Vector2();
 		
 		hitBox = new Polygon(new float[] {
 				0,height,
@@ -136,4 +149,54 @@ public class Rocket {
 	public boolean isMoving() { return (velocity.x != 0); }
 	public Polygon getPolygon() { return hitBox; }
 	
+	
+	// Collision Testing methods
+	public boolean overlapsWith(AbstractObstacle obstacle) {
+		if (obstacle.collisionRect != null)
+			return collidesWith(obstacle.collisionRect);
+		if (obstacle.collisionCirc != null)
+			return collidesWith(obstacle);
+		if (obstacle.collisionPoly != null)
+			return collidesWith(obstacle.collisionPoly);
+		return false;
+	}
+
+	
+	// Circle test
+	private boolean collidesWith(AbstractObstacle obstacle) {
+		if (hitBox.contains(obstacle.getCollisionCirc().x, obstacle.getCollisionCirc().y)) {
+			return true;
+		}
+		
+		polygonVertices = hitBox.getTransformedVertices();
+		squareRadius = obstacle.getCollisionCirc().radius;
+
+		for (int i = 0; i < polygonVertices.length; i += 2) {
+			circleVector.set(obstacle.getCollisionCirc().x, obstacle.getCollisionCirc().y);
+			polygonVertexVector.set(polygonVertices[i], polygonVertices[i+1]);
+			
+			if (polygonVertexVector.dst(circleVector) < squareRadius) {
+				System.out.println("SHIT");
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	private boolean collidesWith(Polygon poly) {
+		return Intersector.overlapConvexPolygons(hitBox, poly);
+	}
+	
+	
+	private boolean collidesWith(Rectangle rect) {
+		return Intersector.overlapConvexPolygons(hitBox.getTransformedVertices(), new float[]{
+			rect.x, rect.y,
+			rect.x + rect.width, rect.y,
+			rect.x + rect.width, rect.y + rect.height,
+			rect.x, rect.y + rect.height
+		}, null);
+	}
+	
+	public Vector2 getposition() { return position; }
 }

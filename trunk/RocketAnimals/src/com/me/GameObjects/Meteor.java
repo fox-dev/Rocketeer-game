@@ -1,6 +1,6 @@
 package com.me.GameObjects;
 
-import com.me.helpers.AssetLoader;
+import com.badlogic.gdx.math.Circle;
 import com.me.helpers.Constants;
 
 public class Meteor extends AbstractObstacle{
@@ -21,8 +21,7 @@ public class Meteor extends AbstractObstacle{
 		rotation = 0;
 		rotateNum = (int)(Math.random() * Constants.METEOR_MAX_ROTATE);
 		
-		hitBox.setVertices(meteor_polygon);
-		hitBox.setScale((float)((double)width / AssetLoader.meteor.getRegionWidth()), (float)((double)height / AssetLoader.meteor.getRegionHeight()));
+		collisionCirc = new Circle(position, (width + height) / 4);
 	}
 	
 	@Override
