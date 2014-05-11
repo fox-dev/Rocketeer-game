@@ -344,8 +344,20 @@ public class ScrollableHandler
 			}
 		}
 		
-	
-		
+		double rSkydiver = Math.random();
+		if (rSkydiver > 0.95 && numObstacles < OBSTACLE_LIMIT && runTime >= SECOND_WAVE_TIME) {
+			
+			boolean flipObjectX3 = ((int)(rSkydiver * 50)) == 1 ? false : true;
+			
+			if (flipObjectX3) {
+				obstacleList.add(new ParaTroop(randInt(0,Constants.TRUE_WIDTH), -30, 30, 30, randInt(150,250), 25, Constants.DIRECTION.DOWN_RIGHT));
+				numObstacles++;
+			}
+			else {
+				obstacleList.add(new ParaTroop(randInt(0,Constants.TRUE_WIDTH), -30, 30, 30, randInt(150,250), 25, Constants.DIRECTION.DOWN_LEFT));
+				numObstacles++;
+			}
+		}
 	}
 	
 	public void scrollBackgroundUpdate(float delta){

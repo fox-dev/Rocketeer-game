@@ -38,7 +38,7 @@ public class GameWorld {
 		rocket = new Rocket(Constants.ROCKET_STARTING_X, Constants.ROCKET_STARTING_Y, Constants.ROCKET_WIDTH, Constants.ROCKET_HEIGHT);
 		scroller = new ScrollableHandler();
 		scrollObjects = new Array<AbstractObstacle>();
-		hab = new HotAirBalloon(100, -30, 95, 120, 200);
+		// hab = new HotAirBalloon(100, -30, 95, 120, 200);
 		
 		// Play music???
 		AssetLoader.bgm.play();
@@ -102,6 +102,15 @@ public class GameWorld {
 		scrollObjects = scroller.getAbstractObstacles();
 		for (AbstractObstacle tempObj : scrollObjects) 
 		{
+			if (rocket.overlapsWith(tempObj)) {
+				
+				if (tempObj instanceof JetPlane) {
+					scroller.despawnPlane();
+				}
+				//scroller.removeObject((HotAirBalloon)tempObj);
+				AssetLoader.hitSounds.random().play();
+				//gameOver();
+			}
 			// Not needed?
 			/*
 			if(tempObj instanceof HotAirBalloon){
@@ -112,7 +121,7 @@ public class GameWorld {
 					//gameOver();	
 				}
 			}
-			*/
+			
 			if(tempObj instanceof JetPlane){
 				if (Intersector.overlapConvexPolygons(rocket.getPolygon(), tempObj.getPolygon())) {
 					scroller.despawnPlane();

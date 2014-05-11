@@ -20,6 +20,7 @@ import com.me.GameObjects.CargoPlane;
 import com.me.GameObjects.HotAirBalloon;
 import com.me.GameObjects.JetPlane;
 import com.me.GameObjects.Meteor;
+import com.me.GameObjects.ParaTroop;
 import com.me.GameObjects.Projectile;
 import com.me.GameObjects.Rocket;
 import com.me.helpers.AssetLoader;
@@ -46,7 +47,7 @@ public class GameRenderer {
 	
 	// Game sprites;
 	TextureRegion rocketLeft, rocketMid, rocketRight, sMeteor, hotAirBalloon, hotAirBalloon_flipped, 
-	 			jetPlane, jetPlane_flipped, fire1, fire2, fire3, gameOver;
+	 			jetPlane, jetPlane_flipped, fire1, fire2, fire3, gameOver, skyDiver;
 	
 	TextureRegion bullets;
 	
@@ -213,6 +214,9 @@ public class GameRenderer {
 			else if(items instanceof Alien){
 				spriteBatch.draw(rocketMid, items.getX(), items.getY(), items.getWidth(), items.getHeight());
 			}
+			else if (items instanceof ParaTroop) {
+				spriteBatch.draw(skyDiver, items.getX(), items.getY(), items.getWidth(), items.getHeight());
+			}
 			
 		}
 	}
@@ -225,7 +229,18 @@ public class GameRenderer {
 		
 		// Draw the rest
 		for (AbstractObstacle items : world.getScroller().getAbstractObstacles()) {
-			shapeRenderer.polygon(items.getPolygon().getTransformedVertices());
+			
+			if (items.getCollisionRect() != null) {
+				shapeRenderer.rect(items.getCollisionRect().x, items.getCollisionRect().y, items.getCollisionRect().width, items.getCollisionRect().height, items.getMiddleX(), items.getMiddleY(), items.getRotation());
+			}
+			
+			if (items.getCollisionCirc() != null) {
+				shapeRenderer.circle(items.getCollisionCirc().x, items.getCollisionCirc().y, items.getCollisionCirc().radius);
+			}
+			
+			if (items.getCollisionPoly() != null) {
+				shapeRenderer.polygon(items.getCollisionPoly().getTransformedVertices());
+			}
 		}
 	}
 	
@@ -247,7 +262,7 @@ public class GameRenderer {
 		hotAirBalloon_flipped = AssetLoader.hotAirBalloon_flipped;
 		jetPlane = AssetLoader.jetPlane;
 		jetPlane_flipped = AssetLoader.jetPlane_flipped;
-		
+		skyDiver = AssetLoader.skyDiver;
 		gameOver = AssetLoader.gameOver;
 		
 		bg = AssetLoader.bg;

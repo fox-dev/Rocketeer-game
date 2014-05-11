@@ -26,7 +26,8 @@ public class AssetLoader {
 
 	
 	public static TextureRegion rocketLeft, rocket, rocketRight, meteor, hotAirBalloon, hotAirBalloon_flipped, 
-	 							jetPlane, jetPlane_flipped, rocketFire1, rocketFire2, rocketFire3, gameOver;
+	 							jetPlane, jetPlane_flipped, rocketFire1, rocketFire2, rocketFire3, gameOver,
+	 							skyDiver;
 	public static Animation rocketAnimation, rocketFireAnimation;
 	
 	public static Sound hit1, hit2;
@@ -102,6 +103,9 @@ public class AssetLoader {
 		jetPlane_flipped = new TextureRegion(texture, 97, 90, 158, 58);
 		jetPlane_flipped.flip(true, true);
 		
+		// Sky diver
+		skyDiver = new TextureRegion(texture, 104, 168, 35, 62);
+		skyDiver.flip(false, true);
 		
 		// Load audio
 		hit1 = Gdx.audio.newSound(Gdx.files.internal("data/hit1.wav"));

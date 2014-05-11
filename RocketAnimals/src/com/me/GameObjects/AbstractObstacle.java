@@ -1,107 +1,34 @@
 package com.me.GameObjects;
 
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
 import com.me.helpers.Constants.DIRECTION;
 
 public class AbstractObstacle extends Scrollable{
 	
 	protected DIRECTION scrollDirection;
-	protected float tempXSpeed, tempYSpeed, polygonScaleX; // Place holders just in case we change direction
 	
-	protected float[] polygonRightVertices, polygonLeftVertices; // Hold the vertices for collision polygons
+	// Obj's Xspeed and Yspeed
+	protected float objXSpeed, objYSpeed;
 	
-	// Polygon vertices
-	protected final float[] jetPlane_polygon_right = {
-			0,	47,
-			23,	53,
-			80, 52,
-			82, 56,
-			101, 57,
-			104, 53,
-			137, 53,
-			157, 41,
-			136, 24,
-			43, 26,
-			16, 0,
-			5,	0,
-			13, 35,
-			1, 40,
-	};
+	// Obj's left-facing and right-facing vertices (if needed)
+	protected float[] polygonRightVertices, polygonLeftVertices;
 	
-	protected final float[] jetPlane_polygon_left = {
-			158,	47,
-			135,	53,
-			78, 52,
-			76, 56,
-			57, 57,
-			54, 53,
-			21, 53,
-			1, 41,
-			22, 24,
-			115, 26,
-			142, 0,
-			153,	0,
-	        145, 35,
-			157, 40,
-	};
-	
-	protected final float[] hotAirBalloon_polygon = {
-			23, 138,
-			23, 119,
-			26, 99,
-			1, 48,
-			0, 35,
-			1, 30,
-			30, 1,
-			41, 0,
-			52, 1,
-			82, 30,
-			83, 35,
-			81, 48,
-			56, 99,
-			59, 119,
-			59, 138,
-	};
-	
-	protected final float[] meteor_polygon = {
-			24, 48,
-			6, 41,
-			0, 26,
-			3, 9,
-			25, 0,
-			38, 7,
-			48, 23,
-			49, 28,
-			42, 39,
-	};
-	
-	protected final float[] bullet_polygon = {
-			1,8,
-			3,3,
-			7,0,
-			13,3,
-			15,8,
-			12,12,
-			9,15,
-			2,13
-	};
-	/*
-	protected final float[] bullet_polygon = {
-			9, 32,
-			11, 28,
-			17, 25,
-			21, 27,
-			23, 32,
-			21, 37,
-			16, 39,
-			11, 36
-	};
-	*/
+	// Obj's hitboxes
+	protected Rectangle collisionRect;
+	protected Circle collisionCirc;
+	protected Polygon collisionPoly;
+
 	////////////////////////////////////////////
 	// When AbstractObstacle's constructor is invoked, invoke the super (Scrollable)
     // constructor
 	public AbstractObstacle(float x, float y, int width, int height, float ySpeed){
 		super(x, y, width, height, ySpeed);
 
+		objXSpeed = 0;
+		objYSpeed = ySpeed;
+		
 		polygonRightVertices = new float[]{
 				0,0,
 				0,height,
@@ -117,6 +44,9 @@ public class AbstractObstacle extends Scrollable{
 	public AbstractObstacle(float x, float y, int width, int height, float xSpeed, float ySpeed){
 		super(x, y, width, height, xSpeed, ySpeed);
 
+		objXSpeed = xSpeed;
+		objYSpeed = ySpeed;
+		
 		polygonRightVertices = new float[]{
 				0,0,
 				0,height,
@@ -128,6 +58,9 @@ public class AbstractObstacle extends Scrollable{
 	
 	public AbstractObstacle(float x, float y, int width, int height, float ySpeed, float xSpeed, DIRECTION direction) {
 		super(x, y, width, height, xSpeed, ySpeed);
+		
+		objXSpeed = xSpeed;
+		objYSpeed = ySpeed;
 		
 		polygonRightVertices = new float[]{
 				0,0,
@@ -146,38 +79,57 @@ public class AbstractObstacle extends Scrollable{
 	public void update(float delta) 
 	{
 		super.update(delta);
+		
+		if (collisionRect != null) {
+			collisionRect.setPosition(position);
+		}
+		
+		if (collisionCirc != null) {
+			collisionCirc.set(position.x + (width/2), position.y + (height/2), (width + height) / 4);
+		}
+		
+		if (collisionPoly != null) {
+			collisionPoly.setPosition(position.x, position.y);
+			collisionPoly.translate(getMiddleX(), getMiddleY());
+			collisionPoly.setRotation(rotation);
+			collisionPoly.translate(-getMiddleX(), -getMiddleY());
+		}
 	}
 	
 	public void setDirection(DIRECTION newDirection) 
 	{ 
-		scrollDirection = newDirection;
-		tempXSpeed = velocity.x;
-		tempYSpeed = velocity.y;
 		// Direction logic
-		switch (scrollDirection) 
+		switch (newDirection) 
 		{
-	
 			case DOWN:
 				velocity.x = 0;
-				velocity.y = tempYSpeed;
+				velocity.y = objYSpeed;
 				break;
 			case DOWN_LEFT:
-				velocity.x = -velocity.x;
-				velocity.y = tempYSpeed;
-				hitBox.setVertices(polygonLeftVertices);
+				velocity.x = -objXSpeed;
+				velocity.y = objYSpeed;
+				if (collisionPoly != null) {
+					collisionPoly.setVertices(polygonLeftVertices);
+				}
 				break;
 			case DOWN_RIGHT:
-				velocity.x = tempXSpeed;
-				velocity.y = tempYSpeed;
-				hitBox.setVertices(polygonRightVertices);
+				velocity.x = objXSpeed;
+				velocity.y = objYSpeed;
+				if (collisionPoly != null) {
+					collisionPoly.setVertices(polygonRightVertices);
+				}
 				break;
 			default:
 				velocity.x = 0;
-				velocity.y = tempYSpeed;
+				velocity.y = objYSpeed;
 				break;
 		}
 	}
-	public DIRECTION getDirection() { return scrollDirection; }
 	
+	// Getters
+	public DIRECTION getDirection() { return scrollDirection; }
+	public Rectangle getCollisionRect() { return collisionRect; }
+	public Circle getCollisionCirc() { return collisionCirc; }
+	public Polygon getCollisionPoly() { return collisionPoly; }
 	
 }
