@@ -8,20 +8,13 @@ import com.me.helpers.Constants;
 
 public class ParaTroop extends AbstractObstacle
 {
-	private static final int maxXSpeed = 200 , minXSpeed = -200, maxYSpeed = 250, minYSpeed = 150;
+	private static final int maxXSpeed = 200 , minXSpeed = 0, maxYSpeed = 250, minYSpeed = 150;
 	private float xMax, xMin;
-	private Random r = new Random();
 	
 	public ParaTroop()
 	{
 		// Using width and height defined below and random number inbetween the speed boundaries
 		super(Constants.TRUE_WIDTH / 2, -30, 30, 30, ScrollableHandler.randInt(minXSpeed, maxXSpeed), ScrollableHandler.randInt(minYSpeed, maxYSpeed));
-				
-		position = new Vector2(r.nextInt(305),-30);
-		velocity = new Vector2(randInt(minXSpeed, maxXSpeed), randInt(minYSpeed, maxYSpeed));
-	
-		width = 30;
-		height = 30;
 	
 		isScrolledDown = false;
 	
@@ -29,7 +22,8 @@ public class ParaTroop extends AbstractObstacle
 	
 		rotation = 0;
 		
-		if(velocity.x > 0)
+		// not needed with current direction handling.
+		/*if(velocity.x > 0)
 		{
 			scrollDirection = Constants.DIRECTION.DOWN_RIGHT;
 		}
@@ -40,7 +34,7 @@ public class ParaTroop extends AbstractObstacle
 		else
 		{
 			scrollDirection = Constants.DIRECTION.DOWN;
-		}
+		}*/
 		
 		if(position.x > (Constants.TRUE_WIDTH - position.x))
 		{
@@ -69,6 +63,7 @@ public class ParaTroop extends AbstractObstacle
 			xMax = x;
 		}
 		xMin = x - xMax;
+		xMax = x + xMax;
 	}
 	
 	public ParaTroop(float x, float y, int width, int height, float scrollSpeed, float glideSpeed, Constants.DIRECTION direction) 
@@ -76,7 +71,6 @@ public class ParaTroop extends AbstractObstacle
 		super(x, y, width, height, scrollSpeed, glideSpeed, direction);
 		
 		collisionRect = new Rectangle(position.x,position.y,width,height);
-		
 		
 		if(x > (Constants.TRUE_WIDTH - x))
 		{
@@ -87,6 +81,7 @@ public class ParaTroop extends AbstractObstacle
 			xMax = x;
 		}
 		xMin = x - xMax;
+		xMax = x +xMax;
 	}
 	
 	public void update(float delta)

@@ -63,19 +63,12 @@ public class ScrollableHandler
 	private int spawnCount = 0;
 	
 	
-	
-	
-
-	
-	
-	public ScrollableHandler(){
-		
+	public ScrollableHandler()
+	{	
 		
 		//iterator = new AbstractObstacle(0, 0, 30, 30, SCROLL_SPEED); //using default bird sprite, change sprite and position later
 		r = new Random();
-		
-		
-		
+			
 		bg = new Background(0, Constants.TRUE_HEIGHT - 102, Constants.TRUE_WIDTH, 102, 15);
 	}
 	                   
@@ -156,7 +149,8 @@ public class ScrollableHandler
 	}
 	
 	
-	public void cargoPlaneStuff(float delta){
+	public void cargoPlaneStuff(float delta)
+	{
 		int xDrop = 0;
 		int yDrop = 0;
 		if(CARGO_PLANE_EVENT == false){
@@ -170,7 +164,6 @@ public class ScrollableHandler
 		while(iterator.hasNext())
 		{	
 			AbstractObstacle o = iterator.next();
-		
 			
 			if(o instanceof CargoPlane){
 				((CargoPlane) o).stalk(playerRocket);
@@ -345,15 +338,17 @@ public class ScrollableHandler
 		}
 		
 		double rSkydiver = Math.random();
-		if (rSkydiver > 0.95 && numObstacles < OBSTACLE_LIMIT && runTime >= SECOND_WAVE_TIME) {
-			
+		if (rSkydiver > 0.95 && numObstacles < OBSTACLE_LIMIT && runTime >= SECOND_WAVE_TIME) 
+		{
 			boolean flipObjectX3 = ((int)(rSkydiver * 50)) == 1 ? false : true;
 			
-			if (flipObjectX3) {
+			if (flipObjectX3) 
+			{
 				obstacleList.add(new ParaTroop(randInt(0,Constants.TRUE_WIDTH), -30, 30, 30, randInt(150,250), 25, Constants.DIRECTION.DOWN_RIGHT));
 				numObstacles++;
 			}
-			else {
+			else 
+			{
 				obstacleList.add(new ParaTroop(randInt(0,Constants.TRUE_WIDTH), -30, 30, 30, randInt(150,250), 25, Constants.DIRECTION.DOWN_LEFT));
 				numObstacles++;
 			}
