@@ -80,15 +80,16 @@ public class AbstractObstacle extends Scrollable{
 	{
 		super.update(delta);
 		
-		if (collisionRect != null) {
+		if (collisionRect != null) 
+		{
 			collisionRect.setPosition(position);
 		}
-		
-		if (collisionCirc != null) {
+		else if (collisionCirc != null) 
+		{
 			collisionCirc.set(position.x + (width/2), position.y + (height/2), (width + height) / 4);
 		}
-		
-		if (collisionPoly != null) {
+		else if (collisionPoly != null) 
+		{
 			collisionPoly.setPosition(position.x, position.y);
 			collisionPoly.translate(getMiddleX(), getMiddleY());
 			collisionPoly.setRotation(rotation);
