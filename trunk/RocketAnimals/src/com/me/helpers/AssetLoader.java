@@ -16,19 +16,23 @@ public class AssetLoader {
 	
 	public static Texture texture2; //temporary
 	
-	public static Texture bulletTexture; //temp
-	public static TextureRegion bullets;
+	//UFO Boss Texture
+	public static TextureRegion uFOTop, uFOSide;
 	
-	public static Texture planeTexture; //temp
-	public static TextureRegion plane;
+	// Bullet Textures
+	public static TextureRegion bulletRed, bulletBlue, bulletGreen, bulletYellow, bulletOrange, bulletPurple;
+	
+	//Boss Plane Texture
+	public static TextureRegion bossPlane;
 	
 	public static TextureRegion bg; //temp
 
 	
 	public static TextureRegion rocketLeft, rocket, rocketRight, meteor, hotAirBalloon, hotAirBalloon_flipped, 
 	 							jetPlane, jetPlane_flipped, rocketFire1, rocketFire2, rocketFire3, gameOver,
-	 							skyDiver;
-	public static Animation rocketAnimation, rocketFireAnimation;
+	 							skyDiver, helicopter, helicopterL, chopperBlade1, chopperBlade2, chopperBlade3;
+	
+	public static Animation rocketAnimation, rocketFireAnimation, chopperAnimation;
 	
 	public static Sound hit1, hit2;
 	public static Array<Sound> hitSounds;
@@ -43,17 +47,28 @@ public class AssetLoader {
 		
 		
 		// Load the texture
-		texture = new Texture(Gdx.files.internal("data/spritesheet.png"));
+		texture = new Texture(Gdx.files.internal("data/SpriteSheetObjects.png"));
 		texture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		
 		texture2 = new Texture(Gdx.files.internal("data/texture.png")); //temporary
 		
-		planeTexture = new Texture(Gdx.files.internal("data/plane.png")); //temporary
-		plane = new TextureRegion(planeTexture, 0, 0, 476, 196);
-		plane.flip(false, true);
+		//UFO Boss
+		uFOTop = new TextureRegion(texture, 303, 132, 105, 87);
+		uFOSide = new TextureRegion(texture, 298, 225, 114, 62);
 		
-		bulletTexture = new Texture(Gdx.files.internal("data/bullets.png")); //temporary
-		bullets = new TextureRegion(bulletTexture, 8, 24, 16, 16);
+		uFOTop.flip(false, true);
+		uFOSide.flip(false, true);
+		//Cargo Plane Boss
+		bossPlane = new TextureRegion(texture, 329, 7, 174, 112);
+		bossPlane.flip(false, true);
+		
+		//Bullets
+		bulletRed = new TextureRegion(texture, 449, 168, 12, 12);
+		bulletOrange = new TextureRegion(texture, 449, 183, 12, 12);
+		bulletYellow = new TextureRegion(texture, 449, 198, 12, 12);
+		bulletGreen = new TextureRegion(texture, 464, 168, 12, 12);
+		bulletBlue = new TextureRegion(texture, 464, 183, 12, 12);
+		bulletPurple = new TextureRegion(texture, 464, 198, 12, 12);
 		
 		//Bg temp
 		bg = new TextureRegion(texture2, 0, 0, 136, 43);
@@ -106,6 +121,27 @@ public class AssetLoader {
 		// Sky diver
 		skyDiver = new TextureRegion(texture, 104, 168, 35, 62);
 		skyDiver.flip(false, true);
+		
+		//Helicopter
+		helicopter = new TextureRegion(texture, 148, 200, 101, 52);
+		helicopterL = new TextureRegion(texture, 148,200, 101, 52);
+		
+		helicopter.flip(false, true);
+		helicopterL.flip(true, true);
+		
+		//Helicopter Blades
+		chopperBlade1 = new TextureRegion(texture, 146, 152, 86, 15);
+		chopperBlade2 = new TextureRegion(texture, 146, 168, 86, 15);
+		chopperBlade3 = new TextureRegion(texture, 146, 184, 86, 15);
+		
+		chopperBlade1.flip(false, true);
+		chopperBlade2.flip(false, true);
+		chopperBlade3.flip(false, true);
+		
+		//Helicopter Blade Animation
+		TextureRegion[] copterSpin = {chopperBlade1, chopperBlade2, chopperBlade3};
+		chopperAnimation = new Animation(0.05f, copterSpin);
+		chopperAnimation.setPlayMode(Animation.LOOP);
 		
 		// Load audio
 		hit1 = Gdx.audio.newSound(Gdx.files.internal("data/hit1.wav"));

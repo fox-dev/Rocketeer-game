@@ -227,7 +227,7 @@ public class ScrollableHandler
 		
 		if(ALIEN_EVENT == false){
 			ALIEN_EVENT = true;
-			obstacleList.add(new Alien(0 - 50,0,50,50,50,0));
+			obstacleList.add(new Alien(-50,0,114,62,50,0));
 		 	numObstacles++;
 		 	
 		}
@@ -350,6 +350,24 @@ public class ScrollableHandler
 			else 
 			{
 				obstacleList.add(new ParaTroop(randInt(0,Constants.TRUE_WIDTH), -30, 30, 30, randInt(150,250), 25, Constants.DIRECTION.DOWN_LEFT));
+				numObstacles++;
+			}
+		}
+		
+		// Added Helicopter Spawns here
+		double rCopter = Math.random();
+		if(rCopter < 0.04 && numObstacles < OBSTACLE_LIMIT && runTime >= SECOND_WAVE_TIME)
+		{
+			boolean flipObjectX4 = ((int)(rCopter * 50)) == 1 ? false : true; // Should alternate often
+			
+			if (flipObjectX4) 
+			{
+				obstacleList.add(new Helicopter(r.nextInt(305), -30, 101, 52, randInt(100, 250), randInt(25, 75), Constants.DIRECTION.DOWN_RIGHT));
+				numObstacles++;
+			} 
+			else 
+			{
+				obstacleList.add(new Helicopter(r.nextInt(305), -30, 101, 52, randInt(100, 250), randInt(25, 75), Constants.DIRECTION.DOWN_LEFT));
 				numObstacles++;
 			}
 		}
