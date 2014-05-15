@@ -24,13 +24,13 @@ public class Alien extends AbstractObstacle{
 	}
 	
 	public void prepareEvent(){
-		if(this.position.x >= Constants.TRUE_WIDTH/2 - 25){
+		if(this.position.x >= Constants.TRUE_WIDTH/2 - 57){       //changed this value to fit UFO Sprite  25 > 57
 			velocity.x = 0;
 		}
 	}
 	
 	public boolean inPosition(){
-		return (this.position.x >= Constants.TRUE_WIDTH/2 - 25);
+		return (this.position.x >= Constants.TRUE_WIDTH/2 - 57); //changed this value to fit UFO sprite. 25 > 57
 	}
 	
 

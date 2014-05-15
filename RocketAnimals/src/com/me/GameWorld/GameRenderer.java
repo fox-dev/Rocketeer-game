@@ -13,16 +13,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.me.GameObjects.AbstractObstacle;
-import com.me.GameObjects.Alien;
-import com.me.GameObjects.Background;
-import com.me.GameObjects.CargoPlane;
-import com.me.GameObjects.HotAirBalloon;
-import com.me.GameObjects.JetPlane;
-import com.me.GameObjects.Meteor;
-import com.me.GameObjects.ParaTroop;
-import com.me.GameObjects.Projectile;
-import com.me.GameObjects.Rocket;
+import com.me.GameObjects.*;
 import com.me.helpers.AssetLoader;
 import com.me.helpers.Constants;
 import com.me.helpers.Constants.DIRECTION;
@@ -47,13 +38,14 @@ public class GameRenderer {
 	
 	// Game sprites;
 	TextureRegion rocketLeft, rocketMid, rocketRight, sMeteor, hotAirBalloon, hotAirBalloon_flipped, 
-	 			jetPlane, jetPlane_flipped, fire1, fire2, fire3, gameOver, skyDiver;
+	 			jetPlane, jetPlane_flipped, fire1, fire2, fire3, gameOver, skyDiver,helicopter, helicopterL, 
+	 			chopperBlade1, chopperBlade2, chopperBlade3;
 	
 	TextureRegion bullets;
 	
-	TextureRegion plane;
+	TextureRegion bossPlane, uFO;
 	
-	Animation rocketAnimation, rocketFireAnimation;
+	Animation rocketAnimation, rocketFireAnimation, chopperAnimation;
 	
 	//temp
 	TextureRegion bg;
@@ -203,19 +195,32 @@ public class GameRenderer {
 				else
 					spriteBatch.draw(jetPlane, items.getX(), items.getY(), items.getWidth(), items.getHeight());
 			}
-			else if(items instanceof Projectile)
+			else if(items instanceof Projectile) //projectile uses new sprite.
 			{
 				spriteBatch.draw(bullets, items.getX(), items.getY(), items.getWidth(), items.getHeight());
 			}
-			else if(items instanceof CargoPlane)
+			else if(items instanceof CargoPlane)// Cargo Plane Boss uses new sprite
 			{
-				spriteBatch.draw(plane, items.getX(), items.getY(), items.getWidth(), items.getHeight());
+				spriteBatch.draw(bossPlane, items.getX(), items.getY(), items.getWidth(), items.getHeight());
 			}
-			else if(items instanceof Alien){
-				spriteBatch.draw(rocketMid, items.getX(), items.getY(), items.getWidth(), items.getHeight());
+			else if(items instanceof Alien){ //Alien now uses new Sprite
+				spriteBatch.draw(uFO, items.getX(), items.getY(), items.getWidth(), items.getHeight());
 			}
 			else if (items instanceof ParaTroop) {
 				spriteBatch.draw(skyDiver, items.getX(), items.getY(), items.getWidth(), items.getHeight());
+			}
+			// Added Helicopter draws facing left and right with animated rotor.
+			else if (items instanceof Helicopter) 
+			{
+				if(items.getDirection().equals(DIRECTION.DOWN_LEFT))
+				{
+					spriteBatch.draw(chopperAnimation.getKeyFrame(runTime), items.getX(), items.getY() - 15, 86, 15);
+					spriteBatch.draw(helicopter, items.getX(), items.getY(), items.getWidth(), items.getHeight());
+				}
+				else{
+					spriteBatch.draw(chopperAnimation.getKeyFrame(runTime), items.getX() + 17, items.getY() - 15, 86, 15);
+					spriteBatch.draw(helicopterL, items.getX(), items.getY(), items.getWidth(), items.getHeight());
+				}
 			}
 			
 		}
@@ -233,12 +238,10 @@ public class GameRenderer {
 			if (items.getCollisionRect() != null) {
 				shapeRenderer.rect(items.getCollisionRect().x, items.getCollisionRect().y, items.getCollisionRect().width, items.getCollisionRect().height, items.getMiddleX(), items.getMiddleY(), items.getRotation());
 			}
-			
-			if (items.getCollisionCirc() != null) {
+			else if (items.getCollisionCirc() != null) {
 				shapeRenderer.circle(items.getCollisionCirc().x, items.getCollisionCirc().y, items.getCollisionCirc().radius);
 			}
-			
-			if (items.getCollisionPoly() != null) {
+			else if (items.getCollisionPoly() != null) {
 				shapeRenderer.polygon(items.getCollisionPoly().getTransformedVertices());
 			}
 		}
@@ -263,12 +266,17 @@ public class GameRenderer {
 		jetPlane = AssetLoader.jetPlane;
 		jetPlane_flipped = AssetLoader.jetPlane_flipped;
 		skyDiver = AssetLoader.skyDiver;
+		helicopter = AssetLoader.helicopter;
+		helicopterL = AssetLoader.helicopterL;
+		chopperAnimation = AssetLoader.chopperAnimation;
+		
 		gameOver = AssetLoader.gameOver;
 		
 		bg = AssetLoader.bg;
 		
-		bullets = AssetLoader.bullets;
-		plane = AssetLoader.plane;
+		bullets = AssetLoader.bulletRed; //different sprites added here.
+		bossPlane = AssetLoader.bossPlane;
+		uFO = AssetLoader.uFOSide;
 		
 	}
 	
