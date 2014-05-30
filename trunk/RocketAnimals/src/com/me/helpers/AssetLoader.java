@@ -1,6 +1,7 @@
 package com.me.helpers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
@@ -27,7 +28,8 @@ public class AssetLoader {
 	
 	public static TextureRegion bg; //temp
 
-	
+	//Button Textures
+	public static TextureRegion playButtonUp, playButtonDown;
 	public static TextureRegion rocketLeft, rocket, rocketRight, meteor, hotAirBalloon, hotAirBalloon_flipped, 
 	 							jetPlane, jetPlane_flipped, rocketFire1, rocketFire2, rocketFire3, gameOver,
 	 							skyDiver, helicopter, helicopterL, chopperBlade1, chopperBlade2, chopperBlade3;
@@ -36,10 +38,9 @@ public class AssetLoader {
 	
 	public static Sound hit1, hit2;
 	public static Array<Sound> hitSounds;
-	
 	public static Music bgm; // change names later!
-	
 	public static BitmapFont font, shadow;
+	public static Preferences prefs;
 	
 	public static void load() {
 		
@@ -51,6 +52,12 @@ public class AssetLoader {
 		texture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		
 		texture2 = new Texture(Gdx.files.internal("data/texture.png")); //temporary
+		
+		//Button Textures
+		playButtonUp = new TextureRegion(texture2, 0, 83, 29, 16);
+		playButtonDown = new TextureRegion(texture2, 29, 83, 29, 16);
+		playButtonUp.flip(false, true);
+		playButtonDown.flip(false, true);
 		
 		//UFO Boss
 		uFOTop = new TextureRegion(texture, 303, 132, 105, 87);
