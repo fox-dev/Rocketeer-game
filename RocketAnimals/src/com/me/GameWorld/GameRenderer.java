@@ -156,6 +156,17 @@ public class GameRenderer {
 	        AssetLoader.font.draw(spriteBatch, "" + world.getScore(), (136 / 2)
 	                - (3 * score.length() - 1), 11);
 		}
+		else if(world.isStandby())
+		{
+			// Convert integer into String
+	        String score = world.getScore() + "";
+			drawPlayer(runTime);
+			AssetLoader.shadow.draw(spriteBatch, "" + world.getScore(), (136 / 2)
+	                - (3 * score.length()), 12);
+			// Draw text
+	        AssetLoader.font.draw(spriteBatch, "" + world.getScore(), (136 / 2)
+	                - (3 * score.length() - 1), 11);
+		}
 		else if(world.isMenu())
 		{
 			drawPlayer(runTime);

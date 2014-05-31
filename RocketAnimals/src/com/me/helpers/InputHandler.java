@@ -37,9 +37,9 @@ public class InputHandler implements InputProcessor {
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) 
 	{
 
-		if (world.isMenu())
+		if (world.isMenu())  // Handles when the button in start screen is touched.
 		{
-			playButton.isTouchDown(screenX, screenY);
+			playButton.isTouchDown(screenX, screenY);  
 		}
 		else if (world.isReady()) {
 			world.standby();
@@ -85,7 +85,7 @@ public class InputHandler implements InputProcessor {
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		 if (world.isMenu()) 
+		 if (world.isMenu()) //game is set to ready state when button is released.
 		 {
 	         if (playButton.isTouchUp(screenX, screenY)) 
 	         {
