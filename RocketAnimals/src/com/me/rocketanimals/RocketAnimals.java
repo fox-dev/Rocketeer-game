@@ -2,7 +2,7 @@ package com.me.rocketanimals;
 
 import com.badlogic.gdx.Game;
 import com.me.helpers.AssetLoader;
-import com.me.screens.GameScreen;
+import com.me.screens.SplashScreen;
 
 public class RocketAnimals extends Game {
 
@@ -10,12 +10,14 @@ public class RocketAnimals extends Game {
 	public void create() {
 		System.out.println("RocketAnimals created");
 		AssetLoader.load();
-		setScreen(new GameScreen());
+		setScreen(new SplashScreen(this));
 	}
 	
 	@Override
-	public void dispose() {
+	public void dispose() 
+	{
 		super.dispose();
+		AssetLoader.dispose();
 	}
 	
 }
