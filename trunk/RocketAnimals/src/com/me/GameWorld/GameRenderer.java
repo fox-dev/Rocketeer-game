@@ -1,5 +1,11 @@
 package com.me.GameWorld;
 
+import java.util.List;
+
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenEquations;
+import aurelienribon.tweenengine.TweenManager;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
@@ -14,9 +20,13 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.me.GameObjects.*;
+import com.me.TweenAccessors.Value;
+import com.me.TweenAccessors.ValueAccessor;
 import com.me.helpers.AssetLoader;
 import com.me.helpers.Constants;
 import com.me.helpers.Constants.DIRECTION;
+import com.me.ui.SimpleButton;
+import com.me.helpers.InputHandler;
 
 public class GameRenderer {
 	
@@ -29,6 +39,13 @@ public class GameRenderer {
 	
 	private int gameHeight;
 	private int midPointY;
+	
+	// Tween stuff
+    private TweenManager manager;
+    private Value alpha = new Value();
+
+    // Buttons
+    private List<SimpleButton> menuButtons;
 	
 	String score;
 	
@@ -55,7 +72,8 @@ public class GameRenderer {
 		this.world = world;
 		this.gameHeight = gameHeight;
 		this.midPointY = midPointY;
-		
+		this.menuButtons = ((InputHandler) Gdx.input.getInputProcessor())
+                .getMenuButtons();
 		
 		cam = new OrthographicCamera();
 		cam.setToOrtho(true, Constants.TRUE_WIDTH, Constants.TRUE_HEIGHT);
@@ -69,9 +87,28 @@ public class GameRenderer {
 		// Init the game objects and visuals
 		initGameObjects();
 		initGameAssets();
+		setupTweens();
 	}
 	
-	public void render(float runTime) {
+	public void setupTweens()
+	{
+		Tween.registerAccessor(Value.class, new ValueAccessor());
+        manager = new TweenManager();
+        Tween.to(alpha, -1, .5f).target(0).ease(TweenEquations.easeOutQuad)
+                .start(manager);
+	}
+	
+	private void drawMenuUI() {
+		/*batcher.draw(AssetLoader.zbLogo, 136 / 2 - 56, midPointY - 50,
+	                AssetLoader.zbLogo.getRegionWidth() / 1.2f,
+	                AssetLoader.zbLogo.getRegionHeight() / 1.2f);*/
+
+	    for (SimpleButton button : menuButtons) {
+	            button.draw(spriteBatch);
+	    }
+	}
+	
+	public void render(float delta, float runTime) {
 		// Update camera
 		cam.update();
 		cam.apply(Gdx.gl10);
@@ -95,18 +132,44 @@ public class GameRenderer {
 		
 		//spriteBatch.draw(bg, 0, Constants.TRUE_HEIGHT - 102, Constants.TRUE_WIDTH, 102);
 		spriteBatch.draw(bg, background.getX(), background.getY(), Constants.TRUE_WIDTH, 102);
-		
-		if(!world.isGameOver()){
-			drawPlayer(runTime);
-		}
-		
 		drawObjects(runTime);
 		
-		 // Convert integer into String
-        String score = world.getScore() + "";
+		if(world.isRunning())
+		{
+			// Convert integer into String
+	        String score = world.getScore() + "";
+			drawPlayer(runTime);
+			AssetLoader.shadow.draw(spriteBatch, "" + world.getScore(), (136 / 2)
+	                - (3 * score.length()), 12);
+			// Draw text
+	        AssetLoader.font.draw(spriteBatch, "" + world.getScore(), (136 / 2)
+	                - (3 * score.length() - 1), 11);
+		}
+		else if(world.isReady())
+		{
+			// Convert integer into String
+	        String score = world.getScore() + "";
+			drawPlayer(runTime);
+			AssetLoader.shadow.draw(spriteBatch, "" + world.getScore(), (136 / 2)
+	                - (3 * score.length()), 12);
+			// Draw text
+	        AssetLoader.font.draw(spriteBatch, "" + world.getScore(), (136 / 2)
+	                - (3 * score.length() - 1), 11);
+		}
+		else if(world.isMenu())
+		{
+			drawPlayer(runTime);
+			drawMenuUI();
+		}
+		else if(world.isGameOver())
+		{
+        	drawGameOver();
+        	//AssetLoader.shadow.draw(spriteBatch, "Game Over", 25, 56);
+           // AssetLoader.font.draw(spriteBatch, "Game Over", 24, 55);
+        }
 
         // Draw shadow first
-        if(!world.isGameOver()){
+        /*if(!world.isGameOver()){
         	AssetLoader.shadow.draw(spriteBatch, "" + world.getScore(), (136 / 2)
                 - (3 * score.length()), 12);
         	// Draw text
@@ -119,15 +182,12 @@ public class GameRenderer {
             // Draw text
             AssetLoader.font.draw(spriteBatch, "" + world.getFinalScore(), (136 / 2)
                 - (3 * score.length() - 1), 11);
-        }
+        }*/
         
         // Draw Game Over
-        if(world.isGameOver()){
-        	drawGameOver();
-        	//AssetLoader.shadow.draw(spriteBatch, "Game Over", 25, 56);
-           // AssetLoader.font.draw(spriteBatch, "Game Over", 24, 55);
-        }
+        
 		spriteBatch.end();
+		drawTransition(delta);
 		
 		// If DRAW_BOUNDS is enabled
 		if (Constants.DRAW_BOUNDS) {
@@ -304,4 +364,19 @@ public class GameRenderer {
         float h = (float)Constants.TRUE_HEIGHT*scale;
         viewport = new Rectangle(crop.x, crop.y, w, h);
 	}
+	
+	 private void drawTransition(float delta) 
+	 {
+		 if (alpha.getValue() > 0) {
+	            manager.update(delta);
+	            Gdx.gl.glEnable(GL10.GL_BLEND);
+	            Gdx.gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
+	            shapeRenderer.begin(ShapeType.Filled);
+	            shapeRenderer.setColor(1, 1, 1, alpha.getValue());
+	            shapeRenderer.rect(0, 0, Constants.TRUE_WIDTH, Constants.TRUE_HEIGHT);
+	            shapeRenderer.end();
+	            Gdx.gl.glDisable(GL10.GL_BLEND);
+
+	     }
+	 }
 }

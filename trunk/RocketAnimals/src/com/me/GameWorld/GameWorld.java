@@ -13,9 +13,6 @@ import com.me.helpers.Constants;
 
 public class GameWorld {
 	
-	
-	
-	
 	private Rocket rocket;
 	private ScrollableHandler scroller;
 	private Array<AbstractObstacle> scrollObjects;
@@ -30,11 +27,11 @@ public class GameWorld {
 	
 	// Game states
 	public enum GameState {
-		READY, STANDBY, RUNNING, GAMEOVER
+		MENU, READY, STANDBY, RUNNING, GAMEOVER
 	}
 	
 	public GameWorld(int midPointY) {
-		currentState = GameState.READY;
+		currentState = GameState.MENU;
 		rocket = new Rocket(Constants.ROCKET_STARTING_X, Constants.ROCKET_STARTING_Y, Constants.ROCKET_WIDTH, Constants.ROCKET_HEIGHT);
 		scroller = new ScrollableHandler();
 		scrollObjects = new Array<AbstractObstacle>();
@@ -45,27 +42,28 @@ public class GameWorld {
 		AssetLoader.bgm.setLooping(true);
 	}
 	
-	public void update(float delta) {
+	public void update(float delta) 
+	{
 		
 		scroller.setRocket(rocket);
 		
 		//System.out.println(("CurrentState: " + currentState));
 		switch(currentState) {
 		
-		case READY:
-			
+		case MENU:
 			updateReady(delta);
+			break;
+		
+		case READY:
 			break;
 		
 		case STANDBY:
 			
 			rocket.moveBird();
-			
 			if(rocket.getY() == Constants.ROCKET_LIFTOFF_STOP_AT_Y){
 				start();
 				break;
 			}
-			
 			break;
 			
 		case RUNNING:
@@ -107,55 +105,9 @@ public class GameWorld {
 				if (tempObj instanceof JetPlane) {
 					scroller.despawnPlane();
 				}
-				//scroller.removeObject((HotAirBalloon)tempObj);
 				AssetLoader.hitSounds.random().play();
 				//gameOver();
 			}
-			// Not needed?
-			/*
-			if(tempObj instanceof HotAirBalloon){
-				if (Intersector.overlapConvexPolygons(tempObj.getPolygon(), rocket.getPolygon())) {
-					//scroller.removeObject((HotAirBalloon)tempObj);
-					AssetLoader.hitSounds.random().play();
-					AssetLoader.hitSounds.random().play();
-					//gameOver();	
-				}
-			}
-			
-			if(tempObj instanceof JetPlane){
-				if (Intersector.overlapConvexPolygons(rocket.getPolygon(), tempObj.getPolygon())) {
-					scroller.despawnPlane();
-					//scroller.removeObject((JetPlane)tempObj);
-					AssetLoader.hitSounds.random().play();
-					//gameOver();	
-				}
-			}
-			else if (Intersector.overlapConvexPolygons(rocket.getPolygon(), tempObj.getPolygon()))   //Cutting down code
-			{
-				//scroller.removeObject(tempObj);
-				AssetLoader.hitSounds.random().play();
-				//gameOver();
-			}
-			
-			/*if(tempObj instanceof Meteor){
-				if (rocket.getRect().overlaps(((tempObj).getRect()))) {
-					scroller.removeObject((Meteor)tempObj);
-					AssetLoader.hitSounds.random().play();
-				}
-			}
-			if(tempObj instanceof HotAirBalloon){
-				if (rocket.getRect().overlaps(((tempObj).getRect()))) {
-					scroller.removeObject((HotAirBalloon)tempObj);
-					AssetLoader.hitSounds.random().play();
-				}
-				
-			}
-			if(tempObj instanceof JetPlane){
-				if (rocket.getRect().overlaps(((tempObj).getRect()))) {
-					scroller.removeObject((JetPlane)tempObj);
-					AssetLoader.hitSounds.random().play();
-				}
-			}*/
 		}
 	}
 	
@@ -195,6 +147,7 @@ public class GameWorld {
 	public boolean isRunning() { return currentState == GameState.RUNNING; }
 	public boolean isGameOver() { return currentState == GameState.GAMEOVER; }
 	public boolean isStandby() { return currentState == GameState.STANDBY; }
+	public boolean isMenu(){return currentState == GameState.MENU;}
 	
 
 	

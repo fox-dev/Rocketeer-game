@@ -13,9 +13,7 @@ import com.badlogic.gdx.utils.Array;
 
 public class AssetLoader {
 	
-	public static Texture texture;
-	
-	public static Texture texture2; //temporary
+	public static Texture texture, texture2, logoTexture; //temporary
 	
 	//UFO Boss Texture
 	public static TextureRegion uFOTop, uFOSide;
@@ -26,10 +24,16 @@ public class AssetLoader {
 	//Boss Plane Texture
 	public static TextureRegion bossPlane;
 	
+	//LogoTexture
+	public static TextureRegion logo;
+	
 	public static TextureRegion bg; //temp
-
+	
+	
 	//Button Textures
 	public static TextureRegion playButtonUp, playButtonDown;
+	
+	
 	public static TextureRegion rocketLeft, rocket, rocketRight, meteor, hotAirBalloon, hotAirBalloon_flipped, 
 	 							jetPlane, jetPlane_flipped, rocketFire1, rocketFire2, rocketFire3, gameOver,
 	 							skyDiver, helicopter, helicopterL, chopperBlade1, chopperBlade2, chopperBlade3;
@@ -52,6 +56,12 @@ public class AssetLoader {
 		texture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		
 		texture2 = new Texture(Gdx.files.internal("data/texture.png")); //temporary
+		texture2.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+		
+		//Logo Texture
+		logoTexture = new Texture(Gdx.files.internal("data/logo.png"));
+		logoTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		logo = new TextureRegion(logoTexture, 0, 0, 512, 114);
 		
 		//Button Textures
 		playButtonUp = new TextureRegion(texture2, 0, 83, 29, 16);
@@ -171,7 +181,7 @@ public class AssetLoader {
 
 	}
 	
-	public static void dipose() {
+	public static void dispose() {
 		// Dipose of the texture when we're done
 		texture.dispose();
 		

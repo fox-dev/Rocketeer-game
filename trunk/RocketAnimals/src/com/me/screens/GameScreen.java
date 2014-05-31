@@ -27,6 +27,7 @@ public class GameScreen implements Screen {
 		int midPointY = (int) (gameHeight / 2);
 		
 		world  = new GameWorld(midPointY);
+		Gdx.input.setInputProcessor(new InputHandler(world, world.getRocket()));
 		renderer = new GameRenderer(world, (int) gameHeight, midPointY);
 	}
 
@@ -39,9 +40,7 @@ public class GameScreen implements Screen {
 		
 		runTime += delta;
 		world.update(delta);
-		renderer.render(runTime);
-		
-		Gdx.input.setInputProcessor(new InputHandler(world, world.getRocket()));
+		renderer.render(delta, runTime);
 	}
 
 	@Override

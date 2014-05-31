@@ -1,19 +1,22 @@
 package com.me.helpers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.me.GameObjects.Rocket;
 import com.me.GameWorld.GameWorld;
+import com.me.ui.SimpleButton;
 
 public class InputHandler implements InputProcessor {
 	
 	private Rocket rocket;
-	
 	private OrthographicCamera cam;
-	
 	private GameWorld world;
-	
+	private List<SimpleButton> menuButtons;
+	private SimpleButton playButton;
 	
 	public InputHandler(GameWorld world, Rocket rocket) {
 		this.world = world;
@@ -22,17 +25,24 @@ public class InputHandler implements InputProcessor {
 		cam = new OrthographicCamera();
 		cam.setToOrtho(true, Constants.TRUE_WIDTH, Constants.TRUE_HEIGHT);
 		
-		
-		
-		
+		menuButtons = new ArrayList<SimpleButton>();
+		playButton = new SimpleButton( 
+				136 / 2 - (AssetLoader.playButtonUp.getRegionWidth() / 2),
+                Constants.TRUE_HEIGHT / 2 + 50, 29, 16, AssetLoader.playButtonUp,
+                AssetLoader.playButtonDown);
+		menuButtons.add(playButton);
 	}
 
 	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) 
+	{
 
-		if (world.isReady()) {
+		if (world.isMenu())
+		{
+			playButton.isTouchDown(screenX, screenY);
+		}
+		else if (world.isReady()) {
 			world.standby();
-			
 		}
 		else if (world.isStandby()){
 			
@@ -75,6 +85,15 @@ public class InputHandler implements InputProcessor {
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		 if (world.isMenu()) 
+		 {
+	         if (playButton.isTouchUp(screenX, screenY)) 
+	         {
+	              world.ready();
+	              return true;
+	         }
+	     }
+		
 		rocket.onNoClick();
 		return true;
 	}
@@ -94,14 +113,13 @@ public class InputHandler implements InputProcessor {
 			cam.unproject(tempPos);
 			System.out.println("Touched " + tempPos.x);
 		
-			if (tempPos.x < rocket.getMiddleX() - 15) {
-			
+			if (tempPos.x < rocket.getMiddleX() - 15) 
+			{
 				rocket.onLeft();
 				rocket.userAtX((int)tempPos.x);
-			
-			
 			}
-			else if(tempPos.x  > rocket.getMiddleX() + 15){
+			else if(tempPos.x  > rocket.getMiddleX() + 15)
+			{
 				rocket.onRight();
 				rocket.userAtX((int)tempPos.x);
 			}
@@ -118,6 +136,11 @@ public class InputHandler implements InputProcessor {
 	@Override
 	public boolean scrolled(int amount) {
 		return false;
+	}
+	
+	public List<SimpleButton> getMenuButtons()
+	{
+		return menuButtons;
 	}
 	
 }
