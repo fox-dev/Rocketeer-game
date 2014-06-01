@@ -33,6 +33,8 @@ public class Alien extends AbstractObstacle{
 		return (this.position.x >= Constants.TRUE_WIDTH/2 - 57); //changed this value to fit UFO sprite. 25 > 57
 	}
 	
+	
+	
 
 	
 

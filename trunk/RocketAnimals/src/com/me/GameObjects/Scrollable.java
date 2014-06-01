@@ -55,6 +55,7 @@ public class Scrollable {
 
         if (((position.y + height) > 480 + height) || (position.y + height <= 0) || (((position.x + width < 0) || position.x - width > Constants.TRUE_WIDTH))) {
             isScrolledDown = true;
+            
         }
 	}
     
