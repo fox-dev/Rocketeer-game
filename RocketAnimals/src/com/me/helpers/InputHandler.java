@@ -1,7 +1,7 @@
 package com.me.helpers;
 
-import java.util.ArrayList;
-import java.util.List;
+//import java.util.ArrayList;
+//import java.util.List;
 
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -15,8 +15,8 @@ public class InputHandler implements InputProcessor {
 	private Rocket rocket;
 	private OrthographicCamera cam;
 	private GameWorld world;
-	private List<SimpleButton> menuButtons;
-	private SimpleButton playButton;
+	//private List<SimpleButton> menuButtons;
+	//private SimpleButton playButton;
 	
 	public InputHandler(GameWorld world, Rocket rocket) {
 		this.world = world;
@@ -25,23 +25,18 @@ public class InputHandler implements InputProcessor {
 		cam = new OrthographicCamera();
 		cam.setToOrtho(true, Constants.TRUE_WIDTH, Constants.TRUE_HEIGHT);
 		
-		menuButtons = new ArrayList<SimpleButton>();
+		/*menuButtons = new ArrayList<SimpleButton>();
 		playButton = new SimpleButton( 
 				136 / 2 - (AssetLoader.playButtonUp.getRegionWidth() / 2),
                 Constants.TRUE_HEIGHT / 2 + 50, 29, 16, AssetLoader.playButtonUp,
                 AssetLoader.playButtonDown);
-		menuButtons.add(playButton);
+		menuButtons.add(playButton);*/
 	}
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) 
 	{
-
-		if (world.isMenu())  // Handles when the button in start screen is touched.
-		{
-			playButton.isTouchDown(screenX, screenY);  
-		}
-		else if (world.isReady()) {
+		if (world.isReady()) {
 			world.standby();
 		}
 		else if (world.isStandby()){
@@ -84,15 +79,16 @@ public class InputHandler implements InputProcessor {
 	}
 
 	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		 if (world.isMenu()) //game is set to ready state when button is released.
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) 
+	{
+		/* if (world.isMenu()) //game is set to ready state when button is released.
 		 {
 	         if (playButton.isTouchUp(screenX, screenY)) 
 	         {
 	              world.ready();
 	              return true;
 	         }
-	     }
+	     }*/
 		
 		rocket.onNoClick();
 		return true;
@@ -138,9 +134,9 @@ public class InputHandler implements InputProcessor {
 		return false;
 	}
 	
-	public List<SimpleButton> getMenuButtons()
+	/*public List<SimpleButton> getMenuButtons()
 	{
 		return menuButtons;
-	}
+	}*/
 	
 }
