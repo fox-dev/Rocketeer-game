@@ -23,6 +23,8 @@ public class CargoPlane extends AbstractObstacle{
 		}
 	}
 	
+	
+	
 	public void stalk(Rocket player){
 		
 		if((this.position.x + width/2) >= player.getMiddleX()){  //Move left

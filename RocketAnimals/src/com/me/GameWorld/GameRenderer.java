@@ -174,6 +174,13 @@ public class GameRenderer {
 		}
 		else if(world.isGameOver())
 		{
+			// Convert integer into String
+	        String score = world.getFinalScore() + "";
+	        AssetLoader.shadow.draw(spriteBatch, "" + score, (136 / 2)
+	                - (3 * score.length()), 12);
+			// Draw text
+	        AssetLoader.font.draw(spriteBatch, "" + score, (136 / 2)
+	                - (3 * score.length() - 1), 11);
         	drawGameOver();
         	//AssetLoader.shadow.draw(spriteBatch, "Game Over", 25, 56);
            // AssetLoader.font.draw(spriteBatch, "Game Over", 24, 55);

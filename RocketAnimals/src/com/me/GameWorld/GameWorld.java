@@ -31,6 +31,7 @@ public class GameWorld {
 	}
 	
 	public GameWorld(int midPointY) {
+		
 		currentState = GameState.MENU;
 		rocket = new Rocket(Constants.ROCKET_STARTING_X, Constants.ROCKET_STARTING_Y, Constants.ROCKET_WIDTH, Constants.ROCKET_HEIGHT);
 		scroller = new ScrollableHandler();
@@ -44,14 +45,14 @@ public class GameWorld {
 	
 	public void update(float delta) 
 	{
-		
+		System.out.println("CurrentState: " + currentState);
 		scroller.setRocket(rocket);
 		
 		//System.out.println(("CurrentState: " + currentState));
 		switch(currentState) {
 		
 		case MENU:
-			updateReady(delta);
+			//updateReady(delta);
 			break;
 		
 		case READY:
@@ -72,7 +73,7 @@ public class GameWorld {
 			break;
 			
 		case GAMEOVER:
-			
+			System.out.println("FinalScore: " + finalScore);
 			updateGameOver(delta);
 			break;
 			
@@ -102,11 +103,8 @@ public class GameWorld {
 		{
 			if (rocket.overlapsWith(tempObj)) {
 				
-				if (tempObj instanceof JetPlane) {
-					scroller.despawnPlane();
-				}
 				AssetLoader.hitSounds.random().play();
-				//gameOver();
+				gameOver();
 			}
 		}
 	}
