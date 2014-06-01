@@ -45,7 +45,7 @@ public class GameRenderer {
     private Value alpha = new Value();
 
     // Buttons
-    private List<SimpleButton> menuButtons;
+    //private List<SimpleButton> menuButtons;
 	
 	String score;
 	
@@ -72,8 +72,8 @@ public class GameRenderer {
 		this.world = world;
 		this.gameHeight = gameHeight;
 		this.midPointY = midPointY;
-		this.menuButtons = ((InputHandler) Gdx.input.getInputProcessor())
-                .getMenuButtons();
+		/*this.menuButtons = ((InputHandler) Gdx.input.getInputProcessor())
+                .getMenuButtons();*/
 		
 		cam = new OrthographicCamera();
 		cam.setToOrtho(true, Constants.TRUE_WIDTH, Constants.TRUE_HEIGHT);
@@ -98,15 +98,15 @@ public class GameRenderer {
                 .start(manager);
 	}
 	
-	private void drawMenuUI() {
-		/*batcher.draw(AssetLoader.zbLogo, 136 / 2 - 56, midPointY - 50,
+	/*private void drawMenuUI() {
+		batcher.draw(AssetLoader.zbLogo, 136 / 2 - 56, midPointY - 50,
 	                AssetLoader.zbLogo.getRegionWidth() / 1.2f,
-	                AssetLoader.zbLogo.getRegionHeight() / 1.2f);*/
+	                AssetLoader.zbLogo.getRegionHeight() / 1.2f);
 
 	    for (SimpleButton button : menuButtons) {
 	            button.draw(spriteBatch);
 	    }
-	}
+	}*/
 	
 	public void render(float delta, float runTime) {
 		// Update camera
@@ -155,6 +155,8 @@ public class GameRenderer {
 			// Draw text
 	        AssetLoader.font.draw(spriteBatch, "" + world.getScore(), (136 / 2)
 	                - (3 * score.length() - 1), 11);
+	        AssetLoader.shadow.draw(spriteBatch, "Click Anywhere To Start!", 48, Constants.TRUE_HEIGHT / 2 - 50);
+	        AssetLoader.font.draw(spriteBatch, "Click Anywhere To Start!", 47, Constants.TRUE_HEIGHT / 2 - 51);
 		}
 		else if(world.isStandby())
 		{
@@ -166,11 +168,6 @@ public class GameRenderer {
 			// Draw text
 	        AssetLoader.font.draw(spriteBatch, "" + world.getScore(), (136 / 2)
 	                - (3 * score.length() - 1), 11);
-		}
-		else if(world.isMenu())
-		{
-			drawPlayer(runTime);
-			drawMenuUI();
 		}
 		else if(world.isGameOver())
 		{
@@ -246,9 +243,6 @@ public class GameRenderer {
 		
 	}
 	private void drawObjects(float runTime){
-
-		
-		
 		// Draw all obstacles
 		for(AbstractObstacle items : world.getScroller().getAbstractObstacles())
 		{

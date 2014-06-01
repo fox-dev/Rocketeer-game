@@ -27,12 +27,12 @@ public class GameWorld {
 	
 	// Game states
 	public enum GameState {
-		MENU, READY, STANDBY, RUNNING, GAMEOVER
+		READY, STANDBY, RUNNING, GAMEOVER
 	}
 	
 	public GameWorld(int midPointY) {
 		
-		currentState = GameState.MENU;
+		currentState = GameState.READY;
 		rocket = new Rocket(Constants.ROCKET_STARTING_X, Constants.ROCKET_STARTING_Y, Constants.ROCKET_WIDTH, Constants.ROCKET_HEIGHT);
 		scroller = new ScrollableHandler();
 		scrollObjects = new Array<AbstractObstacle>();
@@ -49,11 +49,8 @@ public class GameWorld {
 		scroller.setRocket(rocket);
 		
 		//System.out.println(("CurrentState: " + currentState));
-		switch(currentState) {
-		
-		case MENU:
-			//updateReady(delta);
-			break;
+		switch(currentState) 
+		{
 		
 		case READY:
 			break;
@@ -145,9 +142,6 @@ public class GameWorld {
 	public boolean isRunning() { return currentState == GameState.RUNNING; }
 	public boolean isGameOver() { return currentState == GameState.GAMEOVER; }
 	public boolean isStandby() { return currentState == GameState.STANDBY; }
-	public boolean isMenu(){return currentState == GameState.MENU;}
-	
-
 	
 	public Rocket getRocket() { return rocket; }
 	public ScrollableHandler getScroller() { return scroller; }
