@@ -8,7 +8,7 @@ import aurelienribon.tweenengine.TweenManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -111,7 +111,7 @@ public class GameRenderer {
 	public void render(float delta, float runTime) {
 		// Update camera
 		cam.update();
-		cam.apply(Gdx.gl10);
+		//cam.apply(Gdx.gl20);
 		
 		// Set viewport
 		Gdx.gl.glViewport((int) viewport.x, (int) viewport.y,
@@ -119,7 +119,7 @@ public class GameRenderer {
 		
 		// Fill screen with black
 		Gdx.gl.glClearColor(0.11f, 0.11f, 0.11f, 1f);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		// Draw Background color
 		shapeRenderer.begin(ShapeType.Filled);
@@ -381,13 +381,13 @@ public class GameRenderer {
 	 {
 		 if (alpha.getValue() > 0) {
 	            manager.update(delta);
-	            Gdx.gl.glEnable(GL10.GL_BLEND);
-	            Gdx.gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
+	            Gdx.gl.glEnable(GL20.GL_BLEND);
+	            Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 	            shapeRenderer.begin(ShapeType.Filled);
 	            shapeRenderer.setColor(1, 1, 1, alpha.getValue());
 	            shapeRenderer.rect(0, 0, Constants.TRUE_WIDTH, Constants.TRUE_HEIGHT);
 	            shapeRenderer.end();
-	            Gdx.gl.glDisable(GL10.GL_BLEND);
+	            Gdx.gl.glDisable(GL20.GL_BLEND);
 
 	     }
 	 }

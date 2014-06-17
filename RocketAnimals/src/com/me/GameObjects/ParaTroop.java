@@ -14,27 +14,13 @@ public class ParaTroop extends AbstractObstacle
 	public ParaTroop()
 	{
 		// Using width and height defined below and random number inbetween the speed boundaries
-		super(Constants.TRUE_WIDTH / 2, -30, 30, 30, ScrollableHandler.randInt(minXSpeed, maxXSpeed), ScrollableHandler.randInt(minYSpeed, maxYSpeed));
+		super(Constants.TRUE_WIDTH / 2, -30, 30, 30, randInt(minXSpeed, maxXSpeed), randInt(minYSpeed, maxYSpeed));
 	
 		isScrolledDown = false;
 	
 		collisionRect = new Rectangle(position.x,position.y,width,height);
 	
 		rotation = 0;
-		
-		// not needed with current direction handling.
-		/*if(velocity.x > 0)
-		{
-			scrollDirection = Constants.DIRECTION.DOWN_RIGHT;
-		}
-		else if(velocity.x < 0)
-		{
-			scrollDirection = Constants.DIRECTION.DOWN_LEFT;
-		}
-		else
-		{
-			scrollDirection = Constants.DIRECTION.DOWN;
-		}*/
 		
 		if(position.x > (Constants.TRUE_WIDTH - position.x))
 		{
@@ -108,16 +94,6 @@ public class ParaTroop extends AbstractObstacle
 		{
 			isScrolledDown = true;
 		}
-	}
-	
-	public int randInt(int min, int max) 
-	{
-	    // Usually this can be a field rather than a method variable
-	    Random rand = new Random();
-
-	    // nextInt is normally exclusive of the top value,
-	    // so add 1 to make it inclusive
-	    return rand.nextInt((max - min) + 1) + min;
 	}
 	
 }

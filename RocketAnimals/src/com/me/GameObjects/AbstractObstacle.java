@@ -1,5 +1,7 @@
 package com.me.GameObjects;
 
+import java.util.Random;
+
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
@@ -132,5 +134,15 @@ public class AbstractObstacle extends Scrollable{
 	public Rectangle getCollisionRect() { return collisionRect; }
 	public Circle getCollisionCirc() { return collisionCirc; }
 	public Polygon getCollisionPoly() { return collisionPoly; }
+	
+	public static int randInt(int min, int max) 
+	{
+	    // Usually this can be a field rather than a method variable
+	    Random rand = new Random();
+
+	    // nextInt is normally exclusive of the top value,
+	    // so add 1 to make it inclusive
+	    return rand.nextInt((max - min) + 1) + min;
+	}
 	
 }
