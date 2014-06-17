@@ -11,7 +11,8 @@ public class MainActivity extends AndroidApplication {
         super.onCreate(savedInstanceState);
         
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
-        cfg.useGL20 = false;
+        //removed from update to libgdx 1.1.0
+        //cfg.useGL20 = false;
         
         initialize(new RocketAnimals(), cfg);
     }
