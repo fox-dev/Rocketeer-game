@@ -2,7 +2,7 @@ package com.me.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.me.TweenAccessors.SpriteAccessor;
@@ -65,7 +65,7 @@ public class SplashScreen implements Screen
 	{
 		manager.update(delta);
 		Gdx.gl.glClearColor(1,  1,  1,  1);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batcher.begin();
 		sprite.draw(batcher);
 		batcher.end();

@@ -104,7 +104,7 @@ public class AssetLoader {
 		// Rocket Animation
 		TextureRegion[] rockets = {rocketLeft, rocket, rocketRight};
 		rocketAnimation = new Animation(0.01f, rockets);
-		rocketAnimation.setPlayMode(Animation.LOOP_PINGPONG);
+		rocketAnimation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
 		
 		// Rocket fire
 		rocketFire1 = new TextureRegion(texture, 3, 48, 39, 30);
@@ -118,7 +118,7 @@ public class AssetLoader {
 		// Rocket fire Animation
 		TextureRegion[] fire = {rocketFire1, rocketFire2, rocketFire3};
 		rocketFireAnimation = new Animation(0.05f, fire);
-		rocketFireAnimation.setPlayMode(Animation.LOOP);
+		rocketFireAnimation.setPlayMode(Animation.PlayMode.LOOP);
 		
 		// Meteor
 		meteor = new TextureRegion(texture, 192, 6, 49, 48); //change sprite later
@@ -158,7 +158,7 @@ public class AssetLoader {
 		//Helicopter Blade Animation
 		TextureRegion[] copterSpin = {chopperBlade1, chopperBlade2, chopperBlade3};
 		chopperAnimation = new Animation(0.05f, copterSpin);
-		chopperAnimation.setPlayMode(Animation.LOOP);
+		chopperAnimation.setPlayMode(Animation.PlayMode.LOOP);
 		
 		// Load audio
 		hit1 = Gdx.audio.newSound(Gdx.files.internal("data/hit1.wav"));
